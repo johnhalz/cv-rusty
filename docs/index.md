@@ -2,10 +2,6 @@
 
 A `no_std` computer vision library written in Rust, designed for live computations, embedded systems, and high-performance image processing.
 
-## Documentation
-
-Full documentation is available at: **[https://johnhalz.github.io/cv-rusty/](https://johnhalz.github.io/cv-rusty/)**
-
 ## Features
 
 - **`no_std` Compatible**: Core library works without the standard library (only requires `alloc`)
@@ -51,22 +47,22 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Read a JPEG file into a Matrix3
     let image = read_jpeg("photo.jpg")?;
     println!("JPEG dimensions: {}x{}", image.width(), image.height());
-
+    
     // Read a PNG file into a Matrix3
     let image = read_png("photo.png")?;
     println!("PNG dimensions: {}x{}", image.width(), image.height());
-
+    
     // Access pixel data
     if let Some((r, g, b)) = image.get_pixel(100, 100) {
         println!("Pixel at (100, 100): RGB({}, {}, {})", r, g, b);
     }
-
+    
     // Write as JPEG with quality setting (1-100)
     write_jpeg(&image, "output.jpg", 90)?;
-
+    
     // Write as PNG (lossless)
     write_png(&image, "output.png")?;
-
+    
     Ok(())
 }
 ```
@@ -133,7 +129,7 @@ use cv_rusty::Matrix3;
 fn process_image() {
     // Create image data in memory
     let mut image = Matrix3::zeros(320, 240);
-
+    
     // Process pixels (e.g., from a camera sensor)
     for y in 0..240 {
         for x in 0..320 {
@@ -141,7 +137,7 @@ fn process_image() {
             image.set_pixel(x, y, r, g, b);
         }
     }
-
+    
     // Send to display via SPI/I2C
     let raw_data = image.data();
     // ... send raw_data to hardware
