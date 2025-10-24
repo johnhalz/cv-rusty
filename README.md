@@ -6,8 +6,8 @@ A `no_std` computer vision library written in Rust, designed for live computatio
 
 - **`no_std` Compatible**: Core library works without the standard library (only requires `alloc`)
 - **Zero-copy Image Representation**: Efficient three-channel matrix structure for RGB images
-- **JPEG Reading**: Built-in support for reading JPEG images with automatic format conversion (requires `std` feature)
-- **Format Support**: Handles RGB24, Grayscale (L8), and CMYK32 JPEG formats
+- **Image Reading**: Built-in support for reading JPEG and PNG images with automatic format conversion (requires `std` feature)
+- **Format Support**: Handles RGB24, Grayscale (L8), and CMYK32 JPEG formats; RGB, RGBA, Grayscale, and Grayscale+Alpha PNG formats
 - **Safe API**: Bounds-checked pixel access with ergonomic error handling
 - **Embedded Ready**: Perfect for resource-constrained environments and real-time systems
 
@@ -38,16 +38,19 @@ cv-rusty = { version = "0.1.0", default-features = false }
 
 ## Usage
 
-### Reading a JPEG Image (requires `std` feature)
+### Reading Images (requires `std` feature)
 
 ```rust
-use cv_rusty::io::read_jpeg;
+use cv_rusty::io::{read_jpeg, read_png};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Read a JPEG file into a Matrix3
     let image = read_jpeg("photo.jpg")?;
+    println!("JPEG dimensions: {}x{}", image.width(), image.height());
     
-    println!("Image dimensions: {}x{}", image.width(), image.height());
+    // Read a PNG file into a Matrix3
+    let image = read_png("photo.png")?;
+    println!("PNG dimensions: {}x{}", image.width(), image.height());
     
     // Access pixel data
     if let Some((r, g, b)) = image.get_pixel(100, 100) {
@@ -82,9 +85,9 @@ println!("Total bytes: {}", raw_data.len());
 ### Error Handling
 
 ```rust
-use cv_rusty::io::{read_jpeg, ImageError};
+use cv_rusty::io::{read_jpeg, read_png, ImageError};
 
-match read_jpeg("photo.jpg") {
+match read_png("photo.png") {
     Ok(image) => {
         println!("Successfully loaded {}x{} image", image.width(), image.height());
     }
@@ -93,6 +96,9 @@ match read_jpeg("photo.jpg") {
     }
     Err(ImageError::JpegDecode(e)) => {
         eprintln!("JPEG decoding error: {}", e);
+    }
+    Err(ImageError::PngDecode(e)) => {
+        eprintln!("PNG decoding error: {}", e);
     }
     Err(ImageError::UnsupportedFormat(e)) => {
         eprintln!("Unsupported format: {}", e);
@@ -136,6 +142,12 @@ Read and analyze a JPEG file:
 cargo run --example read_jpeg_example path/to/your/image.jpg
 ```
 
+Read and analyze a PNG file:
+
+```bash
+cargo run --example read_png_example path/to/your/image.png
+```
+
 ### `no_std` example
 
 Demonstrate core functionality without file I/O:
@@ -175,6 +187,18 @@ Reads a JPEG image file and returns it as a three-channel RGB `Matrix3`.
 
 **Returns:** `Result<Matrix3, ImageError>`
 
+### `io::read_png(path)`
+
+Reads a PNG image file and returns it as a three-channel RGB `Matrix3`.
+
+**Supported Formats:**
+- RGB (24-bit color)
+- RGBA (32-bit color with alpha, alpha channel stripped)
+- Grayscale (8-bit, converted to RGB)
+- Grayscale+Alpha (16-bit, alpha channel stripped, converted to RGB)
+
+**Returns:** `Result<Matrix3, ImageError>`
+
 ## Use Cases
 
 ### Embedded Systems
@@ -193,7 +217,7 @@ Reads a JPEG image file and returns it as a three-channel RGB `Matrix3`.
 
 - [x] `no_std` support
 - [x] JPEG image reading (with `std` feature)
-- [ ] PNG image support
+- [x] PNG image reading (with `std` feature)
 - [ ] Image writing capabilities
 - [ ] Color space conversions (RGB ↔ HSV, YUV)
 - [ ] Basic image operations (resize, crop, rotate)
