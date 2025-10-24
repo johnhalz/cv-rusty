@@ -5,11 +5,12 @@ edition = "2021"
 
 [dependencies]
 jpeg-decoder = { version = "0.3", optional = true }
+jpeg-encoder = { version = "0.6", optional = true }
 png = { version = "0.17", optional = true }
 
 [features]
 default = ["std"]
-std = ["jpeg-decoder", "png"]
+std = ["jpeg-decoder", "jpeg-encoder", "png"]
 alloc = []
 
 [lib]
@@ -18,4 +19,5 @@ path = "src/lib.rs"
 
 [dev-dependencies]
 jpeg-decoder = "0.3"
+jpeg-encoder = "0.6"
 png = "0.17"

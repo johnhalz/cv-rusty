@@ -12,7 +12,7 @@
 //!
 //! With `std` feature (default):
 //! ```no_run
-//! use cv_rusty::{read_jpeg, read_png};
+//! use cv_rusty::{read_jpeg, read_png, write_jpeg, write_png, Matrix3};
 //!
 //! // Read JPEG image
 //! let image = read_jpeg("photo.jpg").expect("Failed to read JPEG");
@@ -21,6 +21,13 @@
 //! // Read PNG image
 //! let image = read_png("photo.png").expect("Failed to read PNG");
 //! println!("Loaded {}x{} image", image.width(), image.height());
+//!
+//! // Write JPEG image with quality 90
+//! let output = Matrix3::zeros(640, 480);
+//! write_jpeg(&output, "output.jpg", 90).expect("Failed to write JPEG");
+//!
+//! // Write PNG image
+//! write_png(&output, "output.png").expect("Failed to write PNG");
 //! ```
 //!
 //! Without `std` (no_std + alloc):
@@ -44,4 +51,4 @@ pub mod io;
 pub use matrix::Matrix3;
 
 #[cfg(feature = "std")]
-pub use io::{read_jpeg, read_png};
+pub use io::{read_jpeg, read_png, write_jpeg, write_png};

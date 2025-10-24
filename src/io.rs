@@ -18,6 +18,10 @@ pub enum ImageError {
     JpegDecode(String),
     /// PNG decoding error
     PngDecode(String),
+    /// JPEG encoding error
+    JpegEncode(String),
+    /// PNG encoding error
+    PngEncode(String),
     /// Unsupported pixel format
     UnsupportedFormat(String),
 }
@@ -28,6 +32,8 @@ impl std::fmt::Display for ImageError {
             ImageError::Io(e) => write!(f, "I/O error: {}", e),
             ImageError::JpegDecode(e) => write!(f, "JPEG decode error: {}", e),
             ImageError::PngDecode(e) => write!(f, "PNG decode error: {}", e),
+            ImageError::JpegEncode(e) => write!(f, "JPEG encode error: {}", e),
+            ImageError::PngEncode(e) => write!(f, "PNG encode error: {}", e),
             ImageError::UnsupportedFormat(e) => write!(f, "Unsupported format: {}", e),
         }
     }
@@ -221,9 +227,103 @@ pub fn read_png<P: AsRef<Path>>(path: P) -> Result<Matrix3, ImageError> {
     Ok(Matrix3::new(width, height, rgb_data))
 }
 
+/// Writes a Matrix3 as a JPEG image file.
+///
+/// # Arguments
+///
+/// * `matrix` - The Matrix3 containing RGB data to write
+/// * `path` - Path where the JPEG file should be written
+/// * `quality` - JPEG quality (1-100, where 100 is best quality)
+///
+/// # Returns
+///
+/// Returns `Ok(())` on success, or an `ImageError` on failure.
+///
+/// # Examples
+///
+/// ```no_run
+/// use cv_rusty::{Matrix3, io::write_jpeg};
+///
+/// let image = Matrix3::zeros(640, 480);
+/// write_jpeg(&image, "output.jpg", 90).expect("Failed to write JPEG");
+/// ```
+pub fn write_jpeg<P: AsRef<Path>>(
+    matrix: &Matrix3,
+    path: P,
+    quality: u8,
+) -> Result<(), ImageError> {
+    use jpeg_encoder::{ColorType as JpegColorType, Encoder};
+
+    let quality = quality.clamp(1, 100);
+
+    // Create the output file
+    let file = File::create(path)?;
+    let mut writer = io::BufWriter::new(file);
+
+    // Create encoder
+    let encoder = Encoder::new(&mut writer, quality);
+
+    // Encode the image
+    encoder
+        .encode(
+            matrix.data(),
+            matrix.width() as u16,
+            matrix.height() as u16,
+            JpegColorType::Rgb,
+        )
+        .map_err(|e| ImageError::JpegEncode(format!("{}", e)))?;
+
+    Ok(())
+}
+
+/// Writes a Matrix3 as a PNG image file.
+///
+/// # Arguments
+///
+/// * `matrix` - The Matrix3 containing RGB data to write
+/// * `path` - Path where the PNG file should be written
+///
+/// # Returns
+///
+/// Returns `Ok(())` on success, or an `ImageError` on failure.
+///
+/// # Examples
+///
+/// ```no_run
+/// use cv_rusty::{Matrix3, io::write_png};
+///
+/// let image = Matrix3::zeros(640, 480);
+/// write_png(&image, "output.png").expect("Failed to write PNG");
+/// ```
+pub fn write_png<P: AsRef<Path>>(matrix: &Matrix3, path: P) -> Result<(), ImageError> {
+    use png::{BitDepth, Encoder};
+
+    // Create the output file
+    let file = File::create(path)?;
+    let writer = io::BufWriter::new(file);
+
+    // Create encoder
+    let mut encoder = Encoder::new(writer, matrix.width() as u32, matrix.height() as u32);
+    encoder.set_color(ColorType::Rgb);
+    encoder.set_depth(BitDepth::Eight);
+
+    // Write the PNG header
+    let mut writer = encoder
+        .write_header()
+        .map_err(|e| ImageError::PngEncode(format!("{}", e)))?;
+
+    // Write the image data
+    writer
+        .write_image_data(matrix.data())
+        .map_err(|e| ImageError::PngEncode(format!("{}", e)))?;
+
+    Ok(())
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::fs;
 
     #[test]
     fn test_image_error_display() {
@@ -232,11 +332,97 @@ mod tests {
 
         let err = ImageError::PngDecode("png error".to_string());
         assert_eq!(format!("{}", err), "PNG decode error: png error");
+
+        let err = ImageError::JpegEncode("encode error".to_string());
+        assert_eq!(format!("{}", err), "JPEG encode error: encode error");
+
+        let err = ImageError::PngEncode("encode error".to_string());
+        assert_eq!(format!("{}", err), "PNG encode error: encode error");
     }
 
     #[test]
     fn test_unsupported_format_error() {
         let err = ImageError::UnsupportedFormat("RGBA".to_string());
         assert!(format!("{}", err).contains("Unsupported format"));
+    }
+
+    #[test]
+    fn test_write_and_read_jpeg() {
+        // Create a test image with a gradient pattern
+        let width = 100;
+        let height = 100;
+        let mut data = Vec::with_capacity(width * height * 3);
+
+        for y in 0..height {
+            for x in 0..width {
+                data.push((x * 255 / width) as u8);
+                data.push((y * 255 / height) as u8);
+                data.push(128);
+            }
+        }
+
+        let original = Matrix3::new(width, height, data);
+
+        // Write JPEG
+        let temp_path = "test_output.jpg";
+        write_jpeg(&original, temp_path, 90).expect("Failed to write JPEG");
+
+        // Read it back
+        let loaded = read_jpeg(temp_path).expect("Failed to read JPEG");
+
+        // Verify dimensions
+        assert_eq!(loaded.width(), original.width());
+        assert_eq!(loaded.height(), original.height());
+
+        // Clean up
+        fs::remove_file(temp_path).ok();
+    }
+
+    #[test]
+    fn test_write_and_read_png() {
+        // Create a test image with a specific pattern
+        let width = 50;
+        let height = 50;
+        let mut data = Vec::with_capacity(width * height * 3);
+
+        for y in 0..height {
+            for x in 0..width {
+                data.push((x * 5) as u8);
+                data.push((y * 5) as u8);
+                data.push(200);
+            }
+        }
+
+        let original = Matrix3::new(width, height, data.clone());
+
+        // Write PNG
+        let temp_path = "test_output.png";
+        write_png(&original, temp_path).expect("Failed to write PNG");
+
+        // Read it back
+        let loaded = read_png(temp_path).expect("Failed to read PNG");
+
+        // Verify dimensions
+        assert_eq!(loaded.width(), original.width());
+        assert_eq!(loaded.height(), original.height());
+
+        // PNG is lossless, so data should match exactly
+        assert_eq!(loaded.data(), &data[..]);
+
+        // Clean up
+        fs::remove_file(temp_path).ok();
+    }
+
+    #[test]
+    fn test_write_jpeg_quality_bounds() {
+        let image = Matrix3::zeros(10, 10);
+        let temp_path = "test_quality.jpg";
+
+        // Test with quality values outside bounds - should clamp
+        write_jpeg(&image, temp_path, 0).expect("Should clamp to 1");
+        write_jpeg(&image, temp_path, 150).expect("Should clamp to 100");
+
+        // Clean up
+        fs::remove_file(temp_path).ok();
     }
 }
