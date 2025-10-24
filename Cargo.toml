@@ -1,6 +1,19 @@
 [package]
 name = "cv-rusty"
 version = "0.1.0"
-edition = "2024"
+edition = "2021"
 
 [dependencies]
+jpeg-decoder = { version = "0.3", optional = true }
+
+[features]
+default = ["std"]
+std = ["jpeg-decoder"]
+alloc = []
+
+[lib]
+name = "cv_rusty"
+path = "src/lib.rs"
+
+[dev-dependencies]
+jpeg-decoder = "0.3"
