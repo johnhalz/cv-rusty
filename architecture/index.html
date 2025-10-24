@@ -1,0 +1,1468 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../quick-reference/">
+      
+      
+        <link rel="next" href="../image-writing/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.22">
+    
+    
+      
+        <title>Architecture - CV Rusty</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.84d31ad4.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#cv-rusty-architecture" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="CV Rusty" class="md-header__button md-logo" aria-label="CV Rusty" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            CV Rusty
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Architecture
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6m0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4M7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="CV Rusty" class="md-nav__button md-logo" aria-label="CV Rusty" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    CV Rusty
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quick-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Quick Reference
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Architecture
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Architecture
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Project Structure
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#module-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      Module Design
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Module Design">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#librs" class="md-nav__link">
+    <span class="md-ellipsis">
+      lib.rs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#matrixrs" class="md-nav__link">
+    <span class="md-ellipsis">
+      matrix.rs
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="matrix.rs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#matrix3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Matrix3
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iors" class="md-nav__link">
+    <span class="md-ellipsis">
+      io.rs
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="io.rs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#imageerror" class="md-nav__link">
+    <span class="md-ellipsis">
+      ImageError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#read_jpegpath" class="md-nav__link">
+    <span class="md-ellipsis">
+      read_jpeg(path)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dependencies
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Dependencies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#jpeg-decoder-v03" class="md-nav__link">
+    <span class="md-ellipsis">
+      jpeg-decoder (v0.3)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#feature-flags" class="md-nav__link">
+    <span class="md-ellipsis">
+      Feature Flags
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Feature Flags">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#std-default" class="md-nav__link">
+    <span class="md-ellipsis">
+      std (default)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alloc" class="md-nav__link">
+    <span class="md-ellipsis">
+      alloc
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#design-principles" class="md-nav__link">
+    <span class="md-ellipsis">
+      Design Principles
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performance Considerations
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Performance Considerations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#memory-layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      Memory Layout
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bounds-checking" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bounds Checking
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#future-optimizations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Future Optimizations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#no_std-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      no_std Support
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="no_std Support">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Requirements
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limitations-in-no_std" class="md-nav__link">
+    <span class="md-ellipsis">
+      Limitations in no_std
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#embedded-use-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      Embedded Use Cases
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#memory-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Memory Considerations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testing Strategy
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Testing Strategy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#unit-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Unit Tests
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#doc-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Doc Tests
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#integration-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Integration Tests
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#future-architecture-plans" class="md-nav__link">
+    <span class="md-ellipsis">
+      Future Architecture Plans
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Future Architecture Plans">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#planned-modules" class="md-nav__link">
+    <span class="md-ellipsis">
+      Planned Modules
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trait-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      Trait System
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generic-matrix-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      Generic Matrix Types
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contributing-guidelines" class="md-nav__link">
+    <span class="md-ellipsis">
+      Contributing Guidelines
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Contributing Guidelines">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#testing-strategy-for-no_std" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testing Strategy for no_std
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-history" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version History
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../image-writing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Image Writing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../embedded/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Embedded Systems
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Project Structure
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#module-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      Module Design
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Module Design">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#librs" class="md-nav__link">
+    <span class="md-ellipsis">
+      lib.rs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#matrixrs" class="md-nav__link">
+    <span class="md-ellipsis">
+      matrix.rs
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="matrix.rs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#matrix3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Matrix3
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iors" class="md-nav__link">
+    <span class="md-ellipsis">
+      io.rs
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="io.rs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#imageerror" class="md-nav__link">
+    <span class="md-ellipsis">
+      ImageError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#read_jpegpath" class="md-nav__link">
+    <span class="md-ellipsis">
+      read_jpeg(path)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dependencies
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Dependencies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#jpeg-decoder-v03" class="md-nav__link">
+    <span class="md-ellipsis">
+      jpeg-decoder (v0.3)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#feature-flags" class="md-nav__link">
+    <span class="md-ellipsis">
+      Feature Flags
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Feature Flags">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#std-default" class="md-nav__link">
+    <span class="md-ellipsis">
+      std (default)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alloc" class="md-nav__link">
+    <span class="md-ellipsis">
+      alloc
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#design-principles" class="md-nav__link">
+    <span class="md-ellipsis">
+      Design Principles
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performance Considerations
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Performance Considerations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#memory-layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      Memory Layout
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bounds-checking" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bounds Checking
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#future-optimizations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Future Optimizations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#no_std-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      no_std Support
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="no_std Support">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Requirements
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limitations-in-no_std" class="md-nav__link">
+    <span class="md-ellipsis">
+      Limitations in no_std
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#embedded-use-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      Embedded Use Cases
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#memory-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Memory Considerations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testing Strategy
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Testing Strategy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#unit-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Unit Tests
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#doc-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Doc Tests
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#integration-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Integration Tests
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#future-architecture-plans" class="md-nav__link">
+    <span class="md-ellipsis">
+      Future Architecture Plans
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Future Architecture Plans">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#planned-modules" class="md-nav__link">
+    <span class="md-ellipsis">
+      Planned Modules
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trait-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      Trait System
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generic-matrix-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      Generic Matrix Types
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contributing-guidelines" class="md-nav__link">
+    <span class="md-ellipsis">
+      Contributing Guidelines
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Contributing Guidelines">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#testing-strategy-for-no_std" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testing Strategy for no_std
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-history" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version History
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="cv-rusty-architecture">CV Rusty Architecture</h1>
+<h2 id="overview">Overview</h2>
+<p>CV Rusty is a <code>no_std</code> compatible computer vision library written in Rust with a focus on performance, safety, and embedded systems support. The library is designed for live computations, real-time image processing applications, and resource-constrained environments.</p>
+<h2 id="project-structure">Project Structure</h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>cv-rusty/
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>├── src/
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>│   ├── lib.rs          # Main library entry point
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>│   ├── matrix.rs       # Matrix data structures
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>│   └── io.rs           # Image I/O operations
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>├── examples/
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>│   └── read_jpeg_example.rs
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>├── Cargo.toml
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>└── README.md
+</code></pre></div>
+<h2 id="module-design">Module Design</h2>
+<h3 id="librs"><code>lib.rs</code></h3>
+<p>The main library entry point configured for <code>no_std</code> compatibility. It uses feature flags to conditionally compile std-dependent code.</p>
+<p><strong>Key Attributes:</strong>
+- <code>#![cfg_attr(not(feature = "std"), no_std)]</code> - Enables <code>no_std</code> when std feature is disabled
+- <code>extern crate alloc</code> - Required for heap allocations in <code>no_std</code> environments</p>
+<p><strong>Public API:</strong>
+- <code>Matrix3</code> - Three-channel image matrix (always available)
+- <code>read_jpeg</code> - JPEG file reading function (only with <code>std</code> feature)</p>
+<h3 id="matrixrs"><code>matrix.rs</code></h3>
+<p>Contains the core data structure for representing multi-channel image data. This module is fully <code>no_std</code> compatible and only requires the <code>alloc</code> crate.</p>
+<p><strong><code>no_std</code> Compatibility:</strong>
+- Uses <code>core::fmt</code> instead of <code>std::fmt</code>
+- Imports <code>Vec</code> from <code>alloc::vec::Vec</code> when <code>std</code> is not available
+- Imports <code>vec!</code> macro from <code>alloc::vec</code> for <code>no_std</code> environments</p>
+<h4 id="matrix3"><code>Matrix3</code></h4>
+<p>A three-channel matrix specifically designed for RGB image representation.</p>
+<p><strong>Design Decisions:</strong>
+- <strong>Contiguous Memory Layout</strong>: Data is stored in a single <code>Vec&lt;u8&gt;</code> for cache efficiency
+- <strong>Interleaved Channels</strong>: RGB values are stored as <code>[R, G, B, R, G, B, ...]</code> for better spatial locality
+- <strong>Row-Major Order</strong>: Standard image representation order (y * width + x)
+- <strong>Bounds Checking</strong>: All pixel access methods return <code>Option</code> or <code>bool</code> to prevent panics</p>
+<p><strong>Memory Layout:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Pixel (0,0): [R, G, B] | Pixel (1,0): [R, G, B] | ... | Pixel (W-1,0): [R, G, B]
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>Pixel (0,1): [R, G, B] | Pixel (1,1): [R, G, B] | ... | Pixel (W-1,1): [R, G, B]
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>...
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>Pixel (0,H-1): [R, G, B] | ... | Pixel (W-1,H-1): [R, G, B]
+</code></pre></div></p>
+<p><strong>Index Calculation:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kd">let</span><span class="w"> </span><span class="n">pixel_index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">width</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kd">let</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="n">pixel_index</span><span class="p">];</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="kd">let</span><span class="w"> </span><span class="n">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="n">pixel_index</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">];</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="kd">let</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="n">pixel_index</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="p">];</span>
+</code></pre></div></p>
+<h3 id="iors"><code>io.rs</code></h3>
+<p>Handles image file I/O operations, currently supporting JPEG format. This module is only compiled when the <code>std</code> feature is enabled, as it requires file system access.</p>
+<p><strong>Compilation Guard:</strong>
+- Only included when <code>#[cfg(feature = "std")]</code> is true
+- Requires <code>std::fs</code>, <code>std::io</code>, and <code>std::path</code></p>
+<h4 id="imageerror"><code>ImageError</code></h4>
+<p>Custom error type for image operations with variants:
+- <code>Io(io::Error)</code> - File system errors
+- <code>JpegDecode(String)</code> - JPEG decoding errors
+- <code>UnsupportedFormat(String)</code> - Unsupported pixel format errors</p>
+<h4 id="read_jpegpath"><code>read_jpeg(path)</code></h4>
+<p>Reads JPEG files and converts them to RGB <code>Matrix3</code>.</p>
+<p><strong>Supported Input Formats:</strong>
+1. <strong>RGB24</strong> - Direct passthrough (most common)
+2. <strong>L8 (Grayscale)</strong> - Converted by duplicating channel: <code>[G] -&gt; [G, G, G]</code>
+3. <strong>CMYK32</strong> - Converted using formula:
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>R = (1 - C) * (1 - K) * 255
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>G = (1 - M) * (1 - K) * 255
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>B = (1 - Y) * (1 - K) * 255
+</code></pre></div></p>
+<p><strong>Processing Pipeline:</strong>
+1. Open file with buffered reader
+2. Create JPEG decoder
+3. Decode image to raw pixels
+4. Extract metadata (width, height, pixel format)
+5. Convert to RGB if necessary
+6. Construct <code>Matrix3</code> with RGB data</p>
+<h2 id="dependencies">Dependencies</h2>
+<h3 id="jpeg-decoder-v03"><code>jpeg-decoder</code> (v0.3)</h3>
+<ul>
+<li><strong>Purpose</strong>: JPEG image decoding</li>
+<li><strong>Features</strong>: Supports multiple pixel formats, hardware acceleration</li>
+<li><strong>License</strong>: MIT/Apache-2.0</li>
+<li><strong>Availability</strong>: Optional, only included with <code>std</code> feature</li>
+<li><strong>Note</strong>: This dependency requires <code>std</code>, so JPEG reading is not available in <code>no_std</code> environments</li>
+</ul>
+<h2 id="feature-flags">Feature Flags</h2>
+<h3 id="std-default"><code>std</code> (default)</h3>
+<p>Enables standard library support, including:
+- File I/O operations (<code>io</code> module)
+- JPEG reading functionality
+- <code>std::error::Error</code> trait implementations</p>
+<h3 id="alloc"><code>alloc</code></h3>
+<p>Enables heap allocation support (required for core functionality):
+- <code>Vec&lt;u8&gt;</code> for storing pixel data
+- Dynamic memory allocation</p>
+<p><strong>Feature Dependencies:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">[features]</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">default</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;std&quot;</span><span class="p">]</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">std</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;jpeg-decoder&quot;</span><span class="p">]</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="n">alloc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[]</span>
+</code></pre></div></p>
+<h2 id="design-principles">Design Principles</h2>
+<ol>
+<li><strong><code>no_std</code> First</strong>: Core functionality works without standard library</li>
+<li><strong>Zero-Copy When Possible</strong>: Minimize data copying during operations</li>
+<li><strong>Memory Safety</strong>: Use Rust's type system to prevent buffer overflows</li>
+<li><strong>Ergonomic API</strong>: Simple, intuitive interfaces for common operations</li>
+<li><strong>Performance</strong>: Design for real-time processing applications</li>
+<li><strong>Extensibility</strong>: Modular design allows easy addition of new formats and operations</li>
+<li><strong>Embedded Ready</strong>: Suitable for microcontrollers and resource-constrained systems</li>
+</ol>
+<h2 id="performance-considerations">Performance Considerations</h2>
+<h3 id="memory-layout">Memory Layout</h3>
+<ul>
+<li>Contiguous allocation reduces cache misses</li>
+<li>Interleaved channels improve spatial locality for pixel operations</li>
+<li>Single allocation per image minimizes heap fragmentation</li>
+</ul>
+<h3 id="bounds-checking">Bounds Checking</h3>
+<ul>
+<li>All pixel access is bounds-checked at compile time or returns <code>Option</code></li>
+<li>No unsafe code in current implementation</li>
+<li>Trade-off: slight overhead for safety guarantees</li>
+</ul>
+<h3 id="future-optimizations">Future Optimizations</h3>
+<ul>
+<li>SIMD operations for bulk pixel processing</li>
+<li>Parallel processing with rayon for large images (with <code>std</code> feature)</li>
+<li>Memory pooling for repeated allocations</li>
+<li>Optional unsafe fast paths for performance-critical code</li>
+<li>Hardware accelerator support for embedded systems</li>
+<li>Zero-allocation operations where possible</li>
+</ul>
+<h2 id="no_std-support"><code>no_std</code> Support</h2>
+<h3 id="requirements">Requirements</h3>
+<p>The core library (<code>Matrix3</code> and related operations) only requires:
+- <code>core</code> - Rust's core library (always available)
+- <code>alloc</code> - For heap allocations (<code>Vec</code>)</p>
+<h3 id="limitations-in-no_std">Limitations in <code>no_std</code></h3>
+<p>Without the <code>std</code> feature, the following are not available:
+- File I/O operations (<code>read_jpeg</code>, future <code>write_jpeg</code>)
+- <code>std::error::Error</code> trait (we use custom error types)
+- Threading/parallelization</p>
+<h3 id="embedded-use-cases">Embedded Use Cases</h3>
+<p>The <code>no_std</code> design enables use in:
+- <strong>Microcontrollers</strong> (ARM Cortex-M, RISC-V)
+- <strong>Real-time Operating Systems</strong> (RTOS)
+- <strong>Bare-metal environments</strong>
+- <strong>FPGA/ASIC soft processors</strong>
+- <strong>Bootloaders and firmware</strong></p>
+<h3 id="memory-considerations">Memory Considerations</h3>
+<p>In <code>no_std</code> environments:
+- Heap allocation requires a global allocator to be configured
+- Large images may exceed available RAM on constrained devices
+- Consider using smaller images or streaming processing
+- Future: Support for static allocation and external memory</p>
+<h2 id="testing-strategy">Testing Strategy</h2>
+<h3 id="unit-tests">Unit Tests</h3>
+<ul>
+<li>Located inline with source code using <code>#[cfg(test)]</code></li>
+<li>Test coverage includes:</li>
+<li>Matrix creation and initialization</li>
+<li>Pixel access (get/set)</li>
+<li>Boundary conditions</li>
+<li>Error handling</li>
+</ul>
+<h3 id="doc-tests">Doc Tests</h3>
+<ul>
+<li>Embedded in documentation comments</li>
+<li>Ensures examples in docs remain valid</li>
+<li>Run automatically with <code>cargo test</code></li>
+</ul>
+<h3 id="integration-tests">Integration Tests</h3>
+<ul>
+<li>Examples serve as integration tests</li>
+<li>Real-world usage patterns</li>
+</ul>
+<h2 id="future-architecture-plans">Future Architecture Plans</h2>
+<h3 id="planned-modules">Planned Modules</h3>
+<ol>
+<li><strong><code>color.rs</code></strong> - Color space conversions (RGB ↔ HSV, LAB, YUV) - <code>no_std</code> compatible</li>
+<li><strong><code>transform.rs</code></strong> - Geometric transformations (resize, rotate, crop) - <code>no_std</code> compatible</li>
+<li><strong><code>filter.rs</code></strong> - Image filtering (blur, sharpen, edge detection) - <code>no_std</code> compatible</li>
+<li><strong><code>features.rs</code></strong> - Feature detection and extraction - <code>no_std</code> compatible</li>
+<li><strong><code>codec/</code></strong> - Additional image format support (PNG, BMP, TIFF) - requires <code>std</code> feature</li>
+<li><strong><code>hw/</code></strong> - Hardware accelerator interfaces for embedded systems - <code>no_std</code> compatible</li>
+</ol>
+<h3 id="trait-system">Trait System</h3>
+<p>Future implementation of traits for polymorphism:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">pub</span><span class="w"> </span><span class="k">trait</span><span class="w"> </span><span class="n">ImageMatrix</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">width</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">usize</span><span class="p">;</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">height</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">usize</span><span class="p">;</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">channels</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">usize</span><span class="p">;</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="p">}</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="k">pub</span><span class="w"> </span><span class="k">trait</span><span class="w"> </span><span class="n">ImageReader</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">read</span><span class="o">&lt;</span><span class="n">P</span><span class="p">:</span><span class="w"> </span><span class="nb">AsRef</span><span class="o">&lt;</span><span class="n">Path</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="n">path</span><span class="p">:</span><span class="w"> </span><span class="nc">P</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">Result</span><span class="o">&lt;</span><span class="n">Matrix3</span><span class="p">,</span><span class="w"> </span><span class="n">ImageError</span><span class="o">&gt;</span><span class="p">;</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="p">}</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="k">pub</span><span class="w"> </span><span class="k">trait</span><span class="w"> </span><span class="n">ImageWriter</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">write</span><span class="o">&lt;</span><span class="n">P</span><span class="p">:</span><span class="w"> </span><span class="nb">AsRef</span><span class="o">&lt;</span><span class="n">Path</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">path</span><span class="p">:</span><span class="w"> </span><span class="nc">P</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">Result</span><span class="o">&lt;</span><span class="p">(),</span><span class="w"> </span><span class="n">ImageError</span><span class="o">&gt;</span><span class="p">;</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="p">}</span>
+</code></pre></div></p>
+<h3 id="generic-matrix-types">Generic Matrix Types</h3>
+<p>Potential expansion to support different channel counts and data types:
+- <code>Matrix&lt;T, C&gt;</code> - Generic over data type and channel count
+- <code>Matrix1&lt;T&gt;</code> - Single channel (grayscale)
+- <code>Matrix3&lt;T&gt;</code> - Three channels (RGB)
+- <code>Matrix4&lt;T&gt;</code> - Four channels (RGBA)</p>
+<h2 id="contributing-guidelines">Contributing Guidelines</h2>
+<p>When adding new features:
+1. Follow existing module organization patterns
+2. <strong>Design for <code>no_std</code> first</strong> - use <code>core</code> and <code>alloc</code> when possible
+3. Add comprehensive tests (test with and without <code>std</code> feature)
+4. Document all public APIs with examples
+5. Consider performance implications, especially for embedded systems
+6. Maintain memory safety without unsafe code (unless absolutely necessary)
+7. Use feature flags appropriately (<code>std</code> for I/O, keep core logic <code>no_std</code>)
+8. Update this architecture document</p>
+<h3 id="testing-strategy-for-no_std">Testing Strategy for <code>no_std</code></h3>
+<p>When testing <code>no_std</code> compatibility:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># Build without std</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>cargo<span class="w"> </span>build<span class="w"> </span>--no-default-features
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="c1"># Build with std</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>cargo<span class="w"> </span>build<span class="w"> </span>--features<span class="w"> </span>std
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="c1"># Run tests (requires std for test framework)</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>cargo<span class="w"> </span><span class="nb">test</span>
+</code></pre></div></p>
+<h2 id="version-history">Version History</h2>
+<ul>
+<li><strong>v0.1.0</strong> - Initial release with <code>no_std</code> support, JPEG reading (with <code>std</code> feature), and Matrix3 support</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": ["search.suggest", "content.tabs.link"], "search": "../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
