@@ -43,12 +43,16 @@
 #[cfg(not(feature = "std"))]
 extern crate alloc;
 
+pub mod color;
+pub mod convolution;
 pub mod matrix;
 
 #[cfg(feature = "std")]
 pub mod io;
 
-pub use matrix::Matrix3;
+pub use color::{hsl_to_rgb, hsv_to_rgb, rgb_to_hsl, rgb_to_hsv, GrayscaleMethod};
+pub use convolution::{BorderMode, Kernel};
+pub use matrix::{Matrix1, Matrix3};
 
 #[cfg(feature = "std")]
 pub use io::{read_jpeg, read_png, write_jpeg, write_png};
