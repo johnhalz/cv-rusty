@@ -1,4 +1,6 @@
 site_name: CV Rusty
+repo_url: https://github.com/johnhalz/cv-rusty
+repo_name: johnhalz/cv-rusty
 
 nav:
   - Home: index.md

@@ -277,10 +277,16 @@ write_png(&image, "output.png")?;
 - [x] PNG image reading (with `std` feature)
 - [x] JPEG image writing (with `std` feature)
 - [x] PNG image writing (with `std` feature)
-- [ ] Color space conversions (RGB ↔ HSV, YUV)
+- [x] Color space conversions (RGB ↔ HSV, RGB ↔ HSL)
+- [x] RGB to Grayscale conversion (multiple methods)
+- [x] Single-channel matrix (Matrix1) for grayscale images
+- [x] 2D convolution operations with multiple border modes
+- [x] Separable convolution for efficiency
+- [x] Parallel processing support with Rayon
+- [x] Built-in convolution kernels (Gaussian, Sobel, Laplacian, etc.)
+- [ ] Additional color space conversions (RGB ↔ YUV, YCbCr)
 - [ ] Basic image operations (resize, crop, rotate)
-- [ ] Filtering and convolution
-- [ ] Edge detection
+- [ ] Morphological operations (erosion, dilation)
 - [ ] Feature detection
 - [ ] SIMD optimizations
 
