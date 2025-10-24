@@ -9,7 +9,8 @@ Full documentation is available at: **[https://johnhalz.github.io/cv-rusty/](htt
 ## Features
 
 - **`no_std` Compatible**: Core library works without the standard library (only requires `alloc`)
-- **Zero-copy Image Representation**: Efficient three-channel matrix structure for RGB images
+- **Zero-copy Image Representation**: Efficient matrix structures for RGB (`Matrix3`) and grayscale (`Matrix1`) images
+- **Color Space Conversions**: Convert between RGB, HSV, and HSL color spaces; convert RGB to grayscale with multiple algorithms
 - **Image I/O**: Built-in support for reading and writing JPEG and PNG images with automatic format conversion (requires `std` feature)
 - **Format Support**: Handles RGB24, Grayscale (L8), and CMYK32 JPEG formats; RGB, RGBA, Grayscale, and Grayscale+Alpha PNG formats
 - **Safe API**: Bounds-checked pixel access with ergonomic error handling
@@ -71,25 +72,90 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 }
 ```
 
-### Working with Matrix3 (`no_std` compatible)
+### Color Space Conversions (`no_std` compatible)
 
 ```rust
-use cv_rusty::matrix::Matrix3;
+use cv_rusty::{Matrix3, rgb_to_hsv, hsv_to_rgb, rgb_to_hsl, hsl_to_rgb};
 
-// Create a new 640x480 image filled with zeros
-let mut image = Matrix3::zeros(640, 480);
+// Convert RGB to HSV
+let (h, s, v) = rgb_to_hsv(255, 0, 0); // Red
+println!("Hue: {:.1}°, Saturation: {:.3}, Value: {:.3}", h, s, v);
+
+// Convert HSV back to RGB
+let (r, g, b) = hsv_to_rgb(0.0, 1.0, 1.0); // Red
+println!("RGB: ({}, {}, {})", r, g, b);
+
+// Convert RGB to HSL
+let (h, s, l) = rgb_to_hsl(255, 128, 0); // Orange
+println!("Hue: {:.1}°, Saturation: {:.3}, Lightness: {:.3}", h, s, l);
+
+// Convert HSL back to RGB
+let (r, g, b) = hsl_to_rgb(30.0, 1.0, 0.5); // Orange
+println!("RGB: ({}, {}, {})", r, g, b);
+```
+
+### Converting RGB to Grayscale (`no_std` compatible)
+
+```rust
+use cv_rusty::{Matrix3, Matrix1, GrayscaleMethod};
+
+// Create an RGB image
+let mut rgb_image = Matrix3::zeros(640, 480);
+rgb_image.set_pixel(10, 20, 255, 128, 64);
+
+// Convert to grayscale using different methods:
+
+// 1. Luminosity method (default, recommended)
+// Formula: 0.299*R + 0.587*G + 0.114*B
+let gray1 = rgb_image.to_grayscale();
+
+// 2. Average method
+// Formula: (R + G + B) / 3
+let gray2 = rgb_image.to_grayscale_average();
+
+// 3. Lightness method
+// Formula: (max(R,G,B) + min(R,G,B)) / 2
+let gray3 = rgb_image.to_grayscale_lightness();
+
+// Or use the method parameter
+let gray4 = rgb_image.to_grayscale_with_method(GrayscaleMethod::Luminosity);
+
+// Access grayscale pixel values
+if let Some(value) = gray1.get_pixel(10, 20) {
+    println!("Grayscale value: {}", value);
+}
+```
+
+### Working with Matrix3 and Matrix1 (`no_std` compatible)
+
+```rust
+use cv_rusty::{Matrix3, Matrix1};
+
+// Create a new 640x480 RGB image filled with zeros
+let mut rgb_image = Matrix3::zeros(640, 480);
 
 // Set a pixel value
-image.set_pixel(10, 20, 255, 0, 0); // Red pixel at (10, 20)
+rgb_image.set_pixel(10, 20, 255, 0, 0); // Red pixel at (10, 20)
 
 // Get a pixel value
-if let Some((r, g, b)) = image.get_pixel(10, 20) {
+if let Some((r, g, b)) = rgb_image.get_pixel(10, 20) {
     println!("RGB: ({}, {}, {})", r, g, b);
 }
 
 // Access raw data
-let raw_data = image.data();
+let raw_data = rgb_image.data();
 println!("Total bytes: {}", raw_data.len());
+
+// Create a grayscale image
+let mut gray_image = Matrix1::zeros(640, 480);
+
+// Set a grayscale pixel value
+gray_image.set_pixel(10, 20, 128);
+
+// Get a grayscale pixel value
+if let Some(value) = gray_image.get_pixel(10, 20) {
+    println!("Grayscale: {}", value);
+}
 ```
 
 ### Error Handling
@@ -176,6 +242,12 @@ Convert images between formats:
 cargo run --example image_conversion path/to/your/image.jpg
 ```
 
+Demonstrate color space conversions:
+
+```bash
+cargo run --example color_conversion_example
+```
+
 ### `no_std` example
 
 Demonstrate core functionality without file I/O:
@@ -203,6 +275,37 @@ A three-channel matrix for representing RGB image data.
 - `set_pixel(x, y, r, g, b)` - Set RGB values at a pixel location
 - `width()`, `height()`, `dimensions()` - Get matrix dimensions
 - `data()`, `data_mut()` - Access raw pixel data
+- `to_grayscale()` - Convert to grayscale using luminosity method
+- `to_grayscale_average()` - Convert to grayscale using average method
+- `to_grayscale_lightness()` - Convert to grayscale using lightness method
+- `to_grayscale_with_method(method)` - Convert to grayscale with specified method
+
+### `Matrix1`
+
+A single-channel matrix for representing grayscale image data.
+
+**Key Methods:**
+- `new(width, height, data)` - Create from raw grayscale data
+- `zeros(width, height)` - Create a zero-initialized matrix
+- `get_pixel(x, y)` - Get pixel value at a location
+- `set_pixel(x, y, value)` - Set pixel value at a location
+- `width()`, `height()`, `dimensions()` - Get matrix dimensions
+- `data()`, `data_mut()` - Access raw pixel data
+
+### Color Space Conversion Functions
+
+**RGB ↔ HSV:**
+- `rgb_to_hsv(r, g, b)` - Convert RGB (0-255) to HSV (H: 0-360°, S/V: 0.0-1.0)
+- `hsv_to_rgb(h, s, v)` - Convert HSV to RGB
+
+**RGB ↔ HSL:**
+- `rgb_to_hsl(r, g, b)` - Convert RGB (0-255) to HSL (H: 0-360°, S/L: 0.0-1.0)
+- `hsl_to_rgb(h, s, l)` - Convert HSL to RGB
+
+**Grayscale Methods:**
+- `GrayscaleMethod::Luminosity` - Weighted average: 0.299*R + 0.587*G + 0.114*B
+- `GrayscaleMethod::Average` - Simple average: (R + G + B) / 3
+- `GrayscaleMethod::Lightness` - Midpoint: (max(R,G,B) + min(R,G,B)) / 2
 
 ### `io::read_jpeg(path)`
 
@@ -281,7 +384,10 @@ write_png(&image, "output.png")?;
 - [x] PNG image reading (with `std` feature)
 - [x] JPEG image writing (with `std` feature)
 - [x] PNG image writing (with `std` feature)
-- [ ] Color space conversions (RGB ↔ HSV, YUV)
+- [x] Color space conversions (RGB ↔ HSV, RGB ↔ HSL)
+- [x] RGB to Grayscale conversion (multiple methods)
+- [x] Single-channel matrix (Matrix1) for grayscale images
+- [ ] Additional color space conversions (RGB ↔ YUV, YCbCr)
 - [ ] Basic image operations (resize, crop, rotate)
 - [ ] Filtering and convolution
 - [ ] Edge detection

@@ -9,6 +9,19 @@ use alloc::vec::Vec;
 
 use core::fmt;
 
+/// A single-channel matrix for representing grayscale image data.
+///
+/// The data is stored in a contiguous Vec<u8> in row-major order.
+#[derive(Debug, Clone)]
+pub struct Matrix1 {
+    /// Width of the matrix (number of columns)
+    width: usize,
+    /// Height of the matrix (number of rows)
+    height: usize,
+    /// Raw pixel data stored as [pixel, pixel, pixel, ...]
+    data: Vec<u8>,
+}
+
 /// A three-channel matrix for representing RGB image data.
 ///
 /// The data is stored in a contiguous Vec<u8> in row-major order,
@@ -21,6 +34,125 @@ pub struct Matrix3 {
     height: usize,
     /// Raw pixel data stored as [R, G, B, R, G, B, ...]
     data: Vec<u8>,
+}
+
+impl Matrix1 {
+    /// Creates a new Matrix1 with the specified dimensions.
+    ///
+    /// # Arguments
+    ///
+    /// * `width` - The width (number of columns) of the matrix
+    /// * `height` - The height (number of rows) of the matrix
+    /// * `data` - The raw pixel data (must be width * height bytes)
+    ///
+    /// # Panics
+    ///
+    /// Panics if the data length doesn't match width * height.
+    pub fn new(width: usize, height: usize, data: Vec<u8>) -> Self {
+        assert_eq!(
+            data.len(),
+            width * height,
+            "Data length must be width * height"
+        );
+        Self {
+            width,
+            height,
+            data,
+        }
+    }
+
+    /// Creates a new Matrix1 filled with zeros.
+    ///
+    /// # Arguments
+    ///
+    /// * `width` - The width (number of columns) of the matrix
+    /// * `height` - The height (number of rows) of the matrix
+    pub fn zeros(width: usize, height: usize) -> Self {
+        let data = vec![0u8; width * height];
+        Self {
+            width,
+            height,
+            data,
+        }
+    }
+
+    /// Returns the width of the matrix.
+    pub fn width(&self) -> usize {
+        self.width
+    }
+
+    /// Returns the height of the matrix.
+    pub fn height(&self) -> usize {
+        self.height
+    }
+
+    /// Returns the dimensions as (width, height).
+    pub fn dimensions(&self) -> (usize, usize) {
+        (self.width, self.height)
+    }
+
+    /// Returns a reference to the raw pixel data.
+    pub fn data(&self) -> &[u8] {
+        &self.data
+    }
+
+    /// Returns a mutable reference to the raw pixel data.
+    pub fn data_mut(&mut self) -> &mut [u8] {
+        &mut self.data
+    }
+
+    /// Gets the pixel value at the specified location.
+    ///
+    /// # Arguments
+    ///
+    /// * `x` - The x-coordinate (column)
+    /// * `y` - The y-coordinate (row)
+    ///
+    /// # Returns
+    ///
+    /// Returns Some(value) if the coordinates are valid, None otherwise.
+    pub fn get_pixel(&self, x: usize, y: usize) -> Option<u8> {
+        if x >= self.width || y >= self.height {
+            return None;
+        }
+        let idx = y * self.width + x;
+        Some(self.data[idx])
+    }
+
+    /// Sets the pixel value at the specified location.
+    ///
+    /// # Arguments
+    ///
+    /// * `x` - The x-coordinate (column)
+    /// * `y` - The y-coordinate (row)
+    /// * `value` - Pixel value
+    ///
+    /// # Returns
+    ///
+    /// Returns true if the pixel was set successfully, false if coordinates are out of bounds.
+    pub fn set_pixel(&mut self, x: usize, y: usize, value: u8) -> bool {
+        if x >= self.width || y >= self.height {
+            return false;
+        }
+        let idx = y * self.width + x;
+        self.data[idx] = value;
+        true
+    }
+
+    /// Consumes the matrix and returns the raw data.
+    pub fn into_raw(self) -> Vec<u8> {
+        self.data
+    }
+}
+
+impl fmt::Display for Matrix1 {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(
+            f,
+            "Matrix1 {{ width: {}, height: {}, channels: 1 }}",
+            self.width, self.height
+        )
+    }
 }
 
 impl Matrix3 {
@@ -149,6 +281,38 @@ impl fmt::Display for Matrix3 {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn test_new_matrix1() {
+        let data = vec![0u8; 100 * 100];
+        let mat = Matrix1::new(100, 100, data);
+        assert_eq!(mat.width(), 100);
+        assert_eq!(mat.height(), 100);
+        assert_eq!(mat.data().len(), 100 * 100);
+    }
+
+    #[test]
+    fn test_matrix1_zeros() {
+        let mat = Matrix1::zeros(50, 50);
+        assert_eq!(mat.width(), 50);
+        assert_eq!(mat.height(), 50);
+        assert!(mat.data().iter().all(|&x| x == 0));
+    }
+
+    #[test]
+    fn test_matrix1_get_set_pixel() {
+        let mut mat = Matrix1::zeros(10, 10);
+        assert!(mat.set_pixel(5, 5, 128));
+        assert_eq!(mat.get_pixel(5, 5), Some(128));
+        assert_eq!(mat.get_pixel(10, 10), None);
+    }
+
+    #[test]
+    #[should_panic]
+    fn test_matrix1_new_invalid_size() {
+        let data = vec![0u8; 50];
+        Matrix1::new(10, 10, data); // Should panic: 50 != 10 * 10
+    }
 
     #[test]
     fn test_new_matrix() {
