@@ -4,6 +4,7 @@
 
 use crate::matrix::Matrix3;
 use jpeg_decoder::{Decoder, PixelFormat};
+use png::{ColorType, Decoder as PngDecoder};
 use std::fs::File;
 use std::io::{self, BufReader};
 use std::path::Path;
@@ -15,6 +16,8 @@ pub enum ImageError {
     Io(io::Error),
     /// JPEG decoding error
     JpegDecode(String),
+    /// PNG decoding error
+    PngDecode(String),
     /// Unsupported pixel format
     UnsupportedFormat(String),
 }
@@ -24,6 +27,7 @@ impl std::fmt::Display for ImageError {
         match self {
             ImageError::Io(e) => write!(f, "I/O error: {}", e),
             ImageError::JpegDecode(e) => write!(f, "JPEG decode error: {}", e),
+            ImageError::PngDecode(e) => write!(f, "PNG decode error: {}", e),
             ImageError::UnsupportedFormat(e) => write!(f, "Unsupported format: {}", e),
         }
     }
@@ -123,6 +127,100 @@ pub fn read_jpeg<P: AsRef<Path>>(path: P) -> Result<Matrix3, ImageError> {
     Ok(Matrix3::new(width, height, rgb_data))
 }
 
+/// Reads a PNG image file and returns it as a three-channel RGB matrix.
+///
+/// # Arguments
+///
+/// * `path` - Path to the PNG file
+///
+/// # Returns
+///
+/// Returns a `Result` containing a `Matrix3` with RGB data on success,
+/// or an `ImageError` on failure.
+///
+/// # Examples
+///
+/// ```no_run
+/// use cv_rusty::io::read_png;
+///
+/// let image = read_png("photo.png").expect("Failed to read PNG");
+/// println!("Image dimensions: {}x{}", image.width(), image.height());
+/// ```
+pub fn read_png<P: AsRef<Path>>(path: P) -> Result<Matrix3, ImageError> {
+    // Open the file
+    let file = File::open(path)?;
+    let reader = BufReader::new(file);
+
+    // Create decoder
+    let decoder = PngDecoder::new(reader);
+    let mut reader = decoder
+        .read_info()
+        .map_err(|e| ImageError::PngDecode(format!("{}", e)))?;
+
+    // Get image metadata
+    let info = reader.info();
+    let width = info.width as usize;
+    let height = info.height as usize;
+    let color_type = info.color_type;
+
+    // Allocate buffer for image data
+    let mut buf = vec![0u8; reader.output_buffer_size()];
+    let info = reader
+        .next_frame(&mut buf)
+        .map_err(|e| ImageError::PngDecode(format!("{}", e)))?;
+
+    // Resize buffer to actual data size
+    buf.truncate(info.buffer_size());
+
+    // Convert to RGB if necessary
+    let rgb_data = match color_type {
+        ColorType::Rgb => {
+            // Already in RGB format
+            buf
+        }
+        ColorType::Rgba => {
+            // RGBA - strip alpha channel
+            let mut rgb = Vec::with_capacity(width * height * 3);
+            for chunk in buf.chunks_exact(4) {
+                rgb.push(chunk[0]);
+                rgb.push(chunk[1]);
+                rgb.push(chunk[2]);
+            }
+            rgb
+        }
+        ColorType::Grayscale => {
+            // Grayscale - convert to RGB by duplicating the channel
+            let mut rgb = Vec::with_capacity(buf.len() * 3);
+            for &gray in &buf {
+                rgb.push(gray);
+                rgb.push(gray);
+                rgb.push(gray);
+            }
+            rgb
+        }
+        ColorType::GrayscaleAlpha => {
+            // Grayscale with alpha - convert to RGB and strip alpha
+            let mut rgb = Vec::with_capacity(width * height * 3);
+            for chunk in buf.chunks_exact(2) {
+                let gray = chunk[0];
+                rgb.push(gray);
+                rgb.push(gray);
+                rgb.push(gray);
+            }
+            rgb
+        }
+        ColorType::Indexed => {
+            // Indexed color should be expanded by the decoder
+            return Err(ImageError::UnsupportedFormat(
+                "Indexed PNG color type not fully supported. Try converting to RGB first."
+                    .to_string(),
+            ));
+        }
+    };
+
+    Ok(Matrix3::new(width, height, rgb_data))
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -131,6 +229,9 @@ mod tests {
     fn test_image_error_display() {
         let err = ImageError::JpegDecode("test error".to_string());
         assert_eq!(format!("{}", err), "JPEG decode error: test error");
+
+        let err = ImageError::PngDecode("png error".to_string());
+        assert_eq!(format!("{}", err), "PNG decode error: png error");
     }
 
     #[test]

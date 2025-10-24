@@ -12,9 +12,14 @@
 //!
 //! With `std` feature (default):
 //! ```no_run
-//! use cv_rusty::read_jpeg;
+//! use cv_rusty::{read_jpeg, read_png};
 //!
-//! let image = read_jpeg("photo.jpg").expect("Failed to read image");
+//! // Read JPEG image
+//! let image = read_jpeg("photo.jpg").expect("Failed to read JPEG");
+//! println!("Loaded {}x{} image", image.width(), image.height());
+//!
+//! // Read PNG image
+//! let image = read_png("photo.png").expect("Failed to read PNG");
 //! println!("Loaded {}x{} image", image.width(), image.height());
 //! ```
 //!
@@ -39,4 +44,4 @@ pub mod io;
 pub use matrix::Matrix3;
 
 #[cfg(feature = "std")]
-pub use io::read_jpeg;
+pub use io::{read_jpeg, read_png};

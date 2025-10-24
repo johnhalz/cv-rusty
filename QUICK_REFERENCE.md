@@ -39,9 +39,13 @@ let image = Matrix3::new(640, 480, data);
 ### Reading Images (requires `std`)
 
 ```rust
-use cv_rusty::io::read_jpeg;
+use cv_rusty::io::{read_jpeg, read_png};
 
+// Read JPEG
 let image = read_jpeg("photo.jpg")?;
+
+// Read PNG
+let image = read_png("photo.png")?;
 ```
 
 ### Accessing Image Properties
@@ -156,12 +160,13 @@ fn extract_red_channel(image: &Matrix3) -> Matrix3 {
 ### With Match
 
 ```rust
-use cv_rusty::io::{read_jpeg, ImageError};
+use cv_rusty::io::{read_jpeg, read_png, ImageError};
 
-match read_jpeg("photo.jpg") {
+match read_png("photo.png") {
     Ok(image) => println!("Loaded {}x{}", image.width(), image.height()),
     Err(ImageError::Io(e)) => eprintln!("I/O error: {}", e),
     Err(ImageError::JpegDecode(e)) => eprintln!("JPEG error: {}", e),
+    Err(ImageError::PngDecode(e)) => eprintln!("PNG error: {}", e),
     Err(ImageError::UnsupportedFormat(e)) => eprintln!("Format error: {}", e),
 }
 ```
@@ -170,8 +175,9 @@ match read_jpeg("photo.jpg") {
 
 ```rust
 fn process() -> Result<(), Box<dyn std::error::Error>> {
-    let image = read_jpeg("photo.jpg")?;
-    // Process image...
+    let jpeg_image = read_jpeg("photo.jpg")?;
+    let png_image = read_png("photo.png")?;
+    // Process images...
     Ok(())
 }
 ```
@@ -248,8 +254,9 @@ cargo build --no-default-features
 # Run tests
 cargo test
 
-# Run example
+# Run examples
 cargo run --example read_jpeg_example image.jpg
+cargo run --example read_png_example image.png
 cargo run --example no_std_example
 ```
 
