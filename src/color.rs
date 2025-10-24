@@ -7,8 +7,6 @@
 
 #[cfg(not(feature = "std"))]
 use alloc::vec;
-#[cfg(not(feature = "std"))]
-use alloc::vec::Vec;
 
 use crate::matrix::{Matrix1, Matrix3};
 
