@@ -6,7 +6,7 @@ A `no_std` computer vision library written in Rust, designed for live computatio
 
 - **`no_std` Compatible**: Core library works without the standard library (only requires `alloc`)
 - **Zero-copy Image Representation**: Efficient three-channel matrix structure for RGB images
-- **Image Reading**: Built-in support for reading JPEG and PNG images with automatic format conversion (requires `std` feature)
+- **Image I/O**: Built-in support for reading and writing JPEG and PNG images with automatic format conversion (requires `std` feature)
 - **Format Support**: Handles RGB24, Grayscale (L8), and CMYK32 JPEG formats; RGB, RGBA, Grayscale, and Grayscale+Alpha PNG formats
 - **Safe API**: Bounds-checked pixel access with ergonomic error handling
 - **Embedded Ready**: Perfect for resource-constrained environments and real-time systems
@@ -38,10 +38,10 @@ cv-rusty = { version = "0.1.0", default-features = false }
 
 ## Usage
 
-### Reading Images (requires `std` feature)
+### Reading and Writing Images (requires `std` feature)
 
 ```rust
-use cv_rusty::io::{read_jpeg, read_png};
+use cv_rusty::io::{read_jpeg, read_png, write_jpeg, write_png};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Read a JPEG file into a Matrix3
@@ -56,6 +56,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     if let Some((r, g, b)) = image.get_pixel(100, 100) {
         println!("Pixel at (100, 100): RGB({}, {}, {})", r, g, b);
     }
+    
+    // Write as JPEG with quality setting (1-100)
+    write_jpeg(&image, "output.jpg", 90)?;
+    
+    // Write as PNG (lossless)
+    write_png(&image, "output.png")?;
     
     Ok(())
 }
@@ -99,6 +105,12 @@ match read_png("photo.png") {
     }
     Err(ImageError::PngDecode(e)) => {
         eprintln!("PNG decoding error: {}", e);
+    }
+    Err(ImageError::JpegEncode(e)) => {
+        eprintln!("JPEG encoding error: {}", e);
+    }
+    Err(ImageError::PngEncode(e)) => {
+        eprintln!("PNG encoding error: {}", e);
     }
     Err(ImageError::UnsupportedFormat(e)) => {
         eprintln!("Unsupported format: {}", e);
@@ -146,6 +158,18 @@ Read and analyze a PNG file:
 
 ```bash
 cargo run --example read_png_example path/to/your/image.png
+```
+
+Write images in JPEG and PNG formats:
+
+```bash
+cargo run --example write_image_example
+```
+
+Convert images between formats:
+
+```bash
+cargo run --example image_conversion path/to/your/image.jpg
 ```
 
 ### `no_std` example
@@ -199,6 +223,39 @@ Reads a PNG image file and returns it as a three-channel RGB `Matrix3`.
 
 **Returns:** `Result<Matrix3, ImageError>`
 
+### `io::write_jpeg(matrix, path, quality)`
+
+Writes a `Matrix3` as a JPEG image file.
+
+**Arguments:**
+- `matrix` - Reference to the Matrix3 containing RGB data
+- `path` - Path where the JPEG file should be written
+- `quality` - JPEG quality (1-100, where 100 is best quality)
+
+**Returns:** `Result<(), ImageError>`
+
+**Example:**
+```rust
+let image = Matrix3::zeros(640, 480);
+write_jpeg(&image, "output.jpg", 90)?;
+```
+
+### `io::write_png(matrix, path)`
+
+Writes a `Matrix3` as a PNG image file (lossless compression).
+
+**Arguments:**
+- `matrix` - Reference to the Matrix3 containing RGB data
+- `path` - Path where the PNG file should be written
+
+**Returns:** `Result<(), ImageError>`
+
+**Example:**
+```rust
+let image = Matrix3::zeros(640, 480);
+write_png(&image, "output.png")?;
+```
+
 ## Use Cases
 
 ### Embedded Systems
@@ -218,7 +275,8 @@ Reads a PNG image file and returns it as a three-channel RGB `Matrix3`.
 - [x] `no_std` support
 - [x] JPEG image reading (with `std` feature)
 - [x] PNG image reading (with `std` feature)
-- [ ] Image writing capabilities
+- [x] JPEG image writing (with `std` feature)
+- [x] PNG image writing (with `std` feature)
 - [ ] Color space conversions (RGB ↔ HSV, YUV)
 - [ ] Basic image operations (resize, crop, rotate)
 - [ ] Filtering and convolution
