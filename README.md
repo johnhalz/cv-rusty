@@ -58,6 +58,7 @@ cv-rusty = { version = "0.1.0", default-features = false }
 - **`std`** (enabled by default): Enables standard library support, including file I/O operations
 - **`parallel`** (enabled by default): Enables parallel processing for convolution operations using Rayon (requires `std`)
 - **`alloc`**: Enables heap allocation support (required for core functionality)
+- **`window`**: Enables GUI window support for displaying images (similar to OpenCV's imshow)
 
 ## Usage
 
@@ -88,6 +89,37 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     Ok(())
 }
+
+### Displaying Images in Windows (requires `window` feature)
+
+```rust
+use cv_rusty::{Matrix3, imshow_color, imshow};
+
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    // Create or load an image
+    let mut image = Matrix3::zeros(400, 300);
+    
+    // Draw a red square
+    for y in 100..200 {
+        for x in 150..250 {
+            image.set_pixel(x, y, 255, 0, 0);
+        }
+    }
+    
+    // Display the image (similar to OpenCV's imshow)
+    // Window will close when user presses ESC or closes it
+    imshow_color("My Window", &image)?;
+    
+    Ok(())
+}
+```
+
+To enable this feature, add it to your `Cargo.toml`:
+```toml
+[dependencies]
+cv-rusty = { version = "0.3.0", features = ["window"] }
+```
+
 ```
 
 ### Color Space Conversions (`no_std` compatible)

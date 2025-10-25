@@ -11,11 +11,13 @@ nav:
       - Image Writing: guides/image-writing.md
       - Transform Operations: guides/transform_operations.md
       - Custom Rotation: guides/custom_rotation.md
+      - Window Display: guides/window_display.md
   - Architecture:
       - Overview: architecture/architecture.md
       - Embedded Systems: architecture/embedded.md
   - Changelogs:
       - Color Features: changelogs/changelog-color-features.md
+      - Window Feature: changelogs/window_feature_summary.md
 
 theme:
   name: material

@@ -20,6 +20,7 @@ cv-rusty = { version = "0.1.0", default-features = false }
 |---------|-------------|---------|
 | `std` | Standard library support + file I/O | ✓ |
 | `alloc` | Heap allocation (required for core) | - |
+| `window` | GUI window display support | - |
 
 ## Basic Operations
 
@@ -253,6 +254,152 @@ fn extract_red_channel(image: &Matrix3) -> Matrix3 {
 }
 ```
 
+## Window Display API (requires `window` feature)
+
+### Enable Feature
+
+```toml
+[dependencies]
+cv-rusty = { version = "0.3.0", features = ["window"] }
+```
+
+### Import
+
+```rust
+use cv_rusty::{imshow, imshow_color, show_and_wait, show_and_wait_gray, wait_key, WindowError};
+```
+
+### Display Color Image (Matrix3)
+
+```rust
+use cv_rusty::{Matrix3, imshow_color};
+
+let image = Matrix3::zeros(640, 480);
+imshow_color("Color Window", &image)?;
+```
+
+### Display Grayscale Image (Matrix1)
+
+```rust
+use cv_rusty::{Matrix1, imshow};
+
+let image = Matrix1::zeros(640, 480);
+imshow("Grayscale Window", &image)?;
+```
+
+### Display and Wait Functions
+
+```rust
+// Display color image and wait for user to close
+show_and_wait("My Window", &image)?;
+
+// Display grayscale image and wait for user to close
+show_and_wait_gray("My Window", &gray_image)?;
+
+// Wait for specified milliseconds
+wait_key(1000); // Wait 1 second
+wait_key(0);    // Wait indefinitely
+```
+
+### Window Error Types
+
+```rust
+pub enum WindowError {
+    WindowCreation(String),  // Failed to create/update window
+    InvalidDimensions,       // Image has zero width or height
+}
+```
+
+### Complete Window Example
+
+```rust
+use cv_rusty::{Matrix3, imshow_color, read_jpeg};
+
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    // Load image
+    let image = read_jpeg("input.jpg")?;
+    
+    // Display image
+    imshow_color("My Image", &image)?;
+    
+    Ok(())
+}
+```
+
+### Keyboard Controls
+
+| Key | Action |
+|-----|--------|
+| ESC | Close window |
+| Window X button | Close window |
+
+### Display Multiple Images Sequentially
+
+```rust
+imshow_color("Image 1", &image1)?;  // Shows, waits until closed
+imshow_color("Image 2", &image2)?;  // Then shows next
+imshow_color("Image 3", &image3)?;  // And so on...
+```
+
+### Display with Error Handling
+
+```rust
+match imshow_color("Window", &image) {
+    Ok(_) => println!("Displayed successfully"),
+    Err(WindowError::InvalidDimensions) => {
+        eprintln!("Invalid image dimensions");
+    }
+    Err(WindowError::WindowCreation(msg)) => {
+        eprintln!("Window error: {}", msg);
+    }
+}
+```
+
+### Display Processed Image
+
+```rust
+// Original
+let image = read_jpeg("input.jpg")?;
+imshow_color("Original", &image)?;
+
+// Apply processing
+let kernel = Kernel::gaussian(5, 1.0);
+let blurred = image.convolve(&kernel, BorderMode::Replicate);
+imshow_color("Blurred", &blurred)?;
+```
+
+### Create and Display Test Pattern
+
+```rust
+let mut image = Matrix3::zeros(400, 300);
+
+// Draw red square
+for y in 100..200 {
+    for x in 150..250 {
+        image.set_pixel(x, y, 255, 0, 0);
+    }
+}
+
+imshow_color("Test Pattern", &image)?;
+```
+
+### Run Window Examples
+
+```bash
+# Simple example
+cargo run --example simple_imshow --features window
+
+# Comprehensive example  
+cargo run --example window_display_example --features window
+```
+
+### Window Display Notes
+
+- Windows are displayed sequentially (blocking)
+- Each window runs at maximum 60 FPS
+- Requires GUI support (not for headless environments)
+- Image data format: RGB for Matrix3, grayscale for Matrix1
+
 ## Error Handling
 
 ### With Match
@@ -346,6 +493,9 @@ Formula: `width × height × 3 bytes + 24 bytes overhead`
 # Build with std (default)
 cargo build
 
+# Build with window feature
+cargo build --features window
+
 # Build for no_std
 cargo build --no-default-features
 
@@ -356,6 +506,8 @@ cargo test
 cargo run --example read_jpeg_example image.jpg
 cargo run --example read_png_example image.png
 cargo run --example no_std_example
+cargo run --example simple_imshow --features window
+cargo run --example window_display_example --features window
 ```
 
 ## Documentation
