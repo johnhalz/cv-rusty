@@ -89,32 +89,32 @@ impl Matrix3 {
 
         match method {
             GrayscaleMethod::Luminosity => {
-                for i in 0..self.width() * self.height() {
+                for (i, pixel) in gray_data.iter_mut().enumerate() {
                     let rgb_idx = i * 3;
                     let r = self.data()[rgb_idx] as f32;
                     let g = self.data()[rgb_idx + 1] as f32;
                     let b = self.data()[rgb_idx + 2] as f32;
-                    gray_data[i] = (0.299 * r + 0.587 * g + 0.114 * b) as u8;
+                    *pixel = (0.299 * r + 0.587 * g + 0.114 * b) as u8;
                 }
             }
             GrayscaleMethod::Average => {
-                for i in 0..self.width() * self.height() {
+                for (i, pixel) in gray_data.iter_mut().enumerate() {
                     let rgb_idx = i * 3;
                     let r = self.data()[rgb_idx] as u16;
                     let g = self.data()[rgb_idx + 1] as u16;
                     let b = self.data()[rgb_idx + 2] as u16;
-                    gray_data[i] = ((r + g + b) / 3) as u8;
+                    *pixel = ((r + g + b) / 3) as u8;
                 }
             }
             GrayscaleMethod::Lightness => {
-                for i in 0..self.width() * self.height() {
+                for (i, pixel) in gray_data.iter_mut().enumerate() {
                     let rgb_idx = i * 3;
                     let r = self.data()[rgb_idx];
                     let g = self.data()[rgb_idx + 1];
                     let b = self.data()[rgb_idx + 2];
                     let max = r.max(g).max(b);
                     let min = r.min(g).min(b);
-                    gray_data[i] = ((max as u16 + min as u16) / 2) as u8;
+                    *pixel = ((max as u16 + min as u16) / 2) as u8;
                 }
             }
         }

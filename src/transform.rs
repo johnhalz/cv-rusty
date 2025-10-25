@@ -6,10 +6,8 @@
 use alloc::vec;
 
 use crate::matrix::{Matrix1, Matrix3};
+use core::f32::consts::PI;
 use libm::{ceilf, cosf, floorf, roundf, sinf};
-
-/// The value of PI for rotation calculations.
-const PI: f32 = 3.14159265358979323846;
 
 /// Interpolation method for resizing operations.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -778,8 +776,8 @@ mod tests {
     #[test]
     fn test_resize_nearest_matrix1() {
         let mut data = vec![0u8; 4 * 4];
-        for i in 0..16 {
-            data[i] = (i * 16) as u8;
+        for (i, pixel) in data.iter_mut().enumerate().take(16) {
+            *pixel = (i * 16) as u8;
         }
         let image = Matrix1::new(4, 4, data);
         let resized = image.resize(2, 2, InterpolationMethod::NearestNeighbor);
@@ -803,8 +801,8 @@ mod tests {
     #[test]
     fn test_crop_matrix1() {
         let mut data = vec![0u8; 10 * 10];
-        for i in 0..100 {
-            data[i] = (i % 256) as u8;
+        for (i, pixel) in data.iter_mut().enumerate().take(100) {
+            *pixel = (i % 256) as u8;
         }
         let image = Matrix1::new(10, 10, data);
         let cropped = image.crop(2, 2, 5, 5).unwrap();
@@ -852,8 +850,8 @@ mod tests {
     #[test]
     fn test_rotate_270_matrix1() {
         let mut data = vec![0u8; 3 * 2];
-        for i in 0..6 {
-            data[i] = (i + 1) as u8;
+        for (i, pixel) in data.iter_mut().enumerate().take(6) {
+            *pixel = (i + 1) as u8;
         }
 
         let image = Matrix1::new(3, 2, data);
@@ -866,8 +864,8 @@ mod tests {
     #[test]
     fn test_resize_nearest_matrix3() {
         let mut data = vec![0u8; 4 * 4 * 3];
-        for i in 0..(4 * 4 * 3) {
-            data[i] = (i % 256) as u8;
+        for (i, pixel) in data.iter_mut().enumerate().take(4 * 4 * 3) {
+            *pixel = (i % 256) as u8;
         }
         let image = Matrix3::new(4, 4, data);
         let resized = image.resize(2, 2, InterpolationMethod::NearestNeighbor);
@@ -891,8 +889,8 @@ mod tests {
     #[test]
     fn test_crop_matrix3() {
         let mut data = vec![0u8; 10 * 10 * 3];
-        for i in 0..(10 * 10 * 3) {
-            data[i] = (i % 256) as u8;
+        for (i, pixel) in data.iter_mut().enumerate().take(10 * 10 * 3) {
+            *pixel = (i % 256) as u8;
         }
         let image = Matrix3::new(10, 10, data);
         let cropped = image.crop(2, 2, 5, 5).unwrap();
@@ -911,8 +909,8 @@ mod tests {
     #[test]
     fn test_rotate_90_matrix3() {
         let mut data = vec![0u8; 3 * 2 * 3];
-        for i in 0..18 {
-            data[i] = (i % 256) as u8;
+        for (i, pixel) in data.iter_mut().enumerate().take(18) {
+            *pixel = (i % 256) as u8;
         }
 
         let image = Matrix3::new(3, 2, data);
@@ -925,8 +923,8 @@ mod tests {
     #[test]
     fn test_rotate_180_matrix3() {
         let mut data = vec![0u8; 2 * 2 * 3];
-        for i in 0..12 {
-            data[i] = (i + 1) as u8;
+        for (i, pixel) in data.iter_mut().enumerate().take(12) {
+            *pixel = (i + 1) as u8;
         }
         let image = Matrix3::new(2, 2, data);
         let rotated = image.rotate(RotationAngle::Rotate180);
@@ -938,8 +936,8 @@ mod tests {
     #[test]
     fn test_rotate_270_matrix3() {
         let mut data = vec![0u8; 3 * 2 * 3];
-        for i in 0..18 {
-            data[i] = (i % 256) as u8;
+        for (i, pixel) in data.iter_mut().enumerate().take(18) {
+            *pixel = (i % 256) as u8;
         }
 
         let image = Matrix3::new(3, 2, data);
