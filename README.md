@@ -58,7 +58,7 @@ cv-rusty = { version = "0.1.0", default-features = false }
 - **`std`** (enabled by default): Enables standard library support, including file I/O operations
 - **`parallel`** (enabled by default): Enables parallel processing for convolution operations using Rayon (requires `std`)
 - **`alloc`**: Enables heap allocation support (required for core functionality)
-- **`window`**: Enables GUI window support for displaying images (similar to OpenCV's imshow)
+- **`window`**: Enables GUI window support for displaying images with a unified `show_image()` API that works with both color and grayscale images
 
 ## Usage
 
@@ -93,7 +93,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 ### Displaying Images in Windows (requires `window` feature)
 
 ```rust
-use cv_rusty::{Matrix3, imshow_color, imshow};
+use cv_rusty::{Matrix3, show_image};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Create or load an image
@@ -106,9 +106,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         }
     }
     
-    // Display the image (similar to OpenCV's imshow)
+    // Display the image
+    // The show_image() function works with both Matrix3 (color) and Matrix1 (grayscale)
     // Window will close when user presses ESC or closes it
-    imshow_color("My Window", &image)?;
+    show_image("My Window", &image)?;
     
     Ok(())
 }

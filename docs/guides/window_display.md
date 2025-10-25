@@ -1,6 +1,6 @@
 # Window Display Module
 
-The window display module provides functionality similar to OpenCV's `imshow` and `waitKey` for displaying images in GUI windows.
+The window display module provides functionality for displaying images in GUI windows. The `show_image()` function works with both grayscale and color images through Rust's trait system.
 
 ## Features
 
@@ -23,76 +23,50 @@ cv-rusty = { version = "0.3.0", features = ["window"] }
 
 ## API Overview
 
-### `imshow_color(window_name, image)`
+### `show_image(window_name, image)`
 
-Displays a color image (Matrix3) in a window.
+Displays an image in a window. Works with both grayscale (`Matrix1`) and color (`Matrix3`) images.
 
 **Arguments:**
-- `window_name: &str` - The name of the window
-- `image: &Matrix3` - The RGB image to display
+- `window_name: &str` - Name of the window
+- `image: &T` - Image to display (any type implementing `Displayable` trait)
 
 **Returns:** `Result<(), WindowError>`
 
-**Example:**
+**Examples:**
 ```rust
-use cv_rusty::{Matrix3, imshow_color};
+use cv_rusty::{Matrix1, Matrix3, show_image};
 
-let image = Matrix3::zeros(640, 480);
-imshow_color("My Window", &image)?;
-```
+// Display a color image
+let color_image = Matrix3::zeros(640, 480);
+show_image("Color Window", &color_image)?;
 
-### `imshow(window_name, image)`
-
-Displays a grayscale image (Matrix1) in a window.
-
-**Arguments:**
-- `window_name: &str` - The name of the window
-- `image: &Matrix1` - The grayscale image to display
-
-**Returns:** `Result<(), WindowError>`
-
-**Example:**
-```rust
-use cv_rusty::{Matrix1, imshow};
-
-let image = Matrix1::zeros(640, 480);
-imshow("Grayscale Window", &image)?;
+// Display a grayscale image
+let gray_image = Matrix1::zeros(640, 480);
+show_image("Grayscale Window", &gray_image)?;
 ```
 
 ### `show_and_wait(window_name, image)`
 
-Convenience function that displays a color image and waits for the user to close it.
+Displays an image and waits for user to close the window. Works with both color and grayscale images.
 
 **Arguments:**
-- `window_name: &str` - The name of the window
-- `image: &Matrix3` - The RGB image to display
+- `window_name: &str` - Name of the window
+- `image: &T` - Image to display (any type implementing `Displayable` trait)
 
 **Returns:** `Result<(), WindowError>`
 
-**Example:**
+**Examples:**
 ```rust
-use cv_rusty::{Matrix3, show_and_wait};
+use cv_rusty::{Matrix1, Matrix3, show_and_wait};
 
-let image = Matrix3::zeros(640, 480);
-show_and_wait("My Window", &image)?;
-```
+// Works with color images
+let color_image = Matrix3::zeros(640, 480);
+show_and_wait("Color Window", &color_image)?;
 
-### `show_and_wait_gray(window_name, image)`
-
-Convenience function that displays a grayscale image and waits for the user to close it.
-
-**Arguments:**
-- `window_name: &str` - The name of the window
-- `image: &Matrix1` - The grayscale image to display
-
-**Returns:** `Result<(), WindowError>`
-
-**Example:**
-```rust
-use cv_rusty::{Matrix1, show_and_wait_gray};
-
-let image = Matrix1::zeros(640, 480);
-show_and_wait_gray("My Window", &image)?;
+// Works with grayscale images
+let gray_image = Matrix1::zeros(640, 480);
+show_and_wait("Grayscale Window", &gray_image)?;
 ```
 
 ### `wait_key(delay)`
@@ -114,7 +88,7 @@ wait_key(1000); // Wait for 1 second
 ## Complete Example
 
 ```rust
-use cv_rusty::{read_jpeg, imshow_color, Matrix3};
+use cv_rusty::{read_jpeg, show_image, Matrix3, Matrix1};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Load an image from disk
@@ -122,18 +96,22 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("Loaded {}x{} image", image.width(), image.height());
     
     // Display the image
-    imshow_color("Original Image", &image)?;
+    show_image("Original Image", &image)?;
     
     // Create a modified version
     let mut modified = image.clone();
     for y in 100..200 {
-        for x in 100..200 {
-            modified.set_pixel(x, y, 255, 0, 0); // Add red square
+        for x in 150..250 {
+            modified.set_pixel(x, y, 255, 0, 0);
         }
     }
     
     // Display the modified image
-    imshow_color("Modified Image", &modified)?;
+    show_image("Modified Image", &modified)?;
+    
+    // Convert to grayscale and display
+    let gray = image.to_grayscale(cv_rusty::GrayscaleMethod::Average);
+    show_image("Grayscale", &gray)?;
     
     Ok(())
 }
@@ -146,7 +124,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 ## Window Behavior
 
-Each call to `imshow` or `imshow_color` creates a new window that:
+Each call to `show_image` creates a new window that:
 - Opens immediately with the specified image
 - Runs at a maximum of 60 FPS
 - Remains open until the user presses ESC or closes the window
@@ -158,14 +136,15 @@ The window functions return `Result<(), WindowError>` with the following error t
 
 - `WindowError::WindowCreation(String)` - Failed to create or update the window
 - `WindowError::InvalidDimensions` - Image has zero width or height
+## Error Handling
 
 **Example:**
 ```rust
-use cv_rusty::{Matrix3, imshow_color, WindowError};
+use cv_rusty::{Matrix3, show_image, WindowError};
 
 let image = Matrix3::zeros(640, 480);
 
-match imshow_color("My Window", &image) {
+match show_image("My Window", &image) {
     Ok(_) => println!("Image displayed successfully"),
     Err(WindowError::InvalidDimensions) => {
         eprintln!("Image has invalid dimensions");
@@ -180,76 +159,76 @@ match imshow_color("My Window", &image) {
 
 | Feature | cv-rusty | OpenCV |
 |---------|----------|--------|
-| Display color image | `imshow_color("name", &image)` | `imshow("name", image)` |
-| Display grayscale | `imshow("name", &image)` | `imshow("name", image)` |
+| Display any image | `show_image("name", &image)` | `imshow("name", image)` |
 | Wait for key | `wait_key(delay)` (simplified) | `waitKey(delay)` |
 | Close window | ESC or close button | `destroyWindow()` or ESC |
 | Multiple windows | Sequential | Concurrent |
+| Type system | Unified API via traits | Single function for all types |
 
 ## Limitations
 
-1. **Sequential windows**: Unlike OpenCV, windows are displayed sequentially. Each `imshow` call blocks until the window is closed.
+1. **Sequential windows**: Unlike OpenCV, windows are displayed sequentially. Each `show_image` call blocks until the window is closed.
 2. **Simplified wait_key**: The `wait_key` function is a simplified sleep implementation and doesn't return key codes.
 3. **No window management**: Windows cannot be moved, resized programmatically, or destroyed without user interaction.
 4. **Requires GUI**: Cannot be used in headless environments.
 
 ## Advanced Usage
 
-For more advanced window control, you can use the underlying `minifb` crate directly:
+### Creating Custom Displayable Types
+
+You can implement the `Displayable` trait for your own image types:
 
 ```rust
-use cv_rusty::Matrix3;
-use minifb::{Key, Window, WindowOptions};
+use cv_rusty::{Displayable, WindowError, show_image};
 
-fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let image = Matrix3::zeros(640, 480);
-    
-    // Create window with custom options
-    let mut window = Window::new(
-        "Custom Window",
-        image.width(),
-        image.height(),
-        WindowOptions::default(),
-    )?;
-    
-    // Convert image data to minifb format (0x00RRGGBB)
-    let buffer: Vec<u32> = image
-        .data()
-        .chunks_exact(3)
-        .map(|pixel| {
-            let r = pixel[0] as u32;
-            let g = pixel[1] as u32;
-            let b = pixel[2] as u32;
-            (r << 16) | (g << 8) | b
-        })
-        .collect();
-    
-    // Update and control window
-    while window.is_open() && !window.is_key_down(Key::Escape) {
-        window.update_with_buffer(&buffer, image.width(), image.height())?;
-    }
-    
-    Ok(())
+struct MyImage {
+    data: Vec<u8>,
+    width: usize,
+    height: usize,
 }
+
+impl Displayable for MyImage {
+    fn to_display_buffer(&self) -> Result<(Vec<u32>, usize, usize), WindowError> {
+        if self.width == 0 || self.height == 0 {
+            return Err(WindowError::InvalidDimensions);
+        }
+        
+        let buffer: Vec<u32> = self.data
+            .iter()
+            .map(|&pixel| {
+                let rgb = pixel as u32;
+                (rgb << 16) | (rgb << 8) | rgb
+            })
+            .collect();
+        
+        Ok((buffer, self.width, self.height))
+    }
+}
+
+// Now you can use show_image with your custom type
+let my_image = MyImage { data: vec![128; 640 * 480], width: 640, height: 480 };
+show_image("Custom Image", &my_image)?;
 ```
+
+For more advanced window control, you can use the underlying `minifb` crate directly by converting images using the `Displayable` trait.
 
 ## Examples
 
 See the following examples for more demonstrations:
 
-- `examples/simple_imshow.rs` - Basic usage
+- `examples/simple_show_image.rs` - Basic usage
 - `examples/window_display_example.rs` - Comprehensive examples with gradients and patterns
 
 Run examples with:
 ```bash
-cargo run --example simple_imshow --features window
+cargo run --example simple_show_image --features window
 cargo run --example window_display_example --features window
 ```
 
 ## Troubleshooting
 
 ### "This example requires the 'window' feature"
-Enable the window feature: `cargo run --example simple_imshow --features window`
+Enable the window feature: `cargo run --example simple_show_image --features window`
 
 ### "Failed to create window"
 - Ensure you have GUI support (not running in headless environment)
@@ -258,9 +237,30 @@ Enable the window feature: `cargo run --example simple_imshow --features window`
 
 ### Window doesn't appear
 - Check that the image has valid dimensions
-- Ensure the program isn't terminating immediately after the imshow call
+- Ensure the program isn't terminating immediately after the show_image call
 - Try adding error handling to see if an error is being silently ignored
 
 ### Image colors look wrong
 - Ensure your image data is in RGB format (not BGR)
+
+## Benefits of the Unified API
+
+The unified `show_image()` function provides several advantages:
+
+1. **Single Function**: No need to remember separate functions for color vs grayscale
+2. **Type Safe**: The compiler ensures you're passing a displayable image type
+3. **Extensible**: You can implement `Displayable` for custom image types
+4. **Clean Code**: More concise and easier to read
+
+**Before (separate functions):**
+```rust
+show_image_color("Color", &color_image)?;
+show_image("Grayscale", &gray_image)?;
+```
+
+**After (unified function):**
+```rust
+show_image("Color", &color_image)?;
+show_image("Grayscale", &gray_image)?;
+```
 - cv-rusty uses RGB ordering: `[R, G, B, R, G, B, ...]`

@@ -18,6 +18,7 @@ nav:
   - Changelogs:
       - Color Features: changelogs/changelog-color-features.md
       - Window Feature: changelogs/window_feature_summary.md
+      - Unified show_image API: changelogs/UNIFIED_SHOW_IMAGE_API.md
 
 theme:
   name: material

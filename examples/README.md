@@ -101,11 +101,11 @@ cargo run --example transform_demo
 
 ### Window Display (GUI)
 
-#### Simple imshow
-Demonstrates basic image display in a window, similar to OpenCV's imshow.
+#### Simple show_image
+Demonstrates basic image display in a window.
 
 ```bash
-cargo run --example simple_imshow --features window
+cargo run --example simple_show_image --features window
 ```
 
 This example creates a simple test pattern with a red square and blue border, then displays it in a window. Press ESC or close the window to exit.
@@ -170,17 +170,21 @@ The convolution examples will demonstrate various effects:
 ## Creating Your Own Examples
 
 ```rust
-use cv_rusty::{read_jpeg, write_jpeg, Kernel, BorderMode};
+use cv_rusty::{read_jpeg, write_jpeg, show_image, Kernel, BorderMode};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Load image
     let image = read_jpeg("input.jpg")?;
     
+    // Display original
+    show_image("Original", &image)?;
+    
     // Apply Gaussian blur
     let kernel = Kernel::gaussian(5, 1.0);
     let blurred = image.convolve(&kernel, BorderMode::Replicate);
     
-    // Save result
+    // Display and save result
+    show_image("Blurred", &blurred)?;
     write_jpeg(&blurred, "output.jpg", 90)?;
     
     Ok(())
@@ -193,12 +197,12 @@ The library supports several optional features:
 
 - `std` (default): Standard library support with file I/O
 - `parallel` (default): Parallel processing using rayon
-- `window`: GUI window support for displaying images (like OpenCV's imshow)
+- `window`: GUI window support for displaying images
 
 To use specific features:
 ```bash
 # With window display
-cargo run --example simple_imshow --features window
+cargo run --example simple_show_image --features window
 
 # Without parallel processing
 cargo run --example convolution_demo --no-default-features --features std

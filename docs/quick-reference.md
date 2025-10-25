@@ -266,35 +266,28 @@ cv-rusty = { version = "0.3.0", features = ["window"] }
 ### Import
 
 ```rust
-use cv_rusty::{imshow, imshow_color, show_and_wait, show_and_wait_gray, wait_key, WindowError};
+use cv_rusty::{show_image, show_and_wait, wait_key, Displayable, WindowError};
 ```
 
-### Display Color Image (Matrix3)
+### Display Images (Works with Matrix1 and Matrix3)
 
 ```rust
-use cv_rusty::{Matrix3, imshow_color};
+use cv_rusty::{Matrix1, Matrix3, show_image};
 
-let image = Matrix3::zeros(640, 480);
-imshow_color("Color Window", &image)?;
-```
+// Display a color image
+let color_image = Matrix3::zeros(640, 480);
+show_image("Color Window", &color_image)?;
 
-### Display Grayscale Image (Matrix1)
-
-```rust
-use cv_rusty::{Matrix1, imshow};
-
-let image = Matrix1::zeros(640, 480);
-imshow("Grayscale Window", &image)?;
+// Display a grayscale image
+let gray_image = Matrix1::zeros(640, 480);
+show_image("Grayscale Window", &gray_image)?;
 ```
 
 ### Display and Wait Functions
 
 ```rust
-// Display color image and wait for user to close
+// Display image and wait for user to close (works with any image type)
 show_and_wait("My Window", &image)?;
-
-// Display grayscale image and wait for user to close
-show_and_wait_gray("My Window", &gray_image)?;
 
 // Wait for specified milliseconds
 wait_key(1000); // Wait 1 second
@@ -313,14 +306,14 @@ pub enum WindowError {
 ### Complete Window Example
 
 ```rust
-use cv_rusty::{Matrix3, imshow_color, read_jpeg};
+use cv_rusty::{Matrix3, show_image, read_jpeg};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Load image
     let image = read_jpeg("input.jpg")?;
     
     // Display image
-    imshow_color("My Image", &image)?;
+    show_image("My Image", &image)?;
     
     Ok(())
 }
@@ -336,15 +329,15 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 ### Display Multiple Images Sequentially
 
 ```rust
-imshow_color("Image 1", &image1)?;  // Shows, waits until closed
-imshow_color("Image 2", &image2)?;  // Then shows next
-imshow_color("Image 3", &image3)?;  // And so on...
+show_image("Image 1", &image1)?;  // Shows, waits until closed
+show_image("Image 2", &image2)?;  // Then shows next
+show_image("Image 3", &image3)?;  // And so on...
 ```
 
 ### Display with Error Handling
 
 ```rust
-match imshow_color("Window", &image) {
+match show_image("Window", &image) {
     Ok(_) => println!("Displayed successfully"),
     Err(WindowError::InvalidDimensions) => {
         eprintln!("Invalid image dimensions");
@@ -360,12 +353,12 @@ match imshow_color("Window", &image) {
 ```rust
 // Original
 let image = read_jpeg("input.jpg")?;
-imshow_color("Original", &image)?;
+show_image("Original", &image)?;
 
 // Apply processing
 let kernel = Kernel::gaussian(5, 1.0);
 let blurred = image.convolve(&kernel, BorderMode::Replicate);
-imshow_color("Blurred", &blurred)?;
+show_image("Blurred", &blurred)?;
 ```
 
 ### Create and Display Test Pattern
@@ -380,14 +373,25 @@ for y in 100..200 {
     }
 }
 
-imshow_color("Test Pattern", &image)?;
+show_image("Test Pattern", &image)?;
+```
+
+### Display Both Color and Grayscale
+
+```rust
+// Single function works for both types
+let color_image = Matrix3::zeros(640, 480);
+let gray_image = Matrix1::zeros(640, 480);
+
+show_image("Color", &color_image)?;
+show_image("Grayscale", &gray_image)?;
 ```
 
 ### Run Window Examples
 
 ```bash
 # Simple example
-cargo run --example simple_imshow --features window
+cargo run --example simple_show_image --features window
 
 # Comprehensive example  
 cargo run --example window_display_example --features window
@@ -398,6 +402,8 @@ cargo run --example window_display_example --features window
 - Windows are displayed sequentially (blocking)
 - Each window runs at maximum 60 FPS
 - Requires GUI support (not for headless environments)
+- Single `show_image()` function works with both color and grayscale images
+- Uses Rust's trait system (`Displayable` trait) for type safety
 - Image data format: RGB for Matrix3, grayscale for Matrix1
 
 ## Error Handling
@@ -506,7 +512,7 @@ cargo test
 cargo run --example read_jpeg_example image.jpg
 cargo run --example read_png_example image.png
 cargo run --example no_std_example
-cargo run --example simple_imshow --features window
+cargo run --example simple_show_image --features window
 cargo run --example window_display_example --features window
 ```
 

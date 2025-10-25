@@ -2,7 +2,7 @@
 
 ## Overview
 
-Added image display functionality similar to OpenCV's `imshow` to the cv-rusty library. This feature allows users to display images in GUI windows for debugging and visualization purposes.
+Added image display functionality to the cv-rusty library. This feature allows users to display images in GUI windows for debugging and visualization purposes. The API uses a unified `show_image()` function that works with both grayscale and color images through Rust's trait system.
 
 ## Changes Made
 
@@ -17,11 +17,11 @@ Created a comprehensive window display module with the following functions:
 
 #### Public API
 
-- **`imshow(window_name, image)`** - Display grayscale images (Matrix1)
-- **`imshow_color(window_name, image)`** - Display color images (Matrix3)
-- **`show_and_wait(window_name, image)`** - Display color image and wait for user to close
-- **`show_and_wait_gray(window_name, image)`** - Display grayscale image and wait for user to close
+- **`show_image(window_name, image)`** - Display any image (works with both Matrix1 and Matrix3)
+- **`show_and_wait(window_name, image)`** - Display any image and wait for user to close
 - **`wait_key(delay)`** - Wait for specified milliseconds (simplified version)
+- **`Displayable` trait** - Trait for types that can be displayed in a window
+- **`WindowError`** - Error type for window operations
 
 #### Error Handling
 
@@ -46,7 +46,7 @@ Created a comprehensive window display module with the following functions:
 
 Created two comprehensive examples:
 
-#### simple_imshow.rs
+#### simple_show_image.rs
 - Basic usage demonstration
 - Creates a simple test pattern with red square and blue border
 - Shows minimal code required to display an image
@@ -95,20 +95,25 @@ cv-rusty = { version = "0.3.0", features = ["window"] }
 ### Basic Example
 
 ```rust
-use cv_rusty::{Matrix3, imshow_color};
+use cv_rusty::{Matrix3, Matrix1, show_image};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let mut image = Matrix3::zeros(400, 300);
+    // Works with color images
+    let mut color_image = Matrix3::zeros(400, 300);
     
     // Draw something
     for y in 100..200 {
         for x in 150..250 {
-            image.set_pixel(x, y, 255, 0, 0);
+            color_image.set_pixel(x, y, 255, 0, 0);
         }
     }
     
-    // Display the image
-    imshow_color("My Window", &image)?;
+    // Display the color image
+    show_image("My Window", &color_image)?;
+    
+    // Also works with grayscale images
+    let gray_image = Matrix1::zeros(400, 300);
+    show_image("Grayscale", &gray_image)?;
     
     Ok(())
 }
@@ -118,7 +123,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 ```bash
 # Simple example
-cargo run --example simple_imshow --features window
+cargo run --example simple_show_image --features window
 
 # Comprehensive example
 cargo run --example window_display_example --features window
@@ -161,15 +166,16 @@ Made it an optional feature because:
 
 ### API Design
 
-Modeled after OpenCV's imshow for familiarity:
-- Similar function names (`imshow`, `imshow_color`)
-- Simple, blocking API
+Simple, intuitive API:
+- Unified function name (`show_image`) works with all image types
+- Uses Rust's trait system (`Displayable` trait) for type safety and extensibility
+- Blocking API for easy usage
 - Window name as first parameter
 - Error handling with Result types (more Rust-idiomatic than OpenCV)
 
 ## Limitations
 
-1. **Sequential Windows**: Each imshow call blocks until window is closed
+1. **Sequential Windows**: Each `show_image` call blocks until window is closed
 2. **Simplified wait_key**: Just sleeps, doesn't return key codes
 3. **No Window Management**: Cannot programmatically resize, move, or destroy windows
 4. **Requires GUI**: Not usable in headless environments
