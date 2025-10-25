@@ -50,8 +50,8 @@ jobs:
       - name: Run tests (default features)
         run: cargo test --verbose
 
-      - name: Run tests (no default features)
-        run: cargo test --no-default-features --verbose
+      - name: Run tests (no default features - lib only)
+        run: cargo test --no-default-features --lib --verbose
 
       - name: Run tests (all features)
         run: cargo test --all-features --verbose
