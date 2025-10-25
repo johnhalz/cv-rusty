@@ -1,5 +1,8 @@
 # CV Rusty
 
+[![Run Tests](https://github.com/johnhalz/cv-rusty/actions/workflows/test.yaml/badge.svg)](https://github.com/johnhalz/cv-rusty/actions/workflows/test.yaml)
+[![Build](https://github.com/johnhalz/cv-rusty/actions/workflows/build.yaml/badge.svg)](https://github.com/johnhalz/cv-rusty/actions/workflows/build.yaml)
+
 A `no_std` computer vision library written in Rust, designed for live computations, embedded systems, and high-performance image processing.
 
 ## Documentation
