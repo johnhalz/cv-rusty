@@ -1,0 +1,1515 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../custom_rotation/">
+      
+      
+        <link rel="next" href="../../architecture/architecture/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.22">
+    
+    
+      
+        <title>Window Display - CV Rusty</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.84d31ad4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#window-display-module" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="CV Rusty" class="md-header__button md-logo" aria-label="CV Rusty" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            CV Rusty
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Window Display
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6m0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4M7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/johnhalz/cv-rusty" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    johnhalz/cv-rusty
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="CV Rusty" class="md-nav__button md-logo" aria-label="CV Rusty" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    CV Rusty
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/johnhalz/cv-rusty" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    johnhalz/cv-rusty
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quick-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Quick Reference
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Guides
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Guides
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../color-conversion-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Color Conversion
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../convolution/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Convolution
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../image-writing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Image Writing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../transform_operations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Transform Operations
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../custom_rotation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Custom Rotation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Window Display
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Window Display
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#features" class="md-nav__link">
+    <span class="md-ellipsis">
+      Features
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Requirements
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      API Overview
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="API Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#show_imagewindow_name-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      show_image(window_name, image)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#show_and_waitwindow_name-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      show_and_wait(window_name, image)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wait_keydelay" class="md-nav__link">
+    <span class="md-ellipsis">
+      wait_key(delay)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#complete-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Complete Example
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#keyboard-controls" class="md-nav__link">
+    <span class="md-ellipsis">
+      Keyboard Controls
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#window-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Window Behavior
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#error-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Error Handling
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#error-handling_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Error Handling
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#comparison-with-opencv" class="md-nav__link">
+    <span class="md-ellipsis">
+      Comparison with OpenCV
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Limitations
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Advanced Usage
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Advanced Usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creating-custom-displayable-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creating Custom Displayable Types
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Troubleshooting
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#this-example-requires-the-window-feature" class="md-nav__link">
+    <span class="md-ellipsis">
+      "This example requires the 'window' feature"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#failed-to-create-window" class="md-nav__link">
+    <span class="md-ellipsis">
+      "Failed to create window"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#window-doesnt-appear" class="md-nav__link">
+    <span class="md-ellipsis">
+      Window doesn't appear
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#image-colors-look-wrong" class="md-nav__link">
+    <span class="md-ellipsis">
+      Image colors look wrong
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#benefits-of-the-unified-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      Benefits of the Unified API
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Architecture
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Architecture
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/embedded/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Embedded Systems
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Changelogs
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Changelogs
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../changelogs/changelog-color-features/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Color Features
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../changelogs/window_feature_summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Window Feature
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../changelogs/UNIFIED_SHOW_IMAGE_API.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Unified show_image API
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#features" class="md-nav__link">
+    <span class="md-ellipsis">
+      Features
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Requirements
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      API Overview
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="API Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#show_imagewindow_name-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      show_image(window_name, image)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#show_and_waitwindow_name-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      show_and_wait(window_name, image)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wait_keydelay" class="md-nav__link">
+    <span class="md-ellipsis">
+      wait_key(delay)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#complete-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Complete Example
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#keyboard-controls" class="md-nav__link">
+    <span class="md-ellipsis">
+      Keyboard Controls
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#window-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Window Behavior
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#error-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Error Handling
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#error-handling_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Error Handling
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#comparison-with-opencv" class="md-nav__link">
+    <span class="md-ellipsis">
+      Comparison with OpenCV
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Limitations
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Advanced Usage
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Advanced Usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creating-custom-displayable-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creating Custom Displayable Types
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Troubleshooting
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#this-example-requires-the-window-feature" class="md-nav__link">
+    <span class="md-ellipsis">
+      "This example requires the 'window' feature"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#failed-to-create-window" class="md-nav__link">
+    <span class="md-ellipsis">
+      "Failed to create window"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#window-doesnt-appear" class="md-nav__link">
+    <span class="md-ellipsis">
+      Window doesn't appear
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#image-colors-look-wrong" class="md-nav__link">
+    <span class="md-ellipsis">
+      Image colors look wrong
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#benefits-of-the-unified-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      Benefits of the Unified API
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="window-display-module">Window Display Module</h1>
+<p>The window display module provides functionality for displaying images in GUI windows. The <code>show_image()</code> function works with both grayscale and color images through Rust's trait system.</p>
+<h2 id="features">Features</h2>
+<ul>
+<li>Display grayscale images (<code>Matrix1</code>)</li>
+<li>Display color images (<code>Matrix3</code>)</li>
+<li>Simple API similar to OpenCV</li>
+<li>Cross-platform support (Windows, macOS, Linux)</li>
+<li>Automatic window management</li>
+</ul>
+<h2 id="requirements">Requirements</h2>
+<p>This feature requires the <code>window</code> feature flag to be enabled:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">[dependencies]</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">cv-rusty</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s2">&quot;0.3.0&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">features</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;window&quot;</span><span class="p">]</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<p><strong>Note</strong>: The window feature requires GUI support and is not available in headless environments (e.g., CI servers, Docker containers without X11).</p>
+<h2 id="api-overview">API Overview</h2>
+<h3 id="show_imagewindow_name-image"><code>show_image(window_name, image)</code></h3>
+<p>Displays an image in a window. Works with both grayscale (<code>Matrix1</code>) and color (<code>Matrix3</code>) images.</p>
+<p><strong>Arguments:</strong>
+- <code>window_name: &amp;str</code> - Name of the window
+- <code>image: &amp;T</code> - Image to display (any type implementing <code>Displayable</code> trait)</p>
+<p><strong>Returns:</strong> <code>Result&lt;(), WindowError&gt;</code></p>
+<p><strong>Examples:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">use</span><span class="w"> </span><span class="n">cv_rusty</span><span class="p">::{</span><span class="n">Matrix1</span><span class="p">,</span><span class="w"> </span><span class="n">Matrix3</span><span class="p">,</span><span class="w"> </span><span class="n">show_image</span><span class="p">};</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1">// Display a color image</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="kd">let</span><span class="w"> </span><span class="n">color_image</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Matrix3</span><span class="p">::</span><span class="n">zeros</span><span class="p">(</span><span class="mi">640</span><span class="p">,</span><span class="w"> </span><span class="mi">480</span><span class="p">);</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">show_image</span><span class="p">(</span><span class="s">&quot;Color Window&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">color_image</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1">// Display a grayscale image</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="kd">let</span><span class="w"> </span><span class="n">gray_image</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Matrix1</span><span class="p">::</span><span class="n">zeros</span><span class="p">(</span><span class="mi">640</span><span class="p">,</span><span class="w"> </span><span class="mi">480</span><span class="p">);</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="n">show_image</span><span class="p">(</span><span class="s">&quot;Grayscale Window&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">gray_image</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+</code></pre></div></p>
+<h3 id="show_and_waitwindow_name-image"><code>show_and_wait(window_name, image)</code></h3>
+<p>Displays an image and waits for user to close the window. Works with both color and grayscale images.</p>
+<p><strong>Arguments:</strong>
+- <code>window_name: &amp;str</code> - Name of the window
+- <code>image: &amp;T</code> - Image to display (any type implementing <code>Displayable</code> trait)</p>
+<p><strong>Returns:</strong> <code>Result&lt;(), WindowError&gt;</code></p>
+<p><strong>Examples:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">use</span><span class="w"> </span><span class="n">cv_rusty</span><span class="p">::{</span><span class="n">Matrix1</span><span class="p">,</span><span class="w"> </span><span class="n">Matrix3</span><span class="p">,</span><span class="w"> </span><span class="n">show_and_wait</span><span class="p">};</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="c1">// Works with color images</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="kd">let</span><span class="w"> </span><span class="n">color_image</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Matrix3</span><span class="p">::</span><span class="n">zeros</span><span class="p">(</span><span class="mi">640</span><span class="p">,</span><span class="w"> </span><span class="mi">480</span><span class="p">);</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">show_and_wait</span><span class="p">(</span><span class="s">&quot;Color Window&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">color_image</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="c1">// Works with grayscale images</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="kd">let</span><span class="w"> </span><span class="n">gray_image</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Matrix1</span><span class="p">::</span><span class="n">zeros</span><span class="p">(</span><span class="mi">640</span><span class="p">,</span><span class="w"> </span><span class="mi">480</span><span class="p">);</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="n">show_and_wait</span><span class="p">(</span><span class="s">&quot;Grayscale Window&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">gray_image</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+</code></pre></div></p>
+<h3 id="wait_keydelay"><code>wait_key(delay)</code></h3>
+<p>Waits for a key press for a specified duration (simplified version).</p>
+<p><strong>Arguments:</strong>
+- <code>delay: u64</code> - The number of milliseconds to wait. Use 0 to wait indefinitely.</p>
+<p><strong>Example:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">use</span><span class="w"> </span><span class="n">cv_rusty</span><span class="p">::</span><span class="n">wait_key</span><span class="p">;</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="n">wait_key</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span><span class="w"> </span><span class="c1">// Wait for 1 second</span>
+</code></pre></div></p>
+<p><strong>Note</strong>: This is a simplified implementation that just sleeps. For more complex event handling with multiple windows, consider using the minifb window handle directly.</p>
+<h2 id="complete-example">Complete Example</h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">use</span><span class="w"> </span><span class="n">cv_rusty</span><span class="p">::{</span><span class="n">read_jpeg</span><span class="p">,</span><span class="w"> </span><span class="n">show_image</span><span class="p">,</span><span class="w"> </span><span class="n">Matrix3</span><span class="p">,</span><span class="w"> </span><span class="n">Matrix1</span><span class="p">};</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="k">fn</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">Result</span><span class="o">&lt;</span><span class="p">(),</span><span class="w"> </span><span class="nb">Box</span><span class="o">&lt;</span><span class="k">dyn</span><span class="w"> </span><span class="n">std</span><span class="p">::</span><span class="n">error</span><span class="p">::</span><span class="n">Error</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span><span class="c1">// Load an image from disk</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">image</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">read_jpeg</span><span class="p">(</span><span class="s">&quot;input.jpg&quot;</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;Loaded {}x{} image&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">image</span><span class="p">.</span><span class="n">width</span><span class="p">(),</span><span class="w"> </span><span class="n">image</span><span class="p">.</span><span class="n">height</span><span class="p">());</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">    </span><span class="c1">// Display the image</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">    </span><span class="n">show_image</span><span class="p">(</span><span class="s">&quot;Original Image&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">image</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">    </span><span class="c1">// Create a modified version</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">modified</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">image</span><span class="p">.</span><span class="n">clone</span><span class="p">();</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">100</span><span class="o">..</span><span class="mi">200</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">150</span><span class="o">..</span><span class="mi">250</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="w">            </span><span class="n">modified</span><span class="p">.</span><span class="n">set_pixel</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="mi">255</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a><span class="w">    </span><span class="c1">// Display the modified image</span>
+<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a><span class="w">    </span><span class="n">show_image</span><span class="p">(</span><span class="s">&quot;Modified Image&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">modified</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a>
+<a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a><span class="w">    </span><span class="c1">// Convert to grayscale and display</span>
+<a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">gray</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">image</span><span class="p">.</span><span class="n">to_grayscale</span><span class="p">(</span><span class="n">cv_rusty</span><span class="p">::</span><span class="n">GrayscaleMethod</span><span class="p">::</span><span class="n">Average</span><span class="p">);</span>
+<a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a><span class="w">    </span><span class="n">show_image</span><span class="p">(</span><span class="s">&quot;Grayscale&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">gray</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+<a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a>
+<a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a><span class="w">    </span><span class="nb">Ok</span><span class="p">(())</span>
+<a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a><span class="p">}</span>
+</code></pre></div>
+<h2 id="keyboard-controls">Keyboard Controls</h2>
+<ul>
+<li><strong>ESC</strong> - Close the window</li>
+<li><strong>Window close button</strong> - Close the window</li>
+</ul>
+<h2 id="window-behavior">Window Behavior</h2>
+<p>Each call to <code>show_image</code> creates a new window that:
+- Opens immediately with the specified image
+- Runs at a maximum of 60 FPS
+- Remains open until the user presses ESC or closes the window
+- Blocks execution until closed</p>
+<h2 id="error-handling">Error Handling</h2>
+<p>The window functions return <code>Result&lt;(), WindowError&gt;</code> with the following error types:</p>
+<ul>
+<li><code>WindowError::WindowCreation(String)</code> - Failed to create or update the window</li>
+<li><code>WindowError::InvalidDimensions</code> - Image has zero width or height</li>
+</ul>
+<h2 id="error-handling_1">Error Handling</h2>
+<p><strong>Example:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">use</span><span class="w"> </span><span class="n">cv_rusty</span><span class="p">::{</span><span class="n">Matrix3</span><span class="p">,</span><span class="w"> </span><span class="n">show_image</span><span class="p">,</span><span class="w"> </span><span class="n">WindowError</span><span class="p">};</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="kd">let</span><span class="w"> </span><span class="n">image</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Matrix3</span><span class="p">::</span><span class="n">zeros</span><span class="p">(</span><span class="mi">640</span><span class="p">,</span><span class="w"> </span><span class="mi">480</span><span class="p">);</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="k">match</span><span class="w"> </span><span class="n">show_image</span><span class="p">(</span><span class="s">&quot;My Window&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">image</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">    </span><span class="nb">Ok</span><span class="p">(</span><span class="n">_</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;Image displayed successfully&quot;</span><span class="p">),</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">    </span><span class="nb">Err</span><span class="p">(</span><span class="n">WindowError</span><span class="p">::</span><span class="n">InvalidDimensions</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">        </span><span class="fm">eprintln!</span><span class="p">(</span><span class="s">&quot;Image has invalid dimensions&quot;</span><span class="p">);</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">    </span><span class="nb">Err</span><span class="p">(</span><span class="n">WindowError</span><span class="p">::</span><span class="n">WindowCreation</span><span class="p">(</span><span class="n">msg</span><span class="p">))</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w">        </span><span class="fm">eprintln!</span><span class="p">(</span><span class="s">&quot;Failed to create window: {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">msg</span><span class="p">);</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="p">}</span>
+</code></pre></div></p>
+<h2 id="comparison-with-opencv">Comparison with OpenCV</h2>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>cv-rusty</th>
+<th>OpenCV</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Display any image</td>
+<td><code>show_image("name", &amp;image)</code></td>
+<td><code>imshow("name", image)</code></td>
+</tr>
+<tr>
+<td>Wait for key</td>
+<td><code>wait_key(delay)</code> (simplified)</td>
+<td><code>waitKey(delay)</code></td>
+</tr>
+<tr>
+<td>Close window</td>
+<td>ESC or close button</td>
+<td><code>destroyWindow()</code> or ESC</td>
+</tr>
+<tr>
+<td>Multiple windows</td>
+<td>Sequential</td>
+<td>Concurrent</td>
+</tr>
+<tr>
+<td>Type system</td>
+<td>Unified API via traits</td>
+<td>Single function for all types</td>
+</tr>
+</tbody>
+</table>
+<h2 id="limitations">Limitations</h2>
+<ol>
+<li><strong>Sequential windows</strong>: Unlike OpenCV, windows are displayed sequentially. Each <code>show_image</code> call blocks until the window is closed.</li>
+<li><strong>Simplified wait_key</strong>: The <code>wait_key</code> function is a simplified sleep implementation and doesn't return key codes.</li>
+<li><strong>No window management</strong>: Windows cannot be moved, resized programmatically, or destroyed without user interaction.</li>
+<li><strong>Requires GUI</strong>: Cannot be used in headless environments.</li>
+</ol>
+<h2 id="advanced-usage">Advanced Usage</h2>
+<h3 id="creating-custom-displayable-types">Creating Custom Displayable Types</h3>
+<p>You can implement the <code>Displayable</code> trait for your own image types:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">use</span><span class="w"> </span><span class="n">cv_rusty</span><span class="p">::{</span><span class="n">Displayable</span><span class="p">,</span><span class="w"> </span><span class="n">WindowError</span><span class="p">,</span><span class="w"> </span><span class="n">show_image</span><span class="p">};</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="k">struct</span><span class="w"> </span><span class="nc">MyImage</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span><span class="n">data</span><span class="p">:</span><span class="w"> </span><span class="nb">Vec</span><span class="o">&lt;</span><span class="kt">u8</span><span class="o">&gt;</span><span class="p">,</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">    </span><span class="n">width</span><span class="p">:</span><span class="w"> </span><span class="kt">usize</span><span class="p">,</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">    </span><span class="n">height</span><span class="p">:</span><span class="w"> </span><span class="kt">usize</span><span class="p">,</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="p">}</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="k">impl</span><span class="w"> </span><span class="n">Displayable</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">MyImage</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">to_display_buffer</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">Result</span><span class="o">&lt;</span><span class="p">(</span><span class="nb">Vec</span><span class="o">&lt;</span><span class="kt">u32</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="kt">usize</span><span class="p">,</span><span class="w"> </span><span class="kt">usize</span><span class="p">),</span><span class="w"> </span><span class="n">WindowError</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">width</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">height</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="nb">Err</span><span class="p">(</span><span class="n">WindowError</span><span class="p">::</span><span class="n">InvalidDimensions</span><span class="p">);</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">buffer</span><span class="p">:</span><span class="w"> </span><span class="nb">Vec</span><span class="o">&lt;</span><span class="kt">u32</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">data</span>
+<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a><span class="w">            </span><span class="p">.</span><span class="n">iter</span><span class="p">()</span>
+<a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a><span class="w">            </span><span class="p">.</span><span class="n">map</span><span class="p">(</span><span class="o">|&amp;</span><span class="n">pixel</span><span class="o">|</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a><span class="w">                </span><span class="kd">let</span><span class="w"> </span><span class="n">rgb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pixel</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="kt">u32</span><span class="p">;</span>
+<a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a><span class="w">                </span><span class="p">(</span><span class="n">rgb</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">16</span><span class="p">)</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="p">(</span><span class="n">rgb</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">8</span><span class="p">)</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">rgb</span>
+<a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a><span class="w">            </span><span class="p">})</span>
+<a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a><span class="w">            </span><span class="p">.</span><span class="n">collect</span><span class="p">();</span>
+<a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a>
+<a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a><span class="w">        </span><span class="nb">Ok</span><span class="p">((</span><span class="n">buffer</span><span class="p">,</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">height</span><span class="p">))</span>
+<a id="__codelineno-6-24" name="__codelineno-6-24" href="#__codelineno-6-24"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-6-25" name="__codelineno-6-25" href="#__codelineno-6-25"></a><span class="p">}</span>
+<a id="__codelineno-6-26" name="__codelineno-6-26" href="#__codelineno-6-26"></a>
+<a id="__codelineno-6-27" name="__codelineno-6-27" href="#__codelineno-6-27"></a><span class="c1">// Now you can use show_image with your custom type</span>
+<a id="__codelineno-6-28" name="__codelineno-6-28" href="#__codelineno-6-28"></a><span class="kd">let</span><span class="w"> </span><span class="n">my_image</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MyImage</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">data</span><span class="p">:</span><span class="w"> </span><span class="nc">vec</span><span class="o">!</span><span class="p">[</span><span class="mi">128</span><span class="p">;</span><span class="w"> </span><span class="mi">640</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">480</span><span class="p">],</span><span class="w"> </span><span class="n">width</span><span class="p">:</span><span class="w"> </span><span class="mi">640</span><span class="p">,</span><span class="w"> </span><span class="n">height</span><span class="p">:</span><span class="w"> </span><span class="mi">480</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-6-29" name="__codelineno-6-29" href="#__codelineno-6-29"></a><span class="n">show_image</span><span class="p">(</span><span class="s">&quot;Custom Image&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">my_image</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+</code></pre></div>
+<p>For more advanced window control, you can use the underlying <code>minifb</code> crate directly by converting images using the <code>Displayable</code> trait.</p>
+<h2 id="examples">Examples</h2>
+<p>See the following examples for more demonstrations:</p>
+<ul>
+<li><code>examples/simple_show_image.rs</code> - Basic usage</li>
+<li><code>examples/window_display_example.rs</code> - Comprehensive examples with gradients and patterns</li>
+</ul>
+<p>Run examples with:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>cargo<span class="w"> </span>run<span class="w"> </span>--example<span class="w"> </span>simple_show_image<span class="w"> </span>--features<span class="w"> </span>window
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>cargo<span class="w"> </span>run<span class="w"> </span>--example<span class="w"> </span>window_display_example<span class="w"> </span>--features<span class="w"> </span>window
+</code></pre></div></p>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="this-example-requires-the-window-feature">"This example requires the 'window' feature"</h3>
+<p>Enable the window feature: <code>cargo run --example simple_show_image --features window</code></p>
+<h3 id="failed-to-create-window">"Failed to create window"</h3>
+<ul>
+<li>Ensure you have GUI support (not running in headless environment)</li>
+<li>On Linux, ensure X11 or Wayland is available</li>
+<li>Check that image dimensions are valid (&gt; 0)</li>
+</ul>
+<h3 id="window-doesnt-appear">Window doesn't appear</h3>
+<ul>
+<li>Check that the image has valid dimensions</li>
+<li>Ensure the program isn't terminating immediately after the show_image call</li>
+<li>Try adding error handling to see if an error is being silently ignored</li>
+</ul>
+<h3 id="image-colors-look-wrong">Image colors look wrong</h3>
+<ul>
+<li>Ensure your image data is in RGB format (not BGR)</li>
+</ul>
+<h2 id="benefits-of-the-unified-api">Benefits of the Unified API</h2>
+<p>The unified <code>show_image()</code> function provides several advantages:</p>
+<ol>
+<li><strong>Single Function</strong>: No need to remember separate functions for color vs grayscale</li>
+<li><strong>Type Safe</strong>: The compiler ensures you're passing a displayable image type</li>
+<li><strong>Extensible</strong>: You can implement <code>Displayable</code> for custom image types</li>
+<li><strong>Clean Code</strong>: More concise and easier to read</li>
+</ol>
+<p><strong>Before (separate functions):</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">show_image_color</span><span class="p">(</span><span class="s">&quot;Color&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">color_image</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="n">show_image</span><span class="p">(</span><span class="s">&quot;Grayscale&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">gray_image</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+</code></pre></div></p>
+<p><strong>After (unified function):</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">show_image</span><span class="p">(</span><span class="s">&quot;Color&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">color_image</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="n">show_image</span><span class="p">(</span><span class="s">&quot;Grayscale&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">gray_image</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+</code></pre></div>
+- cv-rusty uses RGB ordering: <code>[R, G, B, R, G, B, ...]</code></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["search.suggest", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

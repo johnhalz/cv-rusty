@@ -9,10 +9,8 @@
       
       
       
-        <link rel="prev" href="../../architecture/embedded/">
+        <link rel="prev" href="../changelog-color-features/">
       
-      
-        <link rel="next" href="../window_feature_summary/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -20,7 +18,7 @@
     
     
       
-        <title>Color Features - CV Rusty</title>
+        <title>Window Feature - CV Rusty</title>
       
     
     
@@ -72,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#color-space-conversion-features-change-log" class="md-skip">
+        <a href="#window-display-feature-implementation-summary" class="md-skip">
           Skip to content
         </a>
       
@@ -108,7 +106,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Color Features
+              Window Feature
             
           </span>
         </div>
@@ -611,6 +609,29 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../changelog-color-features/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Color Features
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -628,7 +649,7 @@
   
   
   <span class="md-ellipsis">
-    Color Features
+    Window Feature
     
   </span>
   
@@ -641,7 +662,7 @@
   
   
   <span class="md-ellipsis">
-    Color Features
+    Window Feature
     
   </span>
   
@@ -664,46 +685,196 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#new-features-added" class="md-nav__link">
+  <a href="#overview" class="md-nav__link">
     <span class="md-ellipsis">
-      New Features Added
+      Overview
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="New Features Added">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#changes-made" class="md-nav__link">
+    <span class="md-ellipsis">
+      Changes Made
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Changes Made">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#1-single-channel-matrix-matrix1" class="md-nav__link">
+  <a href="#1-dependencies-cargotoml" class="md-nav__link">
     <span class="md-ellipsis">
-      1. Single-Channel Matrix (Matrix1)
+      1. Dependencies (Cargo.toml)
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#2-rgb-to-grayscale-conversion" class="md-nav__link">
+  <a href="#2-new-module-srcwindowrs" class="md-nav__link">
     <span class="md-ellipsis">
-      2. RGB to Grayscale Conversion
+      2. New Module (src/window.rs)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. New Module (src/window.rs)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#public-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      Public API
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#3-rgb-hsv-color-space-conversion" class="md-nav__link">
+  <a href="#error-handling" class="md-nav__link">
     <span class="md-ellipsis">
-      3. RGB ↔ HSV Color Space Conversion
+      Error Handling
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#4-rgb-hsl-color-space-conversion" class="md-nav__link">
+  <a href="#features" class="md-nav__link">
     <span class="md-ellipsis">
-      4. RGB ↔ HSL Color Space Conversion
+      Features
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-library-integration-srclibrs" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Library Integration (src/lib.rs)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Examples
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#simple_show_imagers" class="md-nav__link">
+    <span class="md-ellipsis">
+      simple_show_image.rs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#window_display_examplers" class="md-nav__link">
+    <span class="md-ellipsis">
+      window_display_example.rs
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Documentation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Documentation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#docswindow_displaymd" class="md-nav__link">
+    <span class="md-ellipsis">
+      docs/window_display.md
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#readmemd-updates" class="md-nav__link">
+    <span class="md-ellipsis">
+      README.md Updates
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#examplesreadmemd-updates" class="md-nav__link">
+    <span class="md-ellipsis">
+      examples/README.md Updates
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Usage
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#enable-the-feature" class="md-nav__link">
+    <span class="md-ellipsis">
+      Enable the Feature
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#basic-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Basic Example
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Run Examples
     </span>
   </a>
   
@@ -715,19 +886,37 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#new-module" class="md-nav__link">
+  <a href="#technical-details" class="md-nav__link">
     <span class="md-ellipsis">
-      New Module
+      Technical Details
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="New Module">
+    <nav class="md-nav" aria-label="Technical Details">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#color-module" class="md-nav__link">
+  <a href="#image-format-conversion" class="md-nav__link">
     <span class="md-ellipsis">
-      color Module
+      Image Format Conversion
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#window-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Window Behavior
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dependencies
     </span>
   </a>
   
@@ -739,72 +928,78 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#public-api-exports" class="md-nav__link">
+  <a href="#design-decisions" class="md-nav__link">
     <span class="md-ellipsis">
-      Public API Exports
+      Design Decisions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Design Decisions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-minifb" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why minifb?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optional-feature" class="md-nav__link">
+    <span class="md-ellipsis">
+      Optional Feature
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#api-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      API Design
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Limitations
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#examples" class="md-nav__link">
+  <a href="#future-enhancements-potential" class="md-nav__link">
     <span class="md-ellipsis">
-      Examples
+      Future Enhancements (Potential)
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#tests" class="md-nav__link">
+  <a href="#testing" class="md-nav__link">
     <span class="md-ellipsis">
-      Tests
+      Testing
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#documentation" class="md-nav__link">
+  <a href="#compatibility" class="md-nav__link">
     <span class="md-ellipsis">
-      Documentation
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#backward-compatibility" class="md-nav__link">
-    <span class="md-ellipsis">
-      Backward Compatibility
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#performance-notes" class="md-nav__link">
-    <span class="md-ellipsis">
-      Performance Notes
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#use-cases" class="md-nav__link">
-    <span class="md-ellipsis">
-      Use Cases
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#future-enhancements" class="md-nav__link">
-    <span class="md-ellipsis">
-      Future Enhancements
+      Compatibility
     </span>
   </a>
   
@@ -814,29 +1009,6 @@
   
 </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../window_feature_summary/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Window Feature
-    
-  </span>
-  
-
-      </a>
     </li>
   
 
@@ -899,46 +1071,196 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#new-features-added" class="md-nav__link">
+  <a href="#overview" class="md-nav__link">
     <span class="md-ellipsis">
-      New Features Added
+      Overview
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="New Features Added">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#changes-made" class="md-nav__link">
+    <span class="md-ellipsis">
+      Changes Made
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Changes Made">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#1-single-channel-matrix-matrix1" class="md-nav__link">
+  <a href="#1-dependencies-cargotoml" class="md-nav__link">
     <span class="md-ellipsis">
-      1. Single-Channel Matrix (Matrix1)
+      1. Dependencies (Cargo.toml)
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#2-rgb-to-grayscale-conversion" class="md-nav__link">
+  <a href="#2-new-module-srcwindowrs" class="md-nav__link">
     <span class="md-ellipsis">
-      2. RGB to Grayscale Conversion
+      2. New Module (src/window.rs)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. New Module (src/window.rs)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#public-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      Public API
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#3-rgb-hsv-color-space-conversion" class="md-nav__link">
+  <a href="#error-handling" class="md-nav__link">
     <span class="md-ellipsis">
-      3. RGB ↔ HSV Color Space Conversion
+      Error Handling
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#4-rgb-hsl-color-space-conversion" class="md-nav__link">
+  <a href="#features" class="md-nav__link">
     <span class="md-ellipsis">
-      4. RGB ↔ HSL Color Space Conversion
+      Features
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-library-integration-srclibrs" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Library Integration (src/lib.rs)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Examples
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#simple_show_imagers" class="md-nav__link">
+    <span class="md-ellipsis">
+      simple_show_image.rs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#window_display_examplers" class="md-nav__link">
+    <span class="md-ellipsis">
+      window_display_example.rs
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Documentation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Documentation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#docswindow_displaymd" class="md-nav__link">
+    <span class="md-ellipsis">
+      docs/window_display.md
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#readmemd-updates" class="md-nav__link">
+    <span class="md-ellipsis">
+      README.md Updates
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#examplesreadmemd-updates" class="md-nav__link">
+    <span class="md-ellipsis">
+      examples/README.md Updates
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Usage
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#enable-the-feature" class="md-nav__link">
+    <span class="md-ellipsis">
+      Enable the Feature
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#basic-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Basic Example
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Run Examples
     </span>
   </a>
   
@@ -950,19 +1272,37 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#new-module" class="md-nav__link">
+  <a href="#technical-details" class="md-nav__link">
     <span class="md-ellipsis">
-      New Module
+      Technical Details
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="New Module">
+    <nav class="md-nav" aria-label="Technical Details">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#color-module" class="md-nav__link">
+  <a href="#image-format-conversion" class="md-nav__link">
     <span class="md-ellipsis">
-      color Module
+      Image Format Conversion
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#window-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Window Behavior
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dependencies
     </span>
   </a>
   
@@ -974,72 +1314,78 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#public-api-exports" class="md-nav__link">
+  <a href="#design-decisions" class="md-nav__link">
     <span class="md-ellipsis">
-      Public API Exports
+      Design Decisions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Design Decisions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-minifb" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why minifb?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optional-feature" class="md-nav__link">
+    <span class="md-ellipsis">
+      Optional Feature
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#api-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      API Design
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Limitations
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#examples" class="md-nav__link">
+  <a href="#future-enhancements-potential" class="md-nav__link">
     <span class="md-ellipsis">
-      Examples
+      Future Enhancements (Potential)
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#tests" class="md-nav__link">
+  <a href="#testing" class="md-nav__link">
     <span class="md-ellipsis">
-      Tests
+      Testing
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#documentation" class="md-nav__link">
+  <a href="#compatibility" class="md-nav__link">
     <span class="md-ellipsis">
-      Documentation
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#backward-compatibility" class="md-nav__link">
-    <span class="md-ellipsis">
-      Backward Compatibility
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#performance-notes" class="md-nav__link">
-    <span class="md-ellipsis">
-      Performance Notes
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#use-cases" class="md-nav__link">
-    <span class="md-ellipsis">
-      Use Cases
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#future-enhancements" class="md-nav__link">
-    <span class="md-ellipsis">
-      Future Enhancements
+      Compatibility
     </span>
   </a>
   
@@ -1064,129 +1410,190 @@
   
 
 
-<h1 id="color-space-conversion-features-change-log">Color Space Conversion Features - Change Log</h1>
-<h2 id="new-features-added">New Features Added</h2>
-<h3 id="1-single-channel-matrix-matrix1">1. Single-Channel Matrix (Matrix1)</h3>
-<p>Added a new <code>Matrix1</code> struct for representing grayscale/single-channel images:</p>
+<h1 id="window-display-feature-implementation-summary">Window Display Feature - Implementation Summary</h1>
+<h2 id="overview">Overview</h2>
+<p>Added image display functionality to the cv-rusty library. This feature allows users to display images in GUI windows for debugging and visualization purposes. The API uses a unified <code>show_image()</code> function that works with both grayscale and color images through Rust's trait system.</p>
+<h2 id="changes-made">Changes Made</h2>
+<h3 id="1-dependencies-cargotoml">1. Dependencies (Cargo.toml)</h3>
 <ul>
-<li><strong>Struct</strong>: <code>Matrix1</code> - Single-channel matrix for grayscale image data</li>
-<li><strong>Methods</strong>:</li>
-<li><code>new(width, height, data)</code> - Create from raw grayscale data</li>
-<li><code>zeros(width, height)</code> - Create zero-initialized matrix</li>
-<li><code>get_pixel(x, y)</code> - Get pixel value at location</li>
-<li><code>set_pixel(x, y, value)</code> - Set pixel value at location</li>
-<li><code>width()</code>, <code>height()</code>, <code>dimensions()</code> - Get matrix dimensions</li>
-<li><code>data()</code>, <code>data_mut()</code> - Access raw pixel data</li>
-<li><code>into_raw()</code> - Consume matrix and return raw data</li>
+<li>Added <code>minifb</code> v0.27 as an optional dependency</li>
+<li>Created new <code>window</code> feature flag that depends on <code>std</code> and <code>minifb</code></li>
 </ul>
-<h3 id="2-rgb-to-grayscale-conversion">2. RGB to Grayscale Conversion</h3>
-<p>Added multiple methods for converting RGB images to grayscale:</p>
-<p><strong>Methods on Matrix3</strong>:
-- <code>to_grayscale()</code> - Default luminosity method (recommended)
-- <code>to_grayscale_average()</code> - Simple average method
-- <code>to_grayscale_lightness()</code> - Lightness (midpoint) method
-- <code>to_grayscale_with_method(GrayscaleMethod)</code> - Specify conversion method</p>
-<p><strong>Conversion Algorithms</strong>:
-- <strong>Luminosity</strong>: <code>0.299*R + 0.587*G + 0.114*B</code> - Accounts for human perception
-- <strong>Average</strong>: <code>(R + G + B) / 3</code> - Simple arithmetic mean
-- <strong>Lightness</strong>: <code>(max(R,G,B) + min(R,G,B)) / 2</code> - Midpoint of range</p>
-<p><strong>Enum</strong>: <code>GrayscaleMethod</code> with variants:
-- <code>Luminosity</code>
-- <code>Average</code>
-- <code>Lightness</code></p>
-<h3 id="3-rgb-hsv-color-space-conversion">3. RGB ↔ HSV Color Space Conversion</h3>
-<p>Added functions for converting between RGB and HSV color spaces:</p>
+<h3 id="2-new-module-srcwindowrs">2. New Module (src/window.rs)</h3>
+<p>Created a comprehensive window display module with the following functions:</p>
+<h4 id="public-api">Public API</h4>
 <ul>
-<li><code>rgb_to_hsv(r: u8, g: u8, b: u8) -&gt; (f32, f32, f32)</code></li>
-<li>Input: RGB values (0-255)</li>
-<li>
-<p>Output: (hue in degrees 0-360°, saturation 0.0-1.0, value 0.0-1.0)</p>
-</li>
-<li>
-<p><code>hsv_to_rgb(h: f32, s: f32, v: f32) -&gt; (u8, u8, u8)</code></p>
-</li>
-<li>Input: HSV (hue 0-360°, saturation 0.0-1.0, value 0.0-1.0)</li>
-<li>Output: RGB values (0-255)</li>
+<li><strong><code>show_image(window_name, image)</code></strong> - Display any image (works with both Matrix1 and Matrix3)</li>
+<li><strong><code>show_and_wait(window_name, image)</code></strong> - Display any image and wait for user to close</li>
+<li><strong><code>wait_key(delay)</code></strong> - Wait for specified milliseconds (simplified version)</li>
+<li><strong><code>Displayable</code> trait</strong> - Trait for types that can be displayed in a window</li>
+<li><strong><code>WindowError</code></strong> - Error type for window operations</li>
 </ul>
-<h3 id="4-rgb-hsl-color-space-conversion">4. RGB ↔ HSL Color Space Conversion</h3>
-<p>Added functions for converting between RGB and HSL color spaces:</p>
+<h4 id="error-handling">Error Handling</h4>
 <ul>
-<li><code>rgb_to_hsl(r: u8, g: u8, b: u8) -&gt; (f32, f32, f32)</code></li>
-<li>Input: RGB values (0-255)</li>
-<li>
-<p>Output: (hue in degrees 0-360°, saturation 0.0-1.0, lightness 0.0-1.0)</p>
-</li>
-<li>
-<p><code>hsl_to_rgb(h: f32, s: f32, l: f32) -&gt; (u8, u8, u8)</code></p>
-</li>
-<li>Input: HSL (hue 0-360°, saturation 0.0-1.0, lightness 0.0-1.0)</li>
-<li>Output: RGB values (0-255)</li>
+<li><code>WindowError</code> enum with variants:</li>
+<li><code>WindowCreation(String)</code> - Window creation/update failures</li>
+<li><code>InvalidDimensions</code> - Zero width or height images</li>
 </ul>
-<h2 id="new-module">New Module</h2>
-<h3 id="color-module"><code>color</code> Module</h3>
-<p>Created a new <code>color</code> module (<code>src/color.rs</code>) containing:
-- Color space conversion functions
-- Grayscale conversion implementations
-- Comprehensive test suite for all conversions</p>
-<p>All color conversion functionality is <strong><code>no_std</code> compatible</strong> and only requires the <code>alloc</code> crate.</p>
-<h2 id="public-api-exports">Public API Exports</h2>
-<p>Updated <code>lib.rs</code> to export:
-- <code>Matrix1</code> - Single-channel matrix struct
-- <code>GrayscaleMethod</code> - Enum for grayscale conversion methods
-- <code>rgb_to_hsv</code>, <code>hsv_to_rgb</code> - HSV conversion functions
-- <code>rgb_to_hsl</code>, <code>hsl_to_rgb</code> - HSL conversion functions</p>
-<h2 id="examples">Examples</h2>
-<p>Added new example: <code>color_conversion_example.rs</code></p>
-<p>Demonstrates:
-- RGB to grayscale conversion with all three methods
-- RGB ↔ HSV conversions
-- RGB ↔ HSL conversions
-- Working with Matrix1 (grayscale images)
-- Roundtrip conversion tests</p>
-<p>Run with:
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>cargo<span class="w"> </span>run<span class="w"> </span>--example<span class="w"> </span>color_conversion_example
-</code></pre></div></p>
-<h2 id="tests">Tests</h2>
-<p>Added comprehensive test coverage:
-- Matrix1 creation and pixel access tests
-- Grayscale conversion tests for all three methods
-- RGB ↔ HSV roundtrip conversion tests
-- RGB ↔ HSL roundtrip conversion tests
-- Pure color conversion accuracy tests
-- Edge case handling</p>
-<p>All 20 unit tests pass successfully.</p>
-<h2 id="documentation">Documentation</h2>
-<p>Updated documentation:
-- Added inline documentation for all new functions and methods
-- Updated README.md with usage examples
-- Added doc tests that verify code examples compile and run correctly
-- Documented all color space conversion formulas</p>
-<h2 id="backward-compatibility">Backward Compatibility</h2>
-<p>All changes are <strong>fully backward compatible</strong>:
-- No breaking changes to existing API
-- Matrix3 functionality unchanged
-- All existing tests continue to pass</p>
-<h2 id="performance-notes">Performance Notes</h2>
+<h4 id="features">Features</h4>
 <ul>
-<li>Color conversions use <code>f32</code> for intermediate calculations</li>
-<li>Grayscale conversions are optimized for performance</li>
-<li>No unnecessary allocations in conversion functions</li>
-<li>All operations are <code>no_std</code> compatible</li>
+<li>Cross-platform support (Windows, macOS, Linux)</li>
+<li>Automatic RGB format conversion for Matrix3</li>
+<li>Grayscale to RGB conversion for Matrix1</li>
+<li>60 FPS frame limit</li>
+<li>ESC key and window close button support</li>
 </ul>
-<h2 id="use-cases">Use Cases</h2>
-<p>These features enable:
-1. <strong>Image preprocessing</strong> - Convert color images to grayscale for algorithms
-2. <strong>Color manipulation</strong> - Adjust hue, saturation, brightness in HSV/HSL space
-3. <strong>Computer vision</strong> - Many CV algorithms work on grayscale images
-4. <strong>Embedded systems</strong> - Reduce memory usage with single-channel images
-5. <strong>Display applications</strong> - Convert between color spaces for different displays
-6. <strong>Image analysis</strong> - Separate color components for analysis</p>
-<h2 id="future-enhancements">Future Enhancements</h2>
-<p>Potential additions:
-- YUV/YCbCr color space conversions
-- LAB color space support
-- Batch conversion operations for performance
-- SIMD-optimized conversions</p>
+<h3 id="3-library-integration-srclibrs">3. Library Integration (src/lib.rs)</h3>
+<ul>
+<li>Added <code>window</code> module with feature gate</li>
+<li>Exported all public window functions when <code>window</code> feature is enabled</li>
+</ul>
+<h3 id="4-examples">4. Examples</h3>
+<p>Created two comprehensive examples:</p>
+<h4 id="simple_show_imagers">simple_show_image.rs</h4>
+<ul>
+<li>Basic usage demonstration</li>
+<li>Creates a simple test pattern with red square and blue border</li>
+<li>Shows minimal code required to display an image</li>
+</ul>
+<h4 id="window_display_examplers">window_display_example.rs</h4>
+<ul>
+<li>Comprehensive demonstration of all features</li>
+<li>Color gradient generation</li>
+<li>Grayscale radial gradient</li>
+<li>Checkerboard pattern</li>
+<li>Optional file loading if test.jpg exists</li>
+</ul>
+<h3 id="5-documentation">5. Documentation</h3>
+<h4 id="docswindow_displaymd">docs/window_display.md</h4>
+<p>Complete API documentation including:
+- Feature requirements
+- API reference for all functions
+- Complete examples
+- Error handling guide
+- Comparison with OpenCV
+- Limitations and advanced usage
+- Troubleshooting guide</p>
+<h4 id="readmemd-updates">README.md Updates</h4>
+<ul>
+<li>Added <code>window</code> feature to Feature Flags section</li>
+<li>Added "Displaying Images in Windows" usage section with example</li>
+<li>Included Cargo.toml configuration instructions</li>
+</ul>
+<h4 id="examplesreadmemd-updates">examples/README.md Updates</h4>
+<ul>
+<li>Added "Window Display (GUI)" section</li>
+<li>Documented both examples with usage instructions</li>
+<li>Added feature flags section</li>
+<li>Updated troubleshooting with window-specific issues</li>
+</ul>
+<h2 id="usage">Usage</h2>
+<h3 id="enable-the-feature">Enable the Feature</h3>
+<p>Add to your <code>Cargo.toml</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">[dependencies]</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">cv-rusty</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s2">&quot;0.3.0&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">features</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;window&quot;</span><span class="p">]</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<h3 id="basic-example">Basic Example</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">use</span><span class="w"> </span><span class="n">cv_rusty</span><span class="p">::{</span><span class="n">Matrix3</span><span class="p">,</span><span class="w"> </span><span class="n">Matrix1</span><span class="p">,</span><span class="w"> </span><span class="n">show_image</span><span class="p">};</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="k">fn</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">Result</span><span class="o">&lt;</span><span class="p">(),</span><span class="w"> </span><span class="nb">Box</span><span class="o">&lt;</span><span class="k">dyn</span><span class="w"> </span><span class="n">std</span><span class="p">::</span><span class="n">error</span><span class="p">::</span><span class="n">Error</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="c1">// Works with color images</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">color_image</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Matrix3</span><span class="p">::</span><span class="n">zeros</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span><span class="w"> </span><span class="mi">300</span><span class="p">);</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">    </span><span class="c1">// Draw something</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">100</span><span class="o">..</span><span class="mi">200</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">150</span><span class="o">..</span><span class="mi">250</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">            </span><span class="n">color_image</span><span class="p">.</span><span class="n">set_pixel</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="mi">255</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="w">    </span><span class="c1">// Display the color image</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="w">    </span><span class="n">show_image</span><span class="p">(</span><span class="s">&quot;My Window&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">color_image</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="w">    </span><span class="c1">// Also works with grayscale images</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">gray_image</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Matrix1</span><span class="p">::</span><span class="n">zeros</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span><span class="w"> </span><span class="mi">300</span><span class="p">);</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="w">    </span><span class="n">show_image</span><span class="p">(</span><span class="s">&quot;Grayscale&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">gray_image</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="w">    </span><span class="nb">Ok</span><span class="p">(())</span>
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="p">}</span>
+</code></pre></div>
+<h3 id="run-examples">Run Examples</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Simple example</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>cargo<span class="w"> </span>run<span class="w"> </span>--example<span class="w"> </span>simple_show_image<span class="w"> </span>--features<span class="w"> </span>window
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1"># Comprehensive example</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>cargo<span class="w"> </span>run<span class="w"> </span>--example<span class="w"> </span>window_display_example<span class="w"> </span>--features<span class="w"> </span>window
+</code></pre></div>
+<h2 id="technical-details">Technical Details</h2>
+<h3 id="image-format-conversion">Image Format Conversion</h3>
+<ul>
+<li><strong>Matrix3 (RGB)</strong>: Converts <code>[R, G, B, R, G, B, ...]</code> to minifb's <code>0x00RRGGBB</code> format</li>
+<li><strong>Matrix1 (Grayscale)</strong>: Converts single channel to RGB by duplicating value: <code>gray -&gt; (gray, gray, gray)</code></li>
+</ul>
+<h3 id="window-behavior">Window Behavior</h3>
+<ul>
+<li>Each window blocks execution until closed</li>
+<li>Windows run at maximum 60 FPS</li>
+<li>ESC key or window close button exits the display</li>
+<li>Sequential display model (not concurrent like OpenCV)</li>
+</ul>
+<h3 id="dependencies">Dependencies</h3>
+<ul>
+<li><code>minifb</code> v0.27: Lightweight cross-platform windowing library</li>
+<li>Requires GUI support (not available in headless environments)</li>
+</ul>
+<h2 id="design-decisions">Design Decisions</h2>
+<h3 id="why-minifb">Why minifb?</h3>
+<ul>
+<li>Lightweight and cross-platform</li>
+<li>Simple API that matches well with our use case</li>
+<li>No complex dependencies</li>
+<li>Works directly with RGB buffers</li>
+</ul>
+<h3 id="optional-feature">Optional Feature</h3>
+<p>Made it an optional feature because:
+- Maintains <code>no_std</code> compatibility for core library
+- Doesn't add GUI dependencies for embedded/server use cases
+- Users can opt-in only when needed</p>
+<h3 id="api-design">API Design</h3>
+<p>Simple, intuitive API:
+- Unified function name (<code>show_image</code>) works with all image types
+- Uses Rust's trait system (<code>Displayable</code> trait) for type safety and extensibility
+- Blocking API for easy usage
+- Window name as first parameter
+- Error handling with Result types (more Rust-idiomatic than OpenCV)</p>
+<h2 id="limitations">Limitations</h2>
+<ol>
+<li><strong>Sequential Windows</strong>: Each <code>show_image</code> call blocks until window is closed</li>
+<li><strong>Simplified wait_key</strong>: Just sleeps, doesn't return key codes</li>
+<li><strong>No Window Management</strong>: Cannot programmatically resize, move, or destroy windows</li>
+<li><strong>Requires GUI</strong>: Not usable in headless environments</li>
+</ol>
+<h2 id="future-enhancements-potential">Future Enhancements (Potential)</h2>
+<ul>
+<li>Non-blocking window display with concurrent windows</li>
+<li>Full keyboard event handling in wait_key</li>
+<li>Mouse event callbacks</li>
+<li>Window resize handling</li>
+<li>Zoom and pan controls</li>
+<li>Pixel value display on hover</li>
+<li>Save displayed image functionality</li>
+</ul>
+<h2 id="testing">Testing</h2>
+<ul>
+<li>Compiles successfully with <code>--features window</code></li>
+<li>Compiles successfully without window feature (no dependency added)</li>
+<li>All existing tests pass</li>
+<li>Examples compile and run correctly</li>
+<li>No breaking changes to existing API</li>
+</ul>
+<h2 id="compatibility">Compatibility</h2>
+<ul>
+<li>Requires Rust 2021 edition</li>
+<li>Works on Windows, macOS, and Linux</li>
+<li>GUI support required at runtime</li>
+<li>Compatible with all existing cv-rusty features</li>
+</ul>
 
 
 
