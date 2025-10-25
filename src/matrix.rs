@@ -11,7 +11,7 @@ use core::fmt;
 
 /// A single-channel matrix for representing grayscale image data.
 ///
-/// The data is stored in a contiguous Vec<u8> in row-major order.
+/// The data is stored in a contiguous `Vec<u8>` in row-major order.
 #[derive(Debug, Clone)]
 pub struct Matrix1 {
     /// Width of the matrix (number of columns)
@@ -24,7 +24,7 @@ pub struct Matrix1 {
 
 /// A three-channel matrix for representing RGB image data.
 ///
-/// The data is stored in a contiguous Vec<u8> in row-major order,
+/// The data is stored in a contiguous `Vec<u8>` in row-major order,
 /// with channels interleaved (RGBRGBRGB...).
 #[derive(Debug, Clone)]
 pub struct Matrix3 {
