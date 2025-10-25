@@ -284,8 +284,8 @@ write_png(&image, "output.png")?;
 - [x] Separable convolution for efficiency
 - [x] Parallel processing support with Rayon
 - [x] Built-in convolution kernels (Gaussian, Sobel, Laplacian, etc.)
+- [x] Basic image operations (resize, crop, rotate)
 - [ ] Additional color space conversions (RGB ↔ YUV, YCbCr)
-- [ ] Basic image operations (resize, crop, rotate)
 - [ ] Morphological operations (erosion, dilation)
 - [ ] Feature detection
 - [ ] SIMD optimizations

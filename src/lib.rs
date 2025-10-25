@@ -46,6 +46,7 @@ extern crate alloc;
 pub mod color;
 pub mod convolution;
 pub mod matrix;
+pub mod transform;
 
 #[cfg(feature = "std")]
 pub mod io;
@@ -53,6 +54,7 @@ pub mod io;
 pub use color::{hsl_to_rgb, hsv_to_rgb, rgb_to_hsl, rgb_to_hsv, GrayscaleMethod};
 pub use convolution::{BorderMode, Kernel};
 pub use matrix::{Matrix1, Matrix3};
+pub use transform::{InterpolationMethod, Rotation, RotationAngle};
 
 #[cfg(feature = "std")]
 pub use io::{read_jpeg, read_png, write_jpeg, write_png};

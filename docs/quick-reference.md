@@ -86,6 +86,104 @@ for pixel in data.iter_mut() {
 }
 ```
 
+## Image Transformations
+
+### Resize
+
+```rust
+use cv_rusty::{Matrix3, InterpolationMethod};
+
+// Resize with bilinear interpolation (recommended)
+let resized = image.resize(320, 240, InterpolationMethod::Bilinear);
+
+// Resize with nearest neighbor (faster, lower quality)
+let resized = image.resize(320, 240, InterpolationMethod::NearestNeighbor);
+
+// Upscale
+let enlarged = image.resize(1280, 720, InterpolationMethod::Bilinear);
+
+// Downscale
+let thumbnail = image.resize(80, 60, InterpolationMethod::Bilinear);
+```
+
+### Crop
+
+```rust
+// Crop region: (x, y, width, height)
+let cropped = image.crop(100, 100, 200, 200).unwrap();
+
+// Center crop
+let (w, h) = image.dimensions();
+let crop_w = 400;
+let crop_h = 300;
+let x = (w - crop_w) / 2;
+let y = (h - crop_h) / 2;
+let center_crop = image.crop(x, y, crop_w, crop_h).unwrap();
+
+// Handle errors
+match image.crop(50, 50, 200, 200) {
+    Some(cropped) => println!("Crop successful"),
+    None => println!("Invalid crop region"),
+}
+```
+
+### Rotate
+
+```rust
+use cv_rusty::{RotationAngle, Rotation, InterpolationMethod};
+
+// Rotate 90 degrees clockwise (fast, lossless)
+let rotated = image.rotate(RotationAngle::Rotate90);
+
+// Rotate 180 degrees (fast, lossless)
+let flipped = image.rotate(RotationAngle::Rotate180);
+
+// Rotate 270 degrees clockwise (fast, lossless)
+let rotated_ccw = image.rotate(RotationAngle::Rotate270);
+
+// Rotate by arbitrary angle with degrees
+let rotated_45 = image.rotate_custom(
+    Rotation::Degrees(45.0),
+    InterpolationMethod::Bilinear
+);
+
+// Rotate by arbitrary angle with radians
+let rotated_pi4 = image.rotate_custom(
+    Rotation::Radians(std::f32::consts::PI / 4.0),
+    InterpolationMethod::Bilinear
+);
+
+// Counter-clockwise rotation with negative angle
+let rotated_ccw = image.rotate_custom(
+    Rotation::Degrees(-30.0),
+    InterpolationMethod::Bilinear
+);
+
+// Fast nearest neighbor for arbitrary angles
+let rotated_fast = image.rotate_custom(
+    Rotation::Degrees(15.0),
+    InterpolationMethod::NearestNeighbor
+);
+```
+
+### Chaining Transformations
+
+```rust
+// Create a thumbnail: crop center, resize, and rotate
+let thumbnail = image
+    .crop(100, 100, 400, 300)
+    .unwrap()
+    .resize(200, 150, InterpolationMethod::Bilinear)
+    .rotate(RotationAngle::Rotate90);
+
+// Process and save
+let processed = image
+    .resize(640, 480, InterpolationMethod::Bilinear)
+    .crop(50, 50, 500, 350)
+    .unwrap();
+write_jpeg(&processed, "output.jpg", 90)?;
+```
+
 ## Common Patterns
 
 ### Brightness Adjustment

@@ -9,6 +9,8 @@ nav:
       - Color Conversion: guides/color-conversion-guide.md
       - Convolution: guides/convolution.md
       - Image Writing: guides/image-writing.md
+      - Transform Operations: guides/transform_operations.md
+      - Custom Rotation: guides/custom_rotation.md
   - Architecture:
       - Overview: architecture/architecture.md
       - Embedded Systems: architecture/embedded.md
