@@ -20,6 +20,7 @@ cv-rusty = { version = "0.1.0", default-features = false }
 |---------|-------------|---------|
 | `std` | Standard library support + file I/O | ✓ |
 | `alloc` | Heap allocation (required for core) | - |
+| `window` | GUI window display support | - |
 
 ## Basic Operations
 
@@ -253,6 +254,158 @@ fn extract_red_channel(image: &Matrix3) -> Matrix3 {
 }
 ```
 
+## Window Display API (requires `window` feature)
+
+### Enable Feature
+
+```toml
+[dependencies]
+cv-rusty = { version = "0.3.0", features = ["window"] }
+```
+
+### Import
+
+```rust
+use cv_rusty::{show_image, show_and_wait, wait_key, Displayable, WindowError};
+```
+
+### Display Images (Works with Matrix1 and Matrix3)
+
+```rust
+use cv_rusty::{Matrix1, Matrix3, show_image};
+
+// Display a color image
+let color_image = Matrix3::zeros(640, 480);
+show_image("Color Window", &color_image)?;
+
+// Display a grayscale image
+let gray_image = Matrix1::zeros(640, 480);
+show_image("Grayscale Window", &gray_image)?;
+```
+
+### Display and Wait Functions
+
+```rust
+// Display image and wait for user to close (works with any image type)
+show_and_wait("My Window", &image)?;
+
+// Wait for specified milliseconds
+wait_key(1000); // Wait 1 second
+wait_key(0);    // Wait indefinitely
+```
+
+### Window Error Types
+
+```rust
+pub enum WindowError {
+    WindowCreation(String),  // Failed to create/update window
+    InvalidDimensions,       // Image has zero width or height
+}
+```
+
+### Complete Window Example
+
+```rust
+use cv_rusty::{Matrix3, show_image, read_jpeg};
+
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    // Load image
+    let image = read_jpeg("input.jpg")?;
+    
+    // Display image
+    show_image("My Image", &image)?;
+    
+    Ok(())
+}
+```
+
+### Keyboard Controls
+
+| Key | Action |
+|-----|--------|
+| ESC | Close window |
+| Window X button | Close window |
+
+### Display Multiple Images Sequentially
+
+```rust
+show_image("Image 1", &image1)?;  // Shows, waits until closed
+show_image("Image 2", &image2)?;  // Then shows next
+show_image("Image 3", &image3)?;  // And so on...
+```
+
+### Display with Error Handling
+
+```rust
+match show_image("Window", &image) {
+    Ok(_) => println!("Displayed successfully"),
+    Err(WindowError::InvalidDimensions) => {
+        eprintln!("Invalid image dimensions");
+    }
+    Err(WindowError::WindowCreation(msg)) => {
+        eprintln!("Window error: {}", msg);
+    }
+}
+```
+
+### Display Processed Image
+
+```rust
+// Original
+let image = read_jpeg("input.jpg")?;
+show_image("Original", &image)?;
+
+// Apply processing
+let kernel = Kernel::gaussian(5, 1.0);
+let blurred = image.convolve(&kernel, BorderMode::Replicate);
+show_image("Blurred", &blurred)?;
+```
+
+### Create and Display Test Pattern
+
+```rust
+let mut image = Matrix3::zeros(400, 300);
+
+// Draw red square
+for y in 100..200 {
+    for x in 150..250 {
+        image.set_pixel(x, y, 255, 0, 0);
+    }
+}
+
+show_image("Test Pattern", &image)?;
+```
+
+### Display Both Color and Grayscale
+
+```rust
+// Single function works for both types
+let color_image = Matrix3::zeros(640, 480);
+let gray_image = Matrix1::zeros(640, 480);
+
+show_image("Color", &color_image)?;
+show_image("Grayscale", &gray_image)?;
+```
+
+### Run Window Examples
+
+```bash
+# Simple example
+cargo run --example simple_show_image --features window
+
+# Comprehensive example  
+cargo run --example window_display_example --features window
+```
+
+### Window Display Notes
+
+- Windows are displayed sequentially (blocking)
+- Each window runs at maximum 60 FPS
+- Requires GUI support (not for headless environments)
+- Single `show_image()` function works with both color and grayscale images
+- Uses Rust's trait system (`Displayable` trait) for type safety
+- Image data format: RGB for Matrix3, grayscale for Matrix1
+
 ## Error Handling
 
 ### With Match
@@ -346,6 +499,9 @@ Formula: `width × height × 3 bytes + 24 bytes overhead`
 # Build with std (default)
 cargo build
 
+# Build with window feature
+cargo build --features window
+
 # Build for no_std
 cargo build --no-default-features
 
@@ -356,6 +512,8 @@ cargo test
 cargo run --example read_jpeg_example image.jpg
 cargo run --example read_png_example image.png
 cargo run --example no_std_example
+cargo run --example simple_show_image --features window
+cargo run --example window_display_example --features window
 ```
 
 ## Documentation

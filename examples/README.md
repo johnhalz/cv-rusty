@@ -90,6 +90,39 @@ Creates test patterns and writes them as JPEG and PNG.
 cargo run --example write_image_example
 ```
 
+### Image Transformations
+
+#### Transform Demo
+Demonstrates image rotation and transformation operations.
+
+```bash
+cargo run --example transform_demo
+```
+
+### Window Display (GUI)
+
+#### Simple show_image
+Demonstrates basic image display in a window.
+
+```bash
+cargo run --example simple_show_image --features window
+```
+
+This example creates a simple test pattern with a red square and blue border, then displays it in a window. Press ESC or close the window to exit.
+
+#### Window Display Example
+Comprehensive example showing various window display capabilities:
+- Color gradient images
+- Grayscale radial gradients
+- Checkerboard patterns
+- Loading and displaying images from files
+
+```bash
+cargo run --example window_display_example --features window
+```
+
+**Note**: The window feature requires GUI support and is not available in headless environments.
+
 ### No-std Example
 
 #### No-std Example
@@ -137,21 +170,45 @@ The convolution examples will demonstrate various effects:
 ## Creating Your Own Examples
 
 ```rust
-use cv_rusty::{read_jpeg, write_jpeg, Kernel, BorderMode};
+use cv_rusty::{read_jpeg, write_jpeg, show_image, Kernel, BorderMode};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Load image
     let image = read_jpeg("input.jpg")?;
     
+    // Display original
+    show_image("Original", &image)?;
+    
     // Apply Gaussian blur
     let kernel = Kernel::gaussian(5, 1.0);
     let blurred = image.convolve(&kernel, BorderMode::Replicate);
     
-    // Save result
+    // Display and save result
+    show_image("Blurred", &blurred)?;
     write_jpeg(&blurred, "output.jpg", 90)?;
     
     Ok(())
 }
+```
+
+## Features
+
+The library supports several optional features:
+
+- `std` (default): Standard library support with file I/O
+- `parallel` (default): Parallel processing using rayon
+- `window`: GUI window support for displaying images
+
+To use specific features:
+```bash
+# With window display
+cargo run --example simple_show_image --features window
+
+# Without parallel processing
+cargo run --example convolution_demo --no-default-features --features std
+
+# All features
+cargo run --example window_display_example --all-features
 ```
 
 ## Troubleshooting
@@ -160,6 +217,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 - Make sure `input.jpg` or `input.png` exists in the examples directory
 - Check file permissions
 - Verify the image format is valid
+
+### "This example requires the 'window' feature"
+- Add `--features window` to your cargo command
+- Example: `cargo run --example simple_imshow --features window`
+- Window feature requires GUI support (not available in headless environments)
 
 ### Slow performance
 - Use `--release` mode
