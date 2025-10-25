@@ -15,7 +15,8 @@ Full documentation is available at: **[https://johnhalz.github.io/cv-rusty/](htt
 - **Separable Convolution**: Optimized implementation for separable kernels (significantly faster for large kernels)
 - **Parallel Processing**: Optional multi-threaded processing using Rayon (requires `parallel` feature)
 - **Color Space Conversions**: Convert between RGB, HSV, and HSL color spaces; convert RGB to grayscale with multiple algorithms
-- **Image I/O**: Built-in support for reading and writing JPEG and PNG images with automatic format conversion (requires `std` feature)
+- **Image Transformations**: Resize, crop, and rotate operations with multiple interpolation methods
+- **Image I/O**: Built-in support for reading and writing JPEG and PNG images with automatic format conversion (requires `std` feature)</parameter>
 - **Format Support**: Handles RGB24, Grayscale (L8), and CMYK32 JPEG formats; RGB, RGBA, Grayscale, and Grayscale+Alpha PNG formats
 - **Safe API**: Bounds-checked pixel access with ergonomic error handling
 - **Embedded Ready**: Perfect for resource-constrained environments and real-time systems
@@ -108,7 +109,42 @@ let (r, g, b) = hsl_to_rgb(30.0, 1.0, 0.5); // Orange
 println!("RGB: ({}, {}, {})", r, g, b);
 ```
 
-### Converting RGB to Grayscale (`no_std` compatible)
+### Image Transformations (`no_std` compatible)
+
+```rust
+use cv_rusty::{Matrix3, InterpolationMethod, Rotation, RotationAngle};
+
+// Load or create an image
+let image = Matrix3::zeros(640, 480);
+
+// Resize image with different interpolation methods
+let resized_nn = image.resize(320, 240, InterpolationMethod::NearestNeighbor);
+let resized_bilinear = image.resize(320, 240, InterpolationMethod::Bilinear);
+
+// Crop a region (x, y, width, height)
+let cropped = image.crop(100, 100, 200, 200).unwrap();
+
+// Rotate image by 90-degree increments (fast, lossless)
+let rotated_90 = image.rotate(RotationAngle::Rotate90);
+let rotated_180 = image.rotate(RotationAngle::Rotate180);
+let rotated_270 = image.rotate(RotationAngle::Rotate270);
+
+// Rotate by arbitrary angle with interpolation
+let rotated_45 = image.rotate_custom(Rotation::Degrees(45.0), InterpolationMethod::Bilinear);
+let rotated_pi4 = image.rotate_custom(Rotation::Radians(std::f32::consts::PI / 4.0), InterpolationMethod::Bilinear);
+
+// Negative angles for counter-clockwise rotation
+let rotated_ccw = image.rotate_custom(Rotation::Degrees(-30.0), InterpolationMethod::Bilinear);
+
+// Chain operations
+let thumbnail = image
+    .crop(50, 50, 400, 300)
+    .unwrap()
+    .resize(200, 150, InterpolationMethod::Bilinear)
+    .rotate(RotationAngle::Rotate90);
+```
+
+### Converting RGB to Grayscale (`no_std` compatible)</parameter>
 
 ```rust
 use cv_rusty::{Matrix3, Matrix1, GrayscaleMethod};
@@ -317,6 +353,12 @@ Demonstrate color space conversions:
 cargo run --example color_conversion_example
 ```
 
+Demonstrate image transformations (resize, crop, rotate):
+
+```bash
+cargo run --release --example transform_demo
+```
+
 ### Convolution Examples
 
 Apply various convolution filters to an image:
@@ -366,6 +408,10 @@ A three-channel matrix for representing RGB image data.
 - `to_grayscale_average()` - Convert to grayscale using average method
 - `to_grayscale_lightness()` - Convert to grayscale using lightness method
 - `to_grayscale_with_method(method)` - Convert to grayscale with specified method
+- `resize(width, height, method)` - Resize image with interpolation
+- `crop(x, y, width, height)` - Crop image to specified region
+- `rotate(angle)` - Rotate image by 90, 180, or 270 degrees (fast, lossless)
+- `rotate_custom(angle, method)` - Rotate image by arbitrary angle with interpolation
 
 ### `Matrix1`
 
@@ -380,6 +426,10 @@ A single-channel matrix for representing grayscale image data.
 - `data()`, `data_mut()` - Access raw pixel data
 - `convolve(kernel, border_mode)` - Apply 2D convolution
 - `convolve_separable(kernel_x, kernel_y, border_mode)` - Apply separable convolution
+- `resize(width, height, method)` - Resize image with interpolation
+- `crop(x, y, width, height)` - Crop image to specified region
+- `rotate(angle)` - Rotate image by 90, 180, or 270 degrees (fast, lossless)
+- `rotate_custom(angle, method)` - Rotate image by arbitrary angle with interpolation
 
 **Note:** Matrix3 has the same convolution methods, which apply the kernel independently to each RGB channel.
 
@@ -418,6 +468,47 @@ Specifies how to handle pixels outside the image boundaries during convolution.
 - `BorderMode::Replicate` - Replicate edge pixels (recommended)
 - `BorderMode::Reflect` - Reflect across the edge
 - `BorderMode::Wrap` - Wrap around to opposite edge
+
+### `InterpolationMethod`
+
+Interpolation method for resizing operations.
+
+**Methods:**
+- `InterpolationMethod::NearestNeighbor` - Fastest, lowest quality (good for pixel art)
+- `InterpolationMethod::Bilinear` - Good balance of speed and quality (recommended)
+
+### `RotationAngle`
+
+Rotation angle in 90-degree increments (fast, lossless).
+
+**Angles:**
+- `RotationAngle::Rotate90` - Rotate 90 degrees clockwise
+- `RotationAngle::Rotate180` - Rotate 180 degrees
+- `RotationAngle::Rotate270` - Rotate 270 degrees clockwise (90 degrees counter-clockwise)
+
+### `Rotation`
+
+Arbitrary rotation angle for custom rotation with interpolation.
+
+**Units:**
+- `Rotation::Degrees(angle)` - Rotation in degrees (e.g., `Rotation::Degrees(45.0)`)
+- `Rotation::Radians(angle)` - Rotation in radians (e.g., `Rotation::Radians(PI / 4.0)`)
+
+**Methods:**
+- `to_radians()` - Convert to radians
+- `to_degrees()` - Convert to degrees
+
+**Examples:**
+```rust
+// Rotate 45 degrees clockwise
+let rotated = image.rotate_custom(Rotation::Degrees(45.0), InterpolationMethod::Bilinear);
+
+// Rotate PI/6 radians (30 degrees)
+let rotated = image.rotate_custom(Rotation::Radians(std::f32::consts::PI / 6.0), InterpolationMethod::Bilinear);
+
+// Counter-clockwise rotation with negative angle
+let rotated = image.rotate_custom(Rotation::Degrees(-22.5), InterpolationMethod::Bilinear);
+```
 
 ### Color Space Conversion Functions
 
@@ -535,9 +626,9 @@ The convolution implementation is highly optimized:
 - [x] Separable convolution for efficiency
 - [x] Parallel processing support with Rayon
 - [x] Built-in convolution kernels (Gaussian, Sobel, Laplacian, etc.)
+- [x] Basic image operations (resize, crop, rotate)
 - [ ] Additional color space conversions (RGB ↔ YUV, YCbCr)
-- [ ] Basic image operations (resize, crop, rotate)
-- [ ] Morphological operations (erosion, dilation)
+- [ ] Morphological operations (erosion, dilation)</parameter>
 - [ ] Feature detection
 - [ ] SIMD optimizations
 

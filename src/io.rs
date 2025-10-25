@@ -105,7 +105,7 @@ pub fn read_jpeg<P: AsRef<Path>>(path: P) -> Result<Matrix3, ImageError> {
         }
         PixelFormat::CMYK32 => {
             // CMYK - convert to RGB
-            let mut rgb = Vec::with_capacity((width * height * 3) as usize);
+            let mut rgb = Vec::with_capacity(width * height * 3);
             for chunk in pixels.chunks_exact(4) {
                 let c = chunk[0] as f32 / 255.0;
                 let m = chunk[1] as f32 / 255.0;

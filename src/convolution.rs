@@ -186,8 +186,8 @@ impl Matrix1 {
                 .into_par_iter()
                 .flat_map(|y| {
                     let mut row = vec![0u8; width];
-                    for x in 0..width {
-                        row[x] = self.convolve_pixel(
+                    for (x, pixel) in row.iter_mut().enumerate() {
+                        *pixel = self.convolve_pixel(
                             x as i32,
                             y as i32,
                             kernel,
@@ -248,7 +248,7 @@ impl Matrix1 {
         }
 
         // Clamp to valid u8 range
-        sum.max(0.0).min(255.0) as u8
+        sum.clamp(0.0, 255.0) as u8
     }
 
     /// Gets a pixel value with border handling.
@@ -323,7 +323,7 @@ impl Matrix1 {
                 .into_par_iter()
                 .flat_map(|y| {
                     let mut row = vec![0u8; width];
-                    for x in 0..width {
+                    for (x, pixel) in row.iter_mut().enumerate() {
                         let mut sum = 0.0f32;
                         for k in 0..kernel.len() as i32 {
                             let img_x = x as i32 + k - k_half;
@@ -331,7 +331,7 @@ impl Matrix1 {
                                 self.get_pixel_with_border(img_x, y as i32, border_mode);
                             sum += pixel_value as f32 * kernel[k as usize];
                         }
-                        row[x] = sum.max(0.0).min(255.0) as u8;
+                        *pixel = sum.clamp(0.0, 255.0) as u8;
                     }
                     row
                 })
@@ -369,7 +369,7 @@ impl Matrix1 {
                 .into_par_iter()
                 .flat_map(|y| {
                     let mut row = vec![0u8; width];
-                    for x in 0..width {
+                    for (x, pixel) in row.iter_mut().enumerate() {
                         let mut sum = 0.0f32;
                         for k in 0..kernel.len() as i32 {
                             let img_y = y as i32 + k - k_half;
@@ -377,7 +377,7 @@ impl Matrix1 {
                                 self.get_pixel_with_border(x as i32, img_y, border_mode);
                             sum += pixel_value as f32 * kernel[k as usize];
                         }
-                        row[x] = sum.max(0.0).min(255.0) as u8;
+                        *pixel = sum.clamp(0.0, 255.0) as u8;
                     }
                     row
                 })
@@ -500,9 +500,9 @@ impl Matrix3 {
 
         // Clamp to valid u8 range
         (
-            sum_r.max(0.0).min(255.0) as u8,
-            sum_g.max(0.0).min(255.0) as u8,
-            sum_b.max(0.0).min(255.0) as u8,
+            sum_r.clamp(0.0, 255.0) as u8,
+            sum_g.clamp(0.0, 255.0) as u8,
+            sum_b.clamp(0.0, 255.0) as u8,
         )
     }
 
@@ -591,9 +591,9 @@ impl Matrix3 {
                             sum_g += g as f32 * kval;
                             sum_b += b as f32 * kval;
                         }
-                        row[x * 3] = sum_r.max(0.0).min(255.0) as u8;
-                        row[x * 3 + 1] = sum_g.max(0.0).min(255.0) as u8;
-                        row[x * 3 + 2] = sum_b.max(0.0).min(255.0) as u8;
+                        row[x * 3] = sum_r.clamp(0.0, 255.0) as u8;
+                        row[x * 3 + 1] = sum_g.clamp(0.0, 255.0) as u8;
+                        row[x * 3 + 2] = sum_b.clamp(0.0, 255.0) as u8;
                     }
                     row
                 })
@@ -655,9 +655,9 @@ impl Matrix3 {
                             sum_g += g as f32 * kval;
                             sum_b += b as f32 * kval;
                         }
-                        row[x * 3] = sum_r.max(0.0).min(255.0) as u8;
-                        row[x * 3 + 1] = sum_g.max(0.0).min(255.0) as u8;
-                        row[x * 3 + 2] = sum_b.max(0.0).min(255.0) as u8;
+                        row[x * 3] = sum_r.clamp(0.0, 255.0) as u8;
+                        row[x * 3 + 1] = sum_g.clamp(0.0, 255.0) as u8;
+                        row[x * 3 + 2] = sum_b.clamp(0.0, 255.0) as u8;
                     }
                     row
                 })
