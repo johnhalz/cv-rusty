@@ -8,12 +8,14 @@ jpeg-decoder = { version = "0.3", optional = true }
 jpeg-encoder = { version = "0.6", optional = true }
 png = { version = "0.17", optional = true }
 rayon = { version = "1.8", optional = true }
+minifb = { version = "0.27", optional = true }
 libm = "0.2"
 
 [features]
 default = ["std", "parallel"]
 std = ["jpeg-decoder", "jpeg-encoder", "png"]
 parallel = ["std", "rayon"]
+window = ["std", "minifb"]
 alloc = []
 
 [lib]

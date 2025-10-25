@@ -51,6 +51,9 @@ pub mod transform;
 #[cfg(feature = "std")]
 pub mod io;
 
+#[cfg(feature = "window")]
+pub mod window;
+
 pub use color::{hsl_to_rgb, hsv_to_rgb, rgb_to_hsl, rgb_to_hsv, GrayscaleMethod};
 pub use convolution::{BorderMode, Kernel};
 pub use matrix::{Matrix1, Matrix3};
@@ -58,3 +61,6 @@ pub use transform::{InterpolationMethod, Rotation, RotationAngle};
 
 #[cfg(feature = "std")]
 pub use io::{read_jpeg, read_png, write_jpeg, write_png};
+
+#[cfg(feature = "window")]
+pub use window::{imshow, imshow_color, show_and_wait, show_and_wait_gray, wait_key, WindowError};
