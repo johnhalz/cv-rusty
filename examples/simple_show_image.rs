@@ -1,9 +1,9 @@
-//! Simple example showing basic imshow usage similar to OpenCV.
+//! Simple example showing basic image display usage.
 //!
-//! Run with: cargo run --example simple_imshow --features window
+//! Run with: cargo run --example simple_show_image --features window
 
 #[cfg(feature = "window")]
-use cv_rusty::{imshow_color, Matrix3};
+use cv_rusty::{show_image, Matrix3};
 
 #[cfg(feature = "window")]
 fn main() {
@@ -29,13 +29,13 @@ fn main() {
         image.set_pixel(width - 1, y, 0, 0, 255); // Right border
     }
 
-    // Display the image (like OpenCV's imshow)
+    // Display the image
     println!("Displaying image. Press ESC or close window to exit.");
-    imshow_color("Simple Image", &image).expect("Failed to display image");
+    show_image("Simple Image", &image).expect("Failed to display image");
 }
 
 #[cfg(not(feature = "window"))]
 fn main() {
     eprintln!("This example requires the 'window' feature.");
-    eprintln!("Run with: cargo run --example simple_imshow --features window");
+    eprintln!("Run with: cargo run --example simple_show_image --features window");
 }

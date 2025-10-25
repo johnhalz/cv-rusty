@@ -1,15 +1,15 @@
-//! Example demonstrating window display functionality similar to OpenCV's imshow.
+//! Example demonstrating window display functionality.
 //!
 //! This example shows how to:
 //! - Create and display color images (Matrix3)
 //! - Create and display grayscale images (Matrix1)
-//! - Use imshow_color and imshow functions
+//! - Use show_image_color and show_image functions
 //! - Load and display images from files
 //!
 //! Run with: cargo run --example window_display_example --features window
 
 #[cfg(feature = "window")]
-use cv_rusty::{imshow, imshow_color, Matrix1, Matrix3};
+use cv_rusty::{show_image, Matrix1, Matrix3};
 
 #[cfg(feature = "window")]
 fn main() {
@@ -33,7 +33,7 @@ fn main() {
     }
 
     println!("Displaying color image. Press ESC or close the window to continue...");
-    if let Err(e) = imshow_color("Color Gradient", &color_image) {
+    if let Err(e) = show_image("Color Gradient", &color_image) {
         eprintln!("Error displaying color image: {}", e);
     }
 
@@ -57,7 +57,7 @@ fn main() {
     }
 
     println!("Displaying grayscale image. Press ESC or close the window to continue...");
-    if let Err(e) = imshow("Grayscale Radial Gradient", &gray_image) {
+    if let Err(e) = show_image("Grayscale Radial Gradient", &gray_image) {
         eprintln!("Error displaying grayscale image: {}", e);
     }
 
@@ -75,7 +75,7 @@ fn main() {
     }
 
     println!("Displaying checkerboard. Press ESC or close the window to continue...");
-    if let Err(e) = imshow_color("Checkerboard", &checkerboard) {
+    if let Err(e) = show_image("Checkerboard", &checkerboard) {
         eprintln!("Error displaying checkerboard: {}", e);
     }
 
@@ -91,7 +91,7 @@ fn main() {
                 Ok(image) => {
                     println!("Loaded image: {}x{}", image.width(), image.height());
                     println!("Press ESC or close the window to exit...");
-                    if let Err(e) = imshow_color("test.jpg", &image) {
+                    if let Err(e) = show_image("test.jpg", &image) {
                         eprintln!("Error displaying image: {}", e);
                     }
                 }

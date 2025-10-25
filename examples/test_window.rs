@@ -3,7 +3,7 @@
 //! Run with: cargo run --example test_window --features window
 
 #[cfg(feature = "window")]
-use cv_rusty::{imshow_color, Matrix3};
+use cv_rusty::{show_image, Matrix3};
 
 #[cfg(feature = "window")]
 fn main() {
@@ -59,7 +59,7 @@ fn main() {
     println!();
     println!("Press ESC or close the window to exit.");
 
-    match imshow_color("Window Test - Should see 4 colored squares", &image) {
+    match show_image("Window Test - Should see 4 colored squares", &image) {
         Ok(_) => println!("\nWindow closed successfully!"),
         Err(e) => eprintln!("\nError displaying window: {}", e),
     }

@@ -1,16 +1,20 @@
 //! Window display module for showing images in GUI windows.
 //!
-//! This module provides functionality similar to OpenCV's `imshow` and `waitKey`
-//! for displaying images in windows. It requires the `window` feature to be enabled.
+//! This module provides functionality for displaying images in GUI windows.
+//! It requires the `window` feature to be enabled.
 //!
 //! # Examples
 //!
 //! ```no_run
-//! use cv_rusty::{Matrix3, imshow, wait_key};
+//! use cv_rusty::{Matrix3, Matrix1, show_image};
 //!
-//! let image = Matrix3::zeros(640, 480);
-//! imshow("My Window", &image).expect("Failed to display image");
-//! wait_key(0); // Wait indefinitely for a key press
+//! // Works with color images
+//! let color_image = Matrix3::zeros(640, 480);
+//! show_image("Color Window", &color_image).expect("Failed to display image");
+//!
+//! // Works with grayscale images
+//! let gray_image = Matrix1::zeros(640, 480);
+//! show_image("Grayscale Window", &gray_image).expect("Failed to display image");
 //! ```
 
 use crate::{Matrix1, Matrix3};
@@ -39,61 +43,75 @@ impl fmt::Display for WindowError {
 
 impl Error for WindowError {}
 
-/// Displays a grayscale image (Matrix1) in a window.
+/// Trait for types that can be displayed in a window.
 ///
-/// Similar to OpenCV's `imshow`, this function creates or updates a window with the given name
-/// and displays the image. The window will remain open until closed by the user or until
-/// `wait_key` is called.
-///
-/// # Arguments
-///
-/// * `window_name` - The name of the window to create or update
-/// * `image` - The grayscale image to display
-///
-/// # Returns
-///
-/// Returns `Ok(())` if the image was displayed successfully, or a `WindowError` if the operation failed.
-///
-/// # Examples
-///
-/// ```no_run
-/// use cv_rusty::{Matrix1, imshow};
-///
-/// let image = Matrix1::zeros(640, 480);
-/// imshow("Grayscale Image", &image).expect("Failed to display image");
-/// ```
-pub fn imshow(window_name: &str, image: &Matrix1) -> Result<(), WindowError> {
-    let width = image.width();
-    let height = image.height();
-
-    if width == 0 || height == 0 {
-        return Err(WindowError::InvalidDimensions);
-    }
-
-    // Convert grayscale to RGB buffer (minifb expects u32 RGB format)
-    let buffer: Vec<u32> = image
-        .data()
-        .iter()
-        .map(|&pixel| {
-            // Convert grayscale to RGB: 0x00RRGGBB
-            let rgb = pixel as u32;
-            (rgb << 16) | (rgb << 8) | rgb
-        })
-        .collect();
-
-    display_buffer(window_name, &buffer, width, height)
+/// This trait is implemented for both `Matrix1` (grayscale) and `Matrix3` (color) images,
+/// allowing the `show_image` function to work with either type.
+pub trait Displayable {
+    /// Converts the image to a buffer format suitable for display.
+    ///
+    /// Returns a tuple of (buffer, width, height).
+    fn to_display_buffer(&self) -> Result<(Vec<u32>, usize, usize), WindowError>;
 }
 
-/// Displays a color image (Matrix3) in a window.
+impl Displayable for Matrix1 {
+    fn to_display_buffer(&self) -> Result<(Vec<u32>, usize, usize), WindowError> {
+        let width = self.width();
+        let height = self.height();
+
+        if width == 0 || height == 0 {
+            return Err(WindowError::InvalidDimensions);
+        }
+
+        // Convert grayscale to RGB buffer (minifb expects u32 RGB format: 0x00RRGGBB)
+        let buffer: Vec<u32> = self
+            .data()
+            .iter()
+            .map(|&pixel| {
+                let rgb = pixel as u32;
+                (rgb << 16) | (rgb << 8) | rgb
+            })
+            .collect();
+
+        Ok((buffer, width, height))
+    }
+}
+
+impl Displayable for Matrix3 {
+    fn to_display_buffer(&self) -> Result<(Vec<u32>, usize, usize), WindowError> {
+        let width = self.width();
+        let height = self.height();
+
+        if width == 0 || height == 0 {
+            return Err(WindowError::InvalidDimensions);
+        }
+
+        // Convert RGB to minifb's u32 format (0x00RRGGBB)
+        let buffer: Vec<u32> = self
+            .data()
+            .chunks_exact(3)
+            .map(|pixel| {
+                let r = pixel[0] as u32;
+                let g = pixel[1] as u32;
+                let b = pixel[2] as u32;
+                (r << 16) | (g << 8) | b
+            })
+            .collect();
+
+        Ok((buffer, width, height))
+    }
+}
+
+/// Displays an image in a window.
 ///
-/// Similar to OpenCV's `imshow`, this function creates or updates a window with the given name
-/// and displays the RGB image. The window will remain open until closed by the user or until
-/// `wait_key` is called.
+/// Creates or updates a window with the given name and displays the image.
+/// Works with both grayscale (`Matrix1`) and color (`Matrix3`) images.
+/// The window will remain open until closed by the user or until ESC is pressed.
 ///
 /// # Arguments
 ///
 /// * `window_name` - The name of the window to create or update
-/// * `image` - The RGB image to display
+/// * `image` - The image to display (can be `Matrix1` or `Matrix3`)
 ///
 /// # Returns
 ///
@@ -102,31 +120,18 @@ pub fn imshow(window_name: &str, image: &Matrix1) -> Result<(), WindowError> {
 /// # Examples
 ///
 /// ```no_run
-/// use cv_rusty::{Matrix3, imshow_color};
+/// use cv_rusty::{Matrix1, Matrix3, show_image};
 ///
-/// let image = Matrix3::zeros(640, 480);
-/// imshow_color("Color Image", &image).expect("Failed to display image");
+/// // Display a color image
+/// let color_image = Matrix3::zeros(640, 480);
+/// show_image("Color Window", &color_image).expect("Failed to display image");
+///
+/// // Display a grayscale image
+/// let gray_image = Matrix1::zeros(640, 480);
+/// show_image("Grayscale Window", &gray_image).expect("Failed to display image");
 /// ```
-pub fn imshow_color(window_name: &str, image: &Matrix3) -> Result<(), WindowError> {
-    let width = image.width();
-    let height = image.height();
-
-    if width == 0 || height == 0 {
-        return Err(WindowError::InvalidDimensions);
-    }
-
-    // Convert RGB to minifb's u32 format (0x00RRGGBB)
-    let buffer: Vec<u32> = image
-        .data()
-        .chunks_exact(3)
-        .map(|pixel| {
-            let r = pixel[0] as u32;
-            let g = pixel[1] as u32;
-            let b = pixel[2] as u32;
-            (r << 16) | (g << 8) | b
-        })
-        .collect();
-
+pub fn show_image<T: Displayable>(window_name: &str, image: &T) -> Result<(), WindowError> {
+    let (buffer, width, height) = image.to_display_buffer()?;
     display_buffer(window_name, &buffer, width, height)
 }
 
@@ -155,7 +160,7 @@ fn display_buffer(
 
 /// Waits for a key press for a specified duration.
 ///
-/// Similar to OpenCV's `waitKey`, this function blocks execution and waits for a key press.
+/// This function blocks execution and waits for a key press.
 /// If `delay` is 0, it waits indefinitely. Otherwise, it waits for the specified number
 /// of milliseconds.
 ///
@@ -169,10 +174,10 @@ fn display_buffer(
 /// # Examples
 ///
 /// ```no_run
-/// use cv_rusty::{Matrix3, imshow_color, wait_key};
+/// use cv_rusty::{Matrix3, show_image, wait_key};
 ///
 /// let image = Matrix3::zeros(640, 480);
-/// imshow_color("My Window", &image).expect("Failed to display image");
+/// show_image("My Window", &image).expect("Failed to display image");
 /// wait_key(1000); // Wait for 1 second
 /// ```
 pub fn wait_key(delay: u64) {
@@ -184,15 +189,15 @@ pub fn wait_key(delay: u64) {
     }
 }
 
-/// Displays an image and waits for a key press, then closes the window.
+/// Displays an image and waits for user interaction, then closes the window.
 ///
-/// This is a convenience function that combines `imshow_color` and a blocking wait.
-/// The window will close when the user presses ESC or closes the window.
+/// This is a convenience function that displays the image and blocks until
+/// the user presses ESC or closes the window. Works with both color and grayscale images.
 ///
 /// # Arguments
 ///
 /// * `window_name` - The name of the window to create
-/// * `image` - The RGB image to display
+/// * `image` - The image to display (can be `Matrix1` or `Matrix3`)
 ///
 /// # Returns
 ///
@@ -201,37 +206,16 @@ pub fn wait_key(delay: u64) {
 /// # Examples
 ///
 /// ```no_run
-/// use cv_rusty::{Matrix3, show_and_wait};
+/// use cv_rusty::{Matrix3, Matrix1, show_and_wait};
 ///
-/// let image = Matrix3::zeros(640, 480);
-/// show_and_wait("My Window", &image).expect("Failed to display image");
+/// // Works with color images
+/// let color_image = Matrix3::zeros(640, 480);
+/// show_and_wait("Color Window", &color_image).expect("Failed to display image");
+///
+/// // Works with grayscale images
+/// let gray_image = Matrix1::zeros(640, 480);
+/// show_and_wait("Grayscale Window", &gray_image).expect("Failed to display image");
 /// ```
-pub fn show_and_wait(window_name: &str, image: &Matrix3) -> Result<(), WindowError> {
-    imshow_color(window_name, image)
-}
-
-/// Displays a grayscale image and waits for a key press, then closes the window.
-///
-/// This is a convenience function that combines `imshow` and a blocking wait.
-/// The window will close when the user presses ESC or closes the window.
-///
-/// # Arguments
-///
-/// * `window_name` - The name of the window to create
-/// * `image` - The grayscale image to display
-///
-/// # Returns
-///
-/// Returns `Ok(())` if successful, or a `WindowError` if the operation failed.
-///
-/// # Examples
-///
-/// ```no_run
-/// use cv_rusty::{Matrix1, show_and_wait_gray};
-///
-/// let image = Matrix1::zeros(640, 480);
-/// show_and_wait_gray("My Window", &image).expect("Failed to display image");
-/// ```
-pub fn show_and_wait_gray(window_name: &str, image: &Matrix1) -> Result<(), WindowError> {
-    imshow(window_name, image)
+pub fn show_and_wait<T: Displayable>(window_name: &str, image: &T) -> Result<(), WindowError> {
+    show_image(window_name, image)
 }

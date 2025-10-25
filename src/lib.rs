@@ -63,4 +63,4 @@ pub use transform::{InterpolationMethod, Rotation, RotationAngle};
 pub use io::{read_jpeg, read_png, write_jpeg, write_png};
 
 #[cfg(feature = "window")]
-pub use window::{imshow, imshow_color, show_and_wait, show_and_wait_gray, wait_key, WindowError};
+pub use window::{show_and_wait, show_image, wait_key, Displayable, WindowError};
