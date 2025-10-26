@@ -184,7 +184,7 @@ let thumbnail = image
 ### Drawing Shapes (`no_std` compatible)
 
 ```rust
-use cv_rusty::{Matrix3, draw_rectangle, draw_circle, Color};
+use cv_rusty::{Matrix3, draw_rectangle, draw_circle, Color, Stroke};
 
 // Create a white canvas
 let mut image = Matrix3::zeros(480, 640);
@@ -200,9 +200,8 @@ draw_rectangle(
     320.0, 240.0,  // center position (x, y)
     100.0, 80.0,   // width, height
     0.0,           // rotation in degrees (clockwise)
-    3,             // stroke width
-    Some(Color::rgb(0, 0, 0)),       // black stroke
-    Some(Color::rgb(255, 0, 0))      // red fill
+    Some(Stroke::new(3, Color::rgb(0, 0, 0))),  // 3px black stroke
+    Some(Color::rgb(255, 0, 0))                 // red fill
 );
 
 // Use hex colors (with or without '#' prefix)
@@ -211,9 +210,8 @@ draw_rectangle(
     320.0, 120.0,
     100.0, 60.0,
     15.0,
-    2,
-    Some(Color::from_hex("#2C3E50").unwrap()),  // dark blue-gray
-    Some(Color::from_hex("#3498DB").unwrap())   // light blue
+    Some(Stroke::new(2, Color::from_hex("#2C3E50").unwrap())),  // 2px dark blue-gray stroke
+    Some(Color::from_hex("#3498DB").unwrap())                   // light blue fill
 );
 
 // Use 3-digit hex format (expands F -> FF)
@@ -221,9 +219,8 @@ draw_circle(
     &mut image,
     200.0, 200.0,
     40.0,
-    2,
-    Some(Color::from_hex("#000").unwrap()),     // black
-    Some(Color::from_hex("#F0F").unwrap())      // magenta
+    Some(Stroke::new(2, Color::from_hex("#000").unwrap())),  // 2px black stroke
+    Some(Color::from_hex("#F0F").unwrap())                   // magenta fill
 );
 
 // Parse colors from strings using FromStr trait
@@ -232,8 +229,7 @@ draw_circle(
     &mut image,
     400.0, 200.0,
     40.0,
-    2,
-    Some(Color::black()),
+    Some(Stroke::new(2, Color::black())),  // 2px black stroke
     Some(cyan)
 );
 
@@ -242,10 +238,9 @@ draw_rectangle(
     &mut image,
     200.0, 150.0,
     80.0, 120.0,
-    45.0,          // rotated 45 degrees
-    2,
-    Some(Color::rgb(0, 0, 255)),     // blue stroke
-    Some(Color::rgb(0, 255, 0))      // green fill
+    45.0,                                          // rotated 45 degrees
+    Some(Stroke::new(2, Color::rgb(0, 0, 255))),   // 2px blue stroke
+    Some(Color::rgb(0, 255, 0))                    // green fill
 );
 
 // Draw a filled blue circle with white border
@@ -253,9 +248,8 @@ draw_circle(
     &mut image,
     450.0, 300.0,  // center position (x, y)
     50.0,          // radius
-    2,             // stroke width
-    Some(Color::rgb(255, 255, 255)), // white stroke
-    Some(Color::rgb(0, 0, 255))      // blue fill
+    Some(Stroke::new(2, Color::rgb(255, 255, 255))),  // 2px white stroke
+    Some(Color::rgb(0, 0, 255))                       // blue fill
 );
 
 // Draw outline-only shapes (no fill)
@@ -263,9 +257,8 @@ draw_circle(
     &mut image,
     500.0, 400.0,
     40.0,
-    4,
-    Some(Color::rgb(255, 0, 255)),   // magenta stroke
-    None           // no fill
+    Some(Stroke::new(4, Color::rgb(255, 0, 255))),  // 4px magenta stroke
+    None                                             // no fill
 );
 
 // Same functions work with grayscale images (Matrix1)
@@ -276,9 +269,8 @@ draw_circle(
     &mut gray_image,
     320.0, 240.0,
     60.0,
-    3,
-    Some(Color::gray(255)),  // white stroke
-    Some(Color::gray(100))   // dark gray fill
+    Some(Stroke::new(3, Color::gray(255))),  // 3px white stroke
+    Some(Color::gray(100))                   // dark gray fill
 );
 ```
 

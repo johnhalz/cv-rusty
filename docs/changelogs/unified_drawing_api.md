@@ -25,6 +25,8 @@ draw_rectangle(&mut rgb_image, 320.0, 240.0, 100.0, 60.0, 0.0, 2,
 let mut gray_image = Matrix1::zeros(640, 480);
 draw_rectangle_gray(&mut gray_image, 320.0, 240.0, 100.0, 60.0, 0.0, 2,
                     Some(Color::gray(255)), Some(Color::gray(100)));
+
+// Note: This was before the Stroke struct was added
 ```
 
 **Problems:**
@@ -36,17 +38,19 @@ draw_rectangle_gray(&mut gray_image, 320.0, 240.0, 100.0, 60.0, 0.0, 2,
 ### New Unified API
 
 ```rust
-use cv_rusty::{Matrix3, Matrix1, draw_rectangle, draw_circle, Color};
+use cv_rusty::{Matrix3, Matrix1, draw_rectangle, draw_circle, Color, Stroke};
 
 // RGB images
 let mut rgb_image = Matrix3::zeros(640, 480);
-draw_rectangle(&mut rgb_image, 320.0, 240.0, 100.0, 60.0, 0.0, 2,
-               Some(Color::rgb(0, 0, 0)), Some(Color::rgb(255, 0, 0)));
+draw_rectangle(&mut rgb_image, 320.0, 240.0, 100.0, 60.0, 0.0,
+               Some(Stroke::new(2, Color::rgb(0, 0, 0))),
+               Some(Color::rgb(255, 0, 0)));
 
 // Grayscale images - same function!
 let mut gray_image = Matrix1::zeros(640, 480);
-draw_rectangle(&mut gray_image, 320.0, 240.0, 100.0, 60.0, 0.0, 2,
-               Some(Color::gray(255)), Some(Color::gray(100)));
+draw_rectangle(&mut gray_image, 320.0, 240.0, 100.0, 60.0, 0.0,
+               Some(Stroke::new(2, Color::gray(255))),
+               Some(Color::gray(100)));
 ```
 
 **Benefits:**
@@ -85,8 +89,7 @@ pub fn draw_rectangle<T: DrawTarget>(
     width: f32,
     height: f32,
     rotation: f32,
-    stroke_width: u32,
-    stroke_color: Option<Color>,
+    stroke: Option<Stroke>,
     fill_color: Option<Color>,
 )
 
@@ -95,8 +98,7 @@ pub fn draw_circle<T: DrawTarget>(
     x: f32,
     y: f32,
     radius: f32,
-    stroke_width: u32,
-    stroke_color: Option<Color>,
+    stroke: Option<Stroke>,
     fill_color: Option<Color>,
 )
 ```
@@ -116,13 +118,13 @@ The `Color` enum automatically handles conversions:
 
 ```rust
 // RGB color on grayscale image - automatically converts to gray
-draw_circle(&mut gray_image, 320.0, 240.0, 50.0, 2,
-            Some(Color::rgb(255, 0, 0)),  // Converts to gray using luminance
+draw_circle(&mut gray_image, 320.0, 240.0, 50.0,
+            Some(Stroke::new(2, Color::rgb(255, 0, 0))),  // Converts to gray using luminance
             Some(Color::gray(100)));
 
 // Grayscale color on RGB image - replicates to all channels
-draw_circle(&mut rgb_image, 320.0, 240.0, 50.0, 2,
-            Some(Color::gray(128)),        // Converts to rgb(128, 128, 128)
+draw_circle(&mut rgb_image, 320.0, 240.0, 50.0,
+            Some(Stroke::new(2, Color::gray(128))),        // Converts to rgb(128, 128, 128)
             Some(Color::rgb(0, 0, 255)));
 ```
 
@@ -167,19 +169,32 @@ No migration needed - just use `draw_rectangle()` and `draw_circle()` with any i
 
 If you used the initial implementation with separate functions:
 
-**Before:**
+**Before (Initial):**
 ```rust
 draw_rectangle_gray(&mut gray_image, ...);
 draw_circle_gray(&mut gray_image, ...);
 ```
 
-**After:**
+**After (Unified):**
 ```rust
 draw_rectangle(&mut gray_image, ...);
 draw_circle(&mut gray_image, ...);
 ```
 
 Simply remove the `_gray` suffix.
+
+**Latest (with Stroke):**
+```rust
+// Old API: separate stroke_width and stroke_color parameters
+draw_rectangle(&mut gray_image, x, y, w, h, rotation, stroke_width,
+               stroke_color, fill_color);
+
+// New API: combined Stroke struct
+draw_rectangle(&mut gray_image, x, y, w, h, rotation,
+               Some(Stroke::new(width, color)), fill_color);
+```
+
+This reduces the parameter count and makes the API cleaner.
 
 ## Performance
 

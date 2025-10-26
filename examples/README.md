@@ -236,7 +236,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 ### Drawing Example
 ```rust
-use cv_rusty::{Matrix3, draw_rectangle, draw_circle, write_png, Color};
+use cv_rusty::{Matrix3, draw_rectangle, draw_circle, write_png, Color, Stroke};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Create a white canvas
@@ -253,9 +253,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         320.0, 240.0,  // center position (x, y)
         100.0, 80.0,   // width, height
         45.0,          // rotation in degrees
-        3,             // stroke width
-        Some(Color::rgb(0, 0, 0)),       // black stroke
-        Some(Color::rgb(255, 0, 0))      // red fill
+        Some(Stroke::new(3, Color::rgb(0, 0, 0))),  // 3px black stroke
+        Some(Color::rgb(255, 0, 0))                 // red fill
     );
     
     // Use hex colors
@@ -264,9 +263,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         420.0, 240.0,
         100.0, 80.0,
         0.0,
-        2,
-        Some(Color::from_hex("#2C3E50")?),  // dark blue-gray
-        Some(Color::from_hex("#3498DB")?)   // light blue
+        Some(Stroke::new(2, Color::from_hex("#2C3E50")?)),  // 2px dark blue-gray stroke
+        Some(Color::from_hex("#3498DB")?)                   // light blue fill
     );
     
     // Draw a blue circle with white border
@@ -274,15 +272,14 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         &mut image,
         200.0, 200.0,  // center position (x, y)
         50.0,          // radius
-        2,             // stroke width
-        Some(Color::rgb(255, 255, 255)), // white stroke
-        Some(Color::rgb(0, 0, 255))      // blue fill
+        Some(Stroke::new(2, Color::rgb(255, 255, 255))),  // 2px white stroke
+        Some(Color::rgb(0, 0, 255))                       // blue fill
     );
     
     // Parse color from string
     let pink: Color = "#FF1493".parse()?;
-    draw_circle(&mut image, 300.0, 200.0, 40.0, 2,
-                Some(Color::black()), Some(pink));
+    draw_circle(&mut image, 300.0, 200.0, 40.0,
+                Some(Stroke::new(2, Color::black())), Some(pink));
     
     // Save result
     write_png(&image, "output.png")?;

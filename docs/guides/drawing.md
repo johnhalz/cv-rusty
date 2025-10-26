@@ -92,21 +92,20 @@ Rectangles are drawn with their center at the specified `(x, y)` position.
 // Works with both RGB (Matrix3) and grayscale (Matrix1) images
 pub fn draw_rectangle<T: DrawTarget>(
     image: &mut T,
-    x: f32,                      // X coordinate of center
-    y: f32,                      // Y coordinate of center
-    width: f32,                  // Width of rectangle
-    height: f32,                 // Height of rectangle
-    rotation: f32,               // Rotation in degrees (clockwise)
-    stroke_width: u32,           // Outline width (0 for no outline)
-    stroke_color: Option<Color>, // Outline color (None for no outline)
-    fill_color: Option<Color>,   // Fill color (None for no fill)
+    x: f32,                    // X coordinate of center
+    y: f32,                    // Y coordinate of center
+    width: f32,                // Width of rectangle
+    height: f32,               // Height of rectangle
+    rotation: f32,             // Rotation in degrees (clockwise)
+    stroke: Option<Stroke>,    // Optional stroke with width and color
+    fill_color: Option<Color>, // Fill color (None for no fill)
 )
 ```
 
 ### Basic Rectangle
 
 ```rust
-use cv_rusty::{Matrix3, Matrix1, draw_rectangle, Color};
+use cv_rusty::{Matrix3, Matrix1, draw_rectangle, Color, Stroke};
 
 // Works with RGB images
 let mut rgb_image = Matrix3::zeros(480, 640);
@@ -115,9 +114,8 @@ draw_rectangle(
     320.0, 240.0,  // Center at (320, 240)
     100.0, 60.0,   // 100 pixels wide, 60 pixels tall
     0.0,           // No rotation
-    2,             // 2-pixel border
-    Some(Color::rgb(0, 0, 0)),       // Black border
-    Some(Color::rgb(255, 0, 0))      // Red fill
+    Some(Stroke::new(2, Color::rgb(0, 0, 0))),  // 2px black border
+    Some(Color::rgb(255, 0, 0))                 // Red fill
 );
 
 // Also works with grayscale images
@@ -127,9 +125,8 @@ draw_rectangle(
     320.0, 240.0,
     100.0, 60.0,
     0.0,
-    2,
-    Some(Color::gray(255)),          // White border
-    Some(Color::gray(100))           // Dark gray fill
+    Some(Stroke::new(2, Color::gray(255))),  // 2px white border
+    Some(Color::gray(100))                   // Dark gray fill
 );
 ```
 
@@ -142,9 +139,8 @@ draw_rectangle(
     200.0, 150.0,  // Center position
     80.0, 120.0,   // Width and height
     45.0,          // 45 degrees clockwise
-    3,             // 3-pixel border
-    Some(Color::rgb(255, 255, 255)), // White border
-    Some(Color::rgb(0, 255, 0))      // Green fill
+    Some(Stroke::new(3, Color::rgb(255, 255, 255))),  // 3px white border
+    Some(Color::rgb(0, 255, 0))                       // Green fill
 );
 ```
 
@@ -157,8 +153,7 @@ draw_rectangle(
     400.0, 300.0,
     150.0, 100.0,
     30.0,          // Rotated 30 degrees
-    4,             // 4-pixel thick outline
-    Some(Color::rgb(0, 0, 255)),     // Blue outline
+    Some(Stroke::new(4, Color::rgb(0, 0, 255))),  // 4px blue outline
     None           // No fill
 );
 ```
@@ -172,8 +167,7 @@ draw_rectangle(
     500.0, 200.0,
     60.0, 60.0,
     0.0,
-    0,             // No stroke
-    None,          // No stroke color
+    None,          // No stroke
     Some(Color::rgb(255, 255, 0))    // Yellow fill
 );
 ```
@@ -188,19 +182,18 @@ Circles are drawn with their center at the specified `(x, y)` position.
 // Works with both RGB (Matrix3) and grayscale (Matrix1) images
 pub fn draw_circle<T: DrawTarget>(
     image: &mut T,
-    x: f32,                      // X coordinate of center
-    y: f32,                      // Y coordinate of center
-    radius: f32,                 // Radius of circle
-    stroke_width: u32,           // Outline width (0 for no outline)
-    stroke_color: Option<Color>, // Outline color (None for no outline)
-    fill_color: Option<Color>,   // Fill color (None for no fill)
+    x: f32,                    // X coordinate of center
+    y: f32,                    // Y coordinate of center
+    radius: f32,               // Radius of circle
+    stroke: Option<Stroke>,    // Optional stroke with width and color
+    fill_color: Option<Color>, // Fill color (None for no fill)
 )
 ```
 
 ### Basic Circle
 
 ```rust
-use cv_rusty::{Matrix3, Matrix1, draw_circle, Color};
+use cv_rusty::{Matrix3, Matrix1, draw_circle, Color, Stroke};
 
 // Works with RGB images
 let mut rgb_image = Matrix3::zeros(480, 640);
@@ -208,9 +201,8 @@ draw_circle(
     &mut rgb_image,
     320.0, 240.0,  // Center at (320, 240)
     50.0,          // Radius of 50 pixels
-    3,             // 3-pixel border
-    Some(Color::rgb(255, 255, 255)), // White border
-    Some(Color::rgb(0, 0, 255))      // Blue fill
+    Some(Stroke::new(3, Color::rgb(255, 255, 255))),  // 3px white border
+    Some(Color::rgb(0, 0, 255))                       // Blue fill
 );
 
 // Also works with grayscale images
@@ -219,9 +211,8 @@ draw_circle(
     &mut gray_image,
     320.0, 240.0,
     50.0,
-    3,
-    Some(Color::gray(255)),          // White border
-    Some(Color::gray(100))           // Dark gray fill
+    Some(Stroke::new(3, Color::gray(255))),  // 3px white border
+    Some(Color::gray(100))                   // Dark gray fill
 );
 ```
 
@@ -233,8 +224,7 @@ draw_circle(
     &mut rgb_image,
     200.0, 200.0,
     60.0,          // Radius
-    5,             // 5-pixel thick outline
-    Some(Color::rgb(255, 0, 0)),     // Red outline
+    Some(Stroke::new(5, Color::rgb(255, 0, 0))),  // 5px red outline
     None           // No fill
 );
 ```
@@ -247,8 +237,7 @@ draw_circle(
     &mut rgb_image,
     450.0, 350.0,
     40.0,          // Radius
-    0,             // No stroke
-    None,          // No stroke color
+    None,          // No stroke
     Some(Color::rgb(0, 255, 0))      // Green fill
 );
 ```
@@ -335,7 +324,7 @@ On a modern CPU (example: Apple M1):
 ### Complete Drawing Example
 
 ```rust
-use cv_rusty::{Matrix3, draw_rectangle, draw_circle, write_png, Color};
+use cv_rusty::{Matrix3, draw_rectangle, draw_circle, write_png, Color, Stroke};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Create white canvas
@@ -352,7 +341,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         400.0, 300.0,
         700.0, 500.0,
         0.0,
-        0,
         None,
         Some(Color::rgb(240, 240, 255))  // Light blue background
     );
@@ -363,8 +351,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         400.0, 50.0,
         700.0, 60.0,
         0.0,
-        2,
-        Some(Color::rgb(100, 100, 100)),
+        Some(Stroke::new(2, Color::rgb(100, 100, 100))),
         Some(Color::rgb(60, 120, 200))
     );
 
@@ -375,8 +362,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             &mut image,
             x, 150.0,
             40.0,
-            3,
-            Some(Color::rgb(50, 50, 50)),
+            Some(Stroke::new(3, Color::rgb(50, 50, 50))),
             Some(Color::rgb(100, 200, 100))
         );
     }
@@ -387,8 +373,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         400.0, 450.0,
         200.0, 30.0,
         -10.0,  // Slightly rotated
-        2,
-        Some(Color::rgb(0, 0, 0)),
+        Some(Stroke::new(2, Color::rgb(0, 0, 0))),
         Some(Color::rgb(255, 200, 50))
     );
 
@@ -400,7 +385,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 ### Data Visualization
 
 ```rust
-use cv_rusty::{Matrix3, draw_circle, draw_rectangle, Color};
+use cv_rusty::{Matrix3, draw_circle, draw_rectangle, Color, Stroke};
 
 fn draw_bar_chart(data: &[f32]) -> Matrix3 {
     let mut image = Matrix3::zeros(400, 600);
@@ -428,8 +413,7 @@ fn draw_bar_chart(data: &[f32]) -> Matrix3 {
             bar_width,
             height,
             0.0,
-            2,
-            Some(Color::rgb(0, 0, 0)),
+            Some(Stroke::new(2, Color::rgb(0, 0, 0))),
             Some(Color::rgb(100, 150, 255))
         );
         
@@ -439,8 +423,7 @@ fn draw_bar_chart(data: &[f32]) -> Matrix3 {
             x + bar_width / 2.0,
             base_y - height,
             5.0,
-            1,
-            Some(Color::rgb(0, 0, 0)),
+            Some(Stroke::new(1, Color::rgb(0, 0, 0))),
             Some(Color::rgb(255, 100, 100))
         );
     }
@@ -456,7 +439,7 @@ let chart = draw_bar_chart(&data);
 ### Annotation Tool
 
 ```rust
-use cv_rusty::{Matrix3, draw_rectangle, draw_circle, Color};
+use cv_rusty::{Matrix3, draw_rectangle, draw_circle, Color, Stroke};
 
 fn annotate_image(
     image: &mut Matrix3,
@@ -480,8 +463,7 @@ fn annotate_image(
         y + h / 2.0,
         w, h,
         0.0,
-        3,
-        Some(color),
+        Some(Stroke::new(3, color)),
         None  // No fill, just outline
     );
     
@@ -494,7 +476,6 @@ fn annotate_image(
             image,
             cx, cy,
             radius,
-            0,
             None,
             Some(color)
         );
