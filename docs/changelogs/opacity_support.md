@@ -1,9 +1,5 @@
 # Opacity and Transparency Support
 
-**Date**: 2024
-**Version**: 0.6.0 (upcoming)
-**Type**: Feature Addition
-
 ## Overview
 
 Added comprehensive opacity/transparency support to the drawing module, enabling semi-transparent shapes and alpha blending. Colors now support opacity values between 0.0 (fully transparent) and 1.0 (fully opaque), with automatic blending when drawing on existing pixels.
@@ -55,6 +51,7 @@ result = existing * (1.0 - opacity) + new * opacity
 ```
 
 This works for both:
+
 - **Matrix1** (grayscale images) - single channel blending
 - **Matrix3** (RGB images) - independent blending per channel
 
@@ -180,6 +177,7 @@ draw_rectangle(
 3. **`Stroke` struct**: Changed from `PartialEq, Eq` to just `PartialEq`
 
 These changes should not affect most users unless:
+
 - You pattern match on `Color` enum variants directly (rare)
 - You rely on `Eq` trait bounds for `Color` or `Stroke` (very rare)
 
@@ -214,6 +212,7 @@ let (r, g, b) = color.to_rgb();
 - **Fully opaque colors** (opacity = 1.0): No performance impact
 - **Fully transparent colors** (opacity = 0.0): Minimal overhead (early return)
 - **Semi-transparent colors** (0.0 < opacity < 1.0): Requires pixel read and blend calculation
+
   - Adds ~10-15% overhead for semi-transparent shapes
   - Blending is computed per-pixel during drawing
 
@@ -270,6 +269,7 @@ cargo run --example opacity_example
 ```
 
 This example creates:
+
 - Overlapping semi-transparent shapes
 - Venn diagram with color blending
 - Gradient effects using varying opacity
@@ -278,22 +278,26 @@ This example creates:
 ## Use Cases
 
 ### Data Visualization
+
 - Overlapping data regions
 - Confidence intervals
 - Heat map overlays
 
 ### Image Annotation
+
 - Highlight regions without obscuring content
 - Semi-transparent bounding boxes
 - Overlay information
 
 ### UI/Graphics
+
 - Translucent windows
 - Fade effects
 - Layered compositions
 - Watermarks
 
 ### Design
+
 - Color mixing demonstrations
 - Venn diagrams
 - Layered graphics

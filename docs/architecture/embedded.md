@@ -9,6 +9,7 @@ CV Rusty is designed to work in resource-constrained environments without the Ru
 ## Requirements
 
 ### Minimum Requirements
+
 - **Rust Edition**: 2021 or later
 - **Memory**: Heap allocator (`alloc` crate)
 - **No standard library**: Works with `#![no_std]`
@@ -21,6 +22,7 @@ Memory = width × height × 3 bytes + struct overhead (~24 bytes)
 ```
 
 **Examples:**
+
 - 320×240 image: ~230 KB
 - 640×480 image: ~921 KB
 - 160×120 image: ~57 KB
@@ -71,7 +73,7 @@ use cv_rusty::Matrix3;
 
 fn capture_from_camera(width: usize, height: usize) -> Matrix3 {
     let mut image = Matrix3::zeros(width, height);
-    
+
     // Read from camera sensor (pseudo-code)
     for y in 0..height {
         for x in 0..width {
@@ -79,7 +81,7 @@ fn capture_from_camera(width: usize, height: usize) -> Matrix3 {
             image.set_pixel(x, y, r, g, b);
         }
     }
-    
+
     image
 }
 ```
@@ -91,7 +93,7 @@ use cv_rusty::Matrix3;
 
 fn adjust_brightness(image: &mut Matrix3, factor: f32) {
     let data = image.data_mut();
-    
+
     for pixel in data.iter_mut() {
         let new_val = (*pixel as f32 * factor).min(255.0) as u8;
         *pixel = new_val;
@@ -107,7 +109,7 @@ use cv_rusty::Matrix3;
 fn send_to_display(image: &Matrix3, spi: &mut SpiInterface) {
     // Get raw RGB data
     let data = image.data();
-    
+
     // Send to display in chunks to avoid large stack usage
     const CHUNK_SIZE: usize = 256;
     for chunk in data.chunks(CHUNK_SIZE) {
@@ -126,11 +128,11 @@ use cv_rusty::Matrix3;
 fn process_image_rows(width: usize, total_height: usize) {
     // Process 10 rows at a time
     const ROWS_PER_BATCH: usize = 10;
-    
+
     for start_row in (0..total_height).step_by(ROWS_PER_BATCH) {
         let rows = ROWS_PER_BATCH.min(total_height - start_row);
         let mut batch = Matrix3::zeros(width, rows);
-        
+
         // Fill batch from sensor
         for y in 0..rows {
             for x in 0..width {
@@ -138,10 +140,10 @@ fn process_image_rows(width: usize, total_height: usize) {
                 batch.set_pixel(x, y, r, g, b);
             }
         }
-        
+
         // Process this batch
         process_batch(&mut batch);
-        
+
         // Send to output
         output_batch(&batch);
     }
@@ -179,18 +181,18 @@ fn main() -> ! {
     const HEAP_SIZE: usize = 32 * 1024;
     static mut HEAP_MEM: [u8; HEAP_SIZE] = [0; HEAP_SIZE];
     unsafe { HEAP.init(HEAP_MEM.as_ptr() as usize, HEAP_SIZE) }
-    
+
     // Initialize peripherals (camera, display, etc.)
     let mut camera = init_camera();
     let mut display = init_display();
-    
+
     loop {
         // Capture small image (80x60 = ~14KB)
         let image = capture_image(&mut camera, 80, 60);
-        
+
         // Process image
         let processed = apply_filters(&image);
-        
+
         // Display result
         send_to_display(&processed, &mut display);
     }
@@ -226,13 +228,13 @@ use cv_rusty::Matrix3;
 fn main() -> ! {
     // ESP32 provides its own allocator
     esp_alloc::heap_allocator!(72 * 1024); // 72 KB heap
-    
+
     println!("CV Rusty on ESP32");
-    
+
     // ESP32-CAM can handle larger images (up to 640x480 on ESP32-S3)
     let image = Matrix3::zeros(320, 240);
     println!("Created {}x{} image", image.width(), image.height());
-    
+
     loop {
         // Process images from ESP32-CAM
     }
@@ -259,10 +261,10 @@ fn main() -> ! {
     const HEAP_SIZE: usize = 64 * 1024;
     static mut HEAP_MEM: [u8; HEAP_SIZE] = [0; HEAP_SIZE];
     unsafe { HEAP.init(HEAP_MEM.as_ptr() as usize, HEAP_SIZE) }
-    
+
     // Your RISC-V application
     let image = Matrix3::zeros(160, 120);
-    
+
     loop {
         // Process images
     }
@@ -380,11 +382,13 @@ fn extract_roi(src: &Matrix3, x: usize, y: usize, w: usize, h: usize) -> Matrix3
 ## Performance Considerations
 
 ### Typical Performance (ARM Cortex-M4 @ 80 MHz)
+
 - Creating 160×120 image: ~1 ms
 - Pixel access: ~10 ns per pixel
 - Full image iteration: ~5-10 ms for 160×120
 
 ### Optimization Strategies
+
 1. **Batch Operations**: Process multiple pixels at once
 2. **Cache Locality**: Access pixels in row-major order
 3. **Minimize Allocations**: Reuse buffers when possible
@@ -410,10 +414,10 @@ Many embedded systems have hardware acceleration for image processing:
 // Example: Offload operations to DMA or GPU
 fn hardware_accelerated_copy(image: &Matrix3, hw_buffer: &mut [u8]) {
     let data = image.data();
-    
+
     // Use DMA to copy data
     dma_transfer(data, hw_buffer);
-    
+
     // Trigger hardware processor
     trigger_hw_processor();
 }
@@ -428,6 +432,7 @@ fn hardware_accelerated_copy(image: &Matrix3, hw_buffer: &mut [u8]) {
 ## Support
 
 For questions about using CV Rusty in embedded systems, please:
+
 1. Check the examples in `examples/no_std_example.rs`
 2. Review this guide
 3. Open an issue on GitHub with your platform details

@@ -5,6 +5,7 @@ This document provides an overview of the image transformation operations added 
 ## Overview
 
 The transform module provides three core operations for image manipulation:
+
 - **Resize**: Scale images up or down with different interpolation methods
 - **Crop**: Extract rectangular regions from images
 - **Rotate**: Rotate images in 90-degree increments (fast, lossless) or by arbitrary angles with interpolation
@@ -18,12 +19,14 @@ Resize images to specified dimensions with configurable interpolation methods.
 ### Interpolation Methods
 
 #### Nearest Neighbor (`InterpolationMethod::NearestNeighbor`)
+
 - **Speed**: Fastest
 - **Quality**: Lowest
 - **Best for**: Pixel art, icons, when speed is critical
 - **Algorithm**: Selects the nearest pixel without blending
 
 #### Bilinear (`InterpolationMethod::Bilinear`)
+
 - **Speed**: Moderate
 - **Quality**: Good
 - **Best for**: Most general-purpose resizing, photos
@@ -81,6 +84,7 @@ let center = image.crop(x, y, crop_size, crop_size).unwrap();
 ### Error Handling
 
 The `crop()` method returns `Option<Matrix>`:
+
 - `Some(Matrix)` if the crop region is valid
 - `None` if the region extends beyond image boundaries
 
@@ -100,6 +104,7 @@ match image.crop(x, y, width, height) {
 ## Rotate
 
 Rotate images using two methods:
+
 1. **Fixed angles** (90°, 180°, 270°) - Fast, lossless transformation
 2. **Arbitrary angles** - Custom rotation with interpolation
 
@@ -230,8 +235,10 @@ Custom rotation automatically calculates the output dimensions to contain the en
 
 - **Time Complexity**: O(width × height) - processes all output pixels
 - **Quality**: Depends on interpolation method
+
   - Bilinear: Good quality, slight blur
   - Nearest Neighbor: Faster, more pixelated
+
 - **Memory**: Creates new image buffer sized to contain full rotated image
 
 #### Comparison: Fixed vs Custom Rotation
@@ -320,7 +327,7 @@ fn create_thumbnail(image: &Matrix3, max_size: usize) -> Matrix3 {
     let scale = max_size as f32 / w.max(h) as f32;
     let new_w = (w as f32 * scale) as usize;
     let new_h = (h as f32 * scale) as usize;
-    
+
     image.resize(new_w, new_h, InterpolationMethod::Bilinear)
 }
 ```
@@ -333,7 +340,7 @@ fn center_crop_resize(image: &Matrix3, size: usize) -> Matrix3 {
     let crop_size = w.min(h);
     let x = (w - crop_size) / 2;
     let y = (h - crop_size) / 2;
-    
+
     image.crop(x, y, crop_size, crop_size)
         .unwrap()
         .resize(size, size, InterpolationMethod::Bilinear)
@@ -346,7 +353,7 @@ fn center_crop_resize(image: &Matrix3, size: usize) -> Matrix3 {
 fn create_tiles(image: &Matrix3, tile_size: usize) -> Vec<Matrix3> {
     let (w, h) = image.dimensions();
     let mut tiles = Vec::new();
-    
+
     for y in (0..h).step_by(tile_size) {
         for x in (0..w).step_by(tile_size) {
             let tw = tile_size.min(w - x);
@@ -356,7 +363,7 @@ fn create_tiles(image: &Matrix3, tile_size: usize) -> Vec<Matrix3> {
             }
         }
     }
-    
+
     tiles
 }
 ```
@@ -427,19 +434,24 @@ cargo build --no-default-features
 ## Performance Tips
 
 1. **Choose the right interpolation method**:
+
    - Use `NearestNeighbor` for pixel art or when speed is critical
    - Use `Bilinear` for photos and general-purpose resizing
 
 2. **Crop before resize**:
+
    - Process less data by cropping first
 
 3. **Avoid multiple resizes**:
+
    - Calculate target size once and resize directly
 
 4. **Use rotation for 90° increments**:
+
    - Much faster and lossless compared to arbitrary angle rotation
 
 5. **Reuse memory when possible**:
+
    - Drop intermediate results to free memory
 
 ## Implementation Details
@@ -461,7 +473,7 @@ for each output pixel (x, y):
     x1, y1 = floor(src_x, src_y)
     x2, y2 = x1+1, y1+1
     dx, dy = fractional parts
-    
+
     # Weighted average of 4 nearest pixels
     value = p11 * (1-dx) * (1-dy) +
             p21 * dx * (1-dy) +
@@ -478,6 +490,7 @@ Direct memory copy of rectangular regions, optimized with `copy_from_slice` for 
 **Fixed Angle (90°/180°/270°)**:
 
 Pixel remapping based on rotation angle:
+
 - **90° CW**: `(x, y) → (height-1-y, x)`
 - **180°**: `(x, y) → (width-1-x, height-1-y)`
 - **270° CW**: `(x, y) → (y, width-1-x)`
@@ -488,6 +501,7 @@ Uses inverse rotation with interpolation:
 
 1. Calculate output dimensions to fit entire rotated image
 2. For each output pixel:
+
    - Apply inverse rotation transformation
    - Sample source image at calculated position
    - Use interpolation for sub-pixel accuracy

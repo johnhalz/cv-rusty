@@ -25,10 +25,12 @@ cv-rusty/
 The main library entry point configured for `no_std` compatibility. It uses feature flags to conditionally compile std-dependent code.
 
 **Key Attributes:**
+
 - `#![cfg_attr(not(feature = "std"), no_std)]` - Enables `no_std` when std feature is disabled
 - `extern crate alloc` - Required for heap allocations in `no_std` environments
 
 **Public API:**
+
 - `Matrix3` - Three-channel image matrix (always available)
 - `read_jpeg` - JPEG file reading function (only with `std` feature)
 
@@ -37,6 +39,7 @@ The main library entry point configured for `no_std` compatibility. It uses feat
 Contains the core data structure for representing multi-channel image data. This module is fully `no_std` compatible and only requires the `alloc` crate.
 
 **`no_std` Compatibility:**
+
 - Uses `core::fmt` instead of `std::fmt`
 - Imports `Vec` from `alloc::vec::Vec` when `std` is not available
 - Imports `vec!` macro from `alloc::vec` for `no_std` environments
@@ -46,6 +49,7 @@ Contains the core data structure for representing multi-channel image data. This
 A three-channel matrix specifically designed for RGB image representation.
 
 **Design Decisions:**
+
 - **Contiguous Memory Layout**: Data is stored in a single `Vec<u8>` for cache efficiency
 - **Interleaved Channels**: RGB values are stored as `[R, G, B, R, G, B, ...]` for better spatial locality
 - **Row-Major Order**: Standard image representation order (y * width + x)
@@ -72,12 +76,14 @@ let b = data[pixel_index + 2];
 Handles image file I/O operations, currently supporting JPEG format. This module is only compiled when the `std` feature is enabled, as it requires file system access.
 
 **Compilation Guard:**
+
 - Only included when `#[cfg(feature = "std")]` is true
 - Requires `std::fs`, `std::io`, and `std::path`
 
 #### `ImageError`
 
 Custom error type for image operations with variants:
+
 - `Io(io::Error)` - File system errors
 - `JpegDecode(String)` - JPEG decoding errors
 - `UnsupportedFormat(String)` - Unsupported pixel format errors
@@ -87,6 +93,7 @@ Custom error type for image operations with variants:
 Reads JPEG files and converts them to RGB `Matrix3`.
 
 **Supported Input Formats:**
+
 1. **RGB24** - Direct passthrough (most common)
 2. **L8 (Grayscale)** - Converted by duplicating channel: `[G] -> [G, G, G]`
 3. **CMYK32** - Converted using formula:
@@ -97,6 +104,7 @@ Reads JPEG files and converts them to RGB `Matrix3`.
    ```
 
 **Processing Pipeline:**
+
 1. Open file with buffered reader
 2. Create JPEG decoder
 3. Decode image to raw pixels
@@ -107,6 +115,7 @@ Reads JPEG files and converts them to RGB `Matrix3`.
 ## Dependencies
 
 ### `jpeg-decoder` (v0.3)
+
 - **Purpose**: JPEG image decoding
 - **Features**: Supports multiple pixel formats, hardware acceleration
 - **License**: MIT/Apache-2.0
@@ -117,12 +126,14 @@ Reads JPEG files and converts them to RGB `Matrix3`.
 
 ### `std` (default)
 Enables standard library support, including:
+
 - File I/O operations (`io` module)
 - JPEG reading functionality
 - `std::error::Error` trait implementations
 
 ### `alloc`
 Enables heap allocation support (required for core functionality):
+
 - `Vec<u8>` for storing pixel data
 - Dynamic memory allocation
 
@@ -147,16 +158,19 @@ alloc = []
 ## Performance Considerations
 
 ### Memory Layout
+
 - Contiguous allocation reduces cache misses
 - Interleaved channels improve spatial locality for pixel operations
 - Single allocation per image minimizes heap fragmentation
 
 ### Bounds Checking
+
 - All pixel access is bounds-checked at compile time or returns `Option`
 - No unsafe code in current implementation
 - Trade-off: slight overhead for safety guarantees
 
 ### Future Optimizations
+
 - SIMD operations for bulk pixel processing
 - Parallel processing with rayon for large images (with `std` feature)
 - Memory pooling for repeated allocations
@@ -168,17 +182,20 @@ alloc = []
 
 ### Requirements
 The core library (`Matrix3` and related operations) only requires:
+
 - `core` - Rust's core library (always available)
 - `alloc` - For heap allocations (`Vec`)
 
 ### Limitations in `no_std`
 Without the `std` feature, the following are not available:
+
 - File I/O operations (`read_jpeg`, future `write_jpeg`)
 - `std::error::Error` trait (we use custom error types)
 - Threading/parallelization
 
 ### Embedded Use Cases
 The `no_std` design enables use in:
+
 - **Microcontrollers** (ARM Cortex-M, RISC-V)
 - **Real-time Operating Systems** (RTOS)
 - **Bare-metal environments**
@@ -187,6 +204,7 @@ The `no_std` design enables use in:
 
 ### Memory Considerations
 In `no_std` environments:
+
 - Heap allocation requires a global allocator to be configured
 - Large images may exceed available RAM on constrained devices
 - Consider using smaller images or streaming processing
@@ -195,6 +213,7 @@ In `no_std` environments:
 ## Testing Strategy
 
 ### Unit Tests
+
 - Located inline with source code using `#[cfg(test)]`
 - Test coverage includes:
   - Matrix creation and initialization
@@ -203,11 +222,13 @@ In `no_std` environments:
   - Error handling
 
 ### Doc Tests
+
 - Embedded in documentation comments
 - Ensures examples in docs remain valid
 - Run automatically with `cargo test`
 
 ### Integration Tests
+
 - Examples serve as integration tests
 - Real-world usage patterns
 
@@ -244,6 +265,7 @@ pub trait ImageWriter {
 ### Generic Matrix Types
 
 Potential expansion to support different channel counts and data types:
+
 - `Matrix<T, C>` - Generic over data type and channel count
 - `Matrix1<T>` - Single channel (grayscale)
 - `Matrix3<T>` - Three channels (RGB)
@@ -252,6 +274,7 @@ Potential expansion to support different channel counts and data types:
 ## Contributing Guidelines
 
 When adding new features:
+
 1. Follow existing module organization patterns
 2. **Design for `no_std` first** - use `core` and `alloc` when possible
 3. Add comprehensive tests (test with and without `std` feature)

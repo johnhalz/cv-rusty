@@ -143,6 +143,7 @@ let (r, g, b) = hsv_to_rgb(0.0, 1.0, 1.0); // Red
 ### HSV Color Wheel
 
 - **Hue (H)**: Color type
+
   - 0° = Red
   - 60° = Yellow
   - 120° = Green
@@ -152,10 +153,12 @@ let (r, g, b) = hsv_to_rgb(0.0, 1.0, 1.0); // Red
   - 360° = Red (wraps around)
 
 - **Saturation (S)**: Color intensity
+
   - 0.0 = Gray (no color)
   - 1.0 = Pure color
 
 - **Value (V)**: Brightness
+
   - 0.0 = Black
   - 1.0 = Full brightness
 
@@ -238,12 +241,12 @@ use cv_rusty::{Matrix3, rgb_to_hsv};
 
 fn detect_red_pixels(image: &Matrix3) -> Vec<(usize, usize)> {
     let mut red_pixels = Vec::new();
-    
+
     for y in 0..image.height() {
         for x in 0..image.width() {
             if let Some((r, g, b)) = image.get_pixel(x, y) {
                 let (h, s, v) = rgb_to_hsv(r, g, b);
-                
+
                 // Red is at 0° and 360° (wraps around)
                 if (h < 20.0 || h > 340.0) && s > 0.5 && v > 0.5 {
                     red_pixels.push((x, y));
@@ -251,7 +254,7 @@ fn detect_red_pixels(image: &Matrix3) -> Vec<(usize, usize)> {
             }
         }
     }
-    
+
     red_pixels
 }
 ```
@@ -263,7 +266,7 @@ use cv_rusty::{Matrix3, rgb_to_hsl, hsl_to_rgb};
 
 fn auto_white_balance(image: &Matrix3) -> Matrix3 {
     let mut result = image.clone();
-    
+
     for y in 0..image.height() {
         for x in 0..image.width() {
             if let Some((r, g, b)) = image.get_pixel(x, y) {
@@ -275,7 +278,7 @@ fn auto_white_balance(image: &Matrix3) -> Matrix3 {
             }
         }
     }
-    
+
     result
 }
 ```
@@ -287,7 +290,7 @@ use cv_rusty::{Matrix3, rgb_to_hsv, hsv_to_rgb};
 
 fn enhance_contrast(image: &Matrix3, factor: f32) -> Matrix3 {
     let mut result = image.clone();
-    
+
     for y in 0..image.height() {
         for x in 0..image.width() {
             if let Some((r, g, b)) = image.get_pixel(x, y) {
@@ -299,7 +302,7 @@ fn enhance_contrast(image: &Matrix3, factor: f32) -> Matrix3 {
             }
         }
     }
-    
+
     result
 }
 ```
@@ -324,16 +327,16 @@ use cv_rusty::{Matrix3, Matrix1, rgb_to_hsv};
 
 fn segment_by_hue(image: &Matrix3, target_hue: f32, tolerance: f32) -> Matrix1 {
     let mut mask = Matrix1::zeros(image.width(), image.height());
-    
+
     for y in 0..image.height() {
         for x in 0..image.width() {
             if let Some((r, g, b)) = image.get_pixel(x, y) {
                 let (h, s, v) = rgb_to_hsv(r, g, b);
-                
+
                 // Check if hue is within tolerance
                 let hue_diff = (h - target_hue).abs();
                 let in_range = hue_diff < tolerance || hue_diff > (360.0 - tolerance);
-                
+
                 if in_range && s > 0.3 && v > 0.3 {
                     mask.set_pixel(x, y, 255);
                 } else {
@@ -342,7 +345,7 @@ fn segment_by_hue(image: &Matrix3, target_hue: f32, tolerance: f32) -> Matrix1 {
             }
         }
     }
-    
+
     mask
 }
 ```

@@ -8,6 +8,7 @@ nav:
   - Guides:
       - Color Conversion: guides/color-conversion-guide.md
       - Convolution: guides/convolution.md
+      - Drawing: guides/drawing.md
       - Image Writing: guides/image-writing.md
       - Transform Operations: guides/transform_operations.md
       - Custom Rotation: guides/custom_rotation.md
@@ -17,8 +18,11 @@ nav:
       - Embedded Systems: architecture/embedded.md
   - Changelogs:
       - Color Features: changelogs/changelog-color-features.md
+      - Hex Color Support: changelogs/hex_color_support.md
+      - Opacity Support: changelogs/opacity_support.md
+      - Unified Drawing API: changelogs/unified_drawing_api.md
+      - Unified show_image API: changelogs/unified_show_image_api.md
       - Window Feature: changelogs/window_feature_summary.md
-      - Unified show_image API: changelogs/UNIFIED_SHOW_IMAGE_API.md
 
 theme:
   name: material

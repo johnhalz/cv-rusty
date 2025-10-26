@@ -35,7 +35,7 @@ pub enum Rotation {
 impl Rotation {
     /// Converts the rotation to radians
     pub fn to_radians(&self) -> f32
-    
+
     /// Converts the rotation to degrees
     pub fn to_degrees(&self) -> f32
 }
@@ -172,7 +172,7 @@ let thumbnail = create_rotated_thumbnail(&image, 15.0, 200);
 ```rust
 fn create_kaleidoscope_effect(image: &Matrix3, divisions: usize) -> Vec<Matrix3> {
     let angle_step = 360.0 / divisions as f32;
-    
+
     (0..divisions)
         .map(|i| {
             let angle = i as f32 * angle_step;
@@ -261,6 +261,7 @@ The output image is automatically sized to contain the entire rotated image with
 ### Example Dimension Changes
 
 **Square Images (100×100):**
+
 - 0°: 100×100
 - 15°: ~104×104
 - 30°: ~116×116
@@ -268,6 +269,7 @@ The output image is automatically sized to contain the entire rotated image with
 - 90°: 100×100
 
 **Rectangular Images (200×100):**
+
 - 0°: 200×100
 - 30°: ~249×230
 - 45°: ~212×212
@@ -287,12 +289,14 @@ The output image is automatically sized to contain the entire rotated image with
 ## When to Use Each Method
 
 ### Use `rotate()` (Fixed Angles) When:
+
 - You need 90°, 180°, or 270° rotation
 - Performance is critical
 - You want lossless transformation
 - Dimensions are important to predict
 
 ### Use `rotate_custom()` (Arbitrary Angles) When:
+
 - You need precise angle control
 - Straightening tilted images
 - Creating artistic effects
@@ -360,6 +364,7 @@ cargo run --example transform_demo --release
 ```
 
 This will create several output files demonstrating:
+
 - 45° rotation with degrees
 - 30° rotation with nearest neighbor
 - PI/6 radians rotation
@@ -371,22 +376,24 @@ This will create several output files demonstrating:
 
 For angle θ (in radians), clockwise rotation:
 
-```
-[cos(θ)  -sin(θ)]
-[sin(θ)   cos(θ)]
-```
+$$
+\begin{pmatrix}
+\cos\theta & -\sin\theta \\
+\sin\theta & \cos\theta
+\end{pmatrix}
+$$
 
 ### Implementation
 
 Uses inverse rotation to map output pixels to source:
 
-```
-For each output pixel (x_out, y_out):
+For each output pixel (`x_out`, `y_out`):
+
   1. Translate to origin (subtract center)
   2. Apply inverse rotation
   3. Translate back (add center)
   4. Sample source image with interpolation
-```
+
 
 ### Why Inverse Rotation?
 
@@ -402,6 +409,7 @@ Forward rotation would leave gaps. Inverse rotation ensures every output pixel i
 ## Future Enhancements
 
 Potential additions:
+
 - [ ] Rotation around custom pivot point
 - [ ] Crop to original dimensions option
 - [ ] Bicubic interpolation

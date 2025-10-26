@@ -5,12 +5,14 @@ This guide covers the efficient convolution operations available in cv-rusty, in
 ## Overview
 
 Convolution is a fundamental operation in image processing used for:
+
 - **Blurring**: Smoothing images and reducing noise
 - **Edge Detection**: Finding boundaries and features
 - **Sharpening**: Enhancing image details
 - **Custom Effects**: Embossing, motion blur, etc.
 
 CV Rusty provides a highly optimized convolution implementation with:
+
 - ✅ Parallel processing support (automatic multi-threading)
 - ✅ Multiple border handling modes
 - ✅ Separable convolution for performance
@@ -26,14 +28,14 @@ use cv_rusty::{read_jpeg, write_jpeg, Kernel, BorderMode};
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Load image
     let image = read_jpeg("input.jpg")?;
-    
+
     // Apply Gaussian blur
     let kernel = Kernel::gaussian(5, 1.0);
     let blurred = image.convolve(&kernel, BorderMode::Replicate);
-    
+
     // Save result
     write_jpeg(&blurred, "output.jpg", 90)?;
-    
+
     Ok(())
 }
 ```
@@ -55,10 +57,12 @@ let very_blurred = image.convolve(&kernel, BorderMode::Replicate);
 ```
 
 **Parameters:**
+
 - `size`: Kernel size (must be odd: 3, 5, 7, 9, etc.)
 - `sigma`: Standard deviation (controls blur strength)
 
 **Guidelines:**
+
 - `sigma ≈ size/6` for good coverage
 - Larger sigma = stronger blur
 - Use separable convolution for kernels > 5×5
@@ -95,23 +99,23 @@ fn combine_gradients(gx: &Matrix3, gy: &Matrix3) -> Matrix3 {
     let width = gx.width();
     let height = gx.height();
     let mut result_data = Vec::with_capacity(width * height * 3);
-    
+
     for y in 0..height {
         for x in 0..width {
             let (gx_r, gx_g, gx_b) = gx.get_pixel(x, y).unwrap();
             let (gy_r, gy_g, gy_b) = gy.get_pixel(x, y).unwrap();
-            
+
             // Compute magnitude: sqrt(gx² + gy²)
             let mag_r = ((gx_r as f32).powi(2) + (gy_r as f32).powi(2)).sqrt();
             let mag_g = ((gx_g as f32).powi(2) + (gy_g as f32).powi(2)).sqrt();
             let mag_b = ((gx_b as f32).powi(2) + (gy_b as f32).powi(2)).sqrt();
-            
+
             result_data.push(mag_r.min(255.0) as u8);
             result_data.push(mag_g.min(255.0) as u8);
             result_data.push(mag_b.min(255.0) as u8);
         }
     }
-    
+
     Matrix3::new(width, height, result_data)
 }
 ```
@@ -165,6 +169,7 @@ let blurred = image.convolve(&custom_blur, BorderMode::Replicate);
 ```
 
 **Requirements:**
+
 - Width and height must be odd (3, 5, 7, 9, etc.)
 - Data length must equal width × height
 
@@ -237,6 +242,7 @@ For separable kernels (like Gaussian), use `convolve_separable()` for massive pe
 A 2D convolution with an N×N kernel requires N² operations per pixel. A separable kernel can be decomposed into two 1D convolutions, requiring only 2N operations.
 
 **Performance Gain:**
+
 - 3×3: 1.5× faster
 - 5×5: 2.5× faster
 - 9×9: 4.5× faster
@@ -262,7 +268,7 @@ fn create_gaussian_1d(size: usize, sigma: f32) -> Vec<f32> {
     let half = (size / 2) as i32;
     let mut kernel = Vec::with_capacity(size);
     let mut sum = 0.0;
-    
+
     for i in -half..=half {
         let coeff = 1.0 / (core::f32::consts::TAU.sqrt() * sigma);
         let exp = -(i as f32 * i as f32) / (2.0 * sigma * sigma);
@@ -270,12 +276,12 @@ fn create_gaussian_1d(size: usize, sigma: f32) -> Vec<f32> {
         kernel.push(value);
         sum += value;
     }
-    
+
     // Normalize
     for value in &mut kernel {
         *value /= sum;
     }
-    
+
     kernel
 }
 ```
@@ -283,12 +289,14 @@ fn create_gaussian_1d(size: usize, sigma: f32) -> Vec<f32> {
 ### When to Use Separable Convolution
 
 ✅ **Use separable when:**
+
 - Gaussian blur (always separable)
 - Box blur (always separable)
 - Large kernel sizes (> 5×5)
 - You care about performance
 
 ❌ **Don't use separable for:**
+
 - Sobel (not separable in practice)
 - Laplacian (not separable)
 - Custom non-separable kernels
@@ -315,11 +323,13 @@ cv-rusty = { version = "0.2.0", default-features = false, features = ["std"] }
 ### Performance Impact
 
 On a 1920×1080 image with a 9×9 kernel:
+
 - **Single-threaded:** ~200ms
 - **Multi-threaded (8 cores):** ~30ms
 - **Speedup:** ~6.7×
 
 **Guidelines:**
+
 - Parallel is best for large images (> 500×500)
 - Parallel is best for large kernels (> 5×5)
 - Small images may be faster single-threaded due to overhead

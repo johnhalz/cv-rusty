@@ -1,9 +1,5 @@
 # Unified Drawing API - Design Document
 
-**Date:** 2024
-**Status:** Implemented
-**Version:** 0.4.0+
-
 ## Overview
 
 The drawing module now uses a unified API where `draw_rectangle()` and `draw_circle()` work seamlessly with both RGB (`Matrix3`) and grayscale (`Matrix1`) images. This eliminates the need for separate `_gray` variants and makes the API more intuitive.
@@ -13,7 +9,7 @@ The drawing module now uses a unified API where `draw_rectangle()` and `draw_cir
 ### Previous API (Initial Implementation)
 
 ```rust
-use cv_rusty::{Matrix3, Matrix1, draw_rectangle, draw_rectangle_gray, 
+use cv_rusty::{Matrix3, Matrix1, draw_rectangle, draw_rectangle_gray,
                draw_circle, draw_circle_gray, Color};
 
 // RGB images
@@ -30,6 +26,7 @@ draw_rectangle_gray(&mut gray_image, 320.0, 240.0, 100.0, 60.0, 0.0, 2,
 ```
 
 **Problems:**
+
 - Users had to remember two different function names
 - Not consistent with the library's `show_image()` API (which works with both types)
 - More cognitive load when switching between image types
@@ -54,6 +51,7 @@ draw_rectangle(&mut gray_image, 320.0, 240.0, 100.0, 60.0, 0.0,
 ```
 
 **Benefits:**
+
 - Single function name to remember
 - Consistent with `show_image()` API pattern
 - Type-safe through traits
@@ -141,7 +139,7 @@ pub trait Displayable {
     fn to_display_data(&self) -> Vec<u8>;
 }
 
-pub fn show_image<T: Displayable>(window_name: &str, image: &T) 
+pub fn show_image<T: Displayable>(window_name: &str, image: &T)
     -> Result<(), WindowError>
 ```
 

@@ -28,6 +28,7 @@ cv-rusty = { version = "0.3.0", features = ["window"] }
 Displays an image in a window. Works with both grayscale (`Matrix1`) and color (`Matrix3`) images.
 
 **Arguments:**
+
 - `window_name: &str` - Name of the window
 - `image: &T` - Image to display (any type implementing `Displayable` trait)
 
@@ -51,6 +52,7 @@ show_image("Grayscale Window", &gray_image)?;
 Displays an image and waits for user to close the window. Works with both color and grayscale images.
 
 **Arguments:**
+
 - `window_name: &str` - Name of the window
 - `image: &T` - Image to display (any type implementing `Displayable` trait)
 
@@ -74,6 +76,7 @@ show_and_wait("Grayscale Window", &gray_image)?;
 Waits for a key press for a specified duration (simplified version).
 
 **Arguments:**
+
 - `delay: u64` - The number of milliseconds to wait. Use 0 to wait indefinitely.
 
 **Example:**
@@ -94,10 +97,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Load an image from disk
     let image = read_jpeg("input.jpg")?;
     println!("Loaded {}x{} image", image.width(), image.height());
-    
+
     // Display the image
     show_image("Original Image", &image)?;
-    
+
     // Create a modified version
     let mut modified = image.clone();
     for y in 100..200 {
@@ -105,14 +108,14 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             modified.set_pixel(x, y, 255, 0, 0);
         }
     }
-    
+
     // Display the modified image
     show_image("Modified Image", &modified)?;
-    
+
     // Convert to grayscale and display
     let gray = image.to_grayscale(cv_rusty::GrayscaleMethod::Average);
     show_image("Grayscale", &gray)?;
-    
+
     Ok(())
 }
 ```
@@ -125,6 +128,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 ## Window Behavior
 
 Each call to `show_image` creates a new window that:
+
 - Opens immediately with the specified image
 - Runs at a maximum of 60 FPS
 - Remains open until the user presses ESC or closes the window
@@ -136,7 +140,6 @@ The window functions return `Result<(), WindowError>` with the following error t
 
 - `WindowError::WindowCreation(String)` - Failed to create or update the window
 - `WindowError::InvalidDimensions` - Image has zero width or height
-## Error Handling
 
 **Example:**
 ```rust
@@ -192,7 +195,7 @@ impl Displayable for MyImage {
         if self.width == 0 || self.height == 0 {
             return Err(WindowError::InvalidDimensions);
         }
-        
+
         let buffer: Vec<u32> = self.data
             .iter()
             .map(|&pixel| {
@@ -200,7 +203,7 @@ impl Displayable for MyImage {
                 (rgb << 16) | (rgb << 8) | rgb
             })
             .collect();
-        
+
         Ok((buffer, self.width, self.height))
     }
 }
@@ -231,16 +234,19 @@ cargo run --example window_display_example --features window
 Enable the window feature: `cargo run --example simple_show_image --features window`
 
 ### "Failed to create window"
+
 - Ensure you have GUI support (not running in headless environment)
 - On Linux, ensure X11 or Wayland is available
 - Check that image dimensions are valid (> 0)
 
 ### Window doesn't appear
+
 - Check that the image has valid dimensions
 - Ensure the program isn't terminating immediately after the show_image call
 - Try adding error handling to see if an error is being silently ignored
 
 ### Image colors look wrong
+
 - Ensure your image data is in RGB format (not BGR)
 
 ## Benefits of the Unified API

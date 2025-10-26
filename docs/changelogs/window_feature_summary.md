@@ -26,6 +26,7 @@ Created a comprehensive window display module with the following functions:
 #### Error Handling
 
 - `WindowError` enum with variants:
+
   - `WindowCreation(String)` - Window creation/update failures
   - `InvalidDimensions` - Zero width or height images
 
@@ -47,11 +48,13 @@ Created a comprehensive window display module with the following functions:
 Created two comprehensive examples:
 
 #### simple_show_image.rs
+
 - Basic usage demonstration
 - Creates a simple test pattern with red square and blue border
 - Shows minimal code required to display an image
 
 #### window_display_example.rs
+
 - Comprehensive demonstration of all features
 - Color gradient generation
 - Grayscale radial gradient
@@ -62,6 +65,7 @@ Created two comprehensive examples:
 
 #### docs/window_display.md
 Complete API documentation including:
+
 - Feature requirements
 - API reference for all functions
 - Complete examples
@@ -71,11 +75,13 @@ Complete API documentation including:
 - Troubleshooting guide
 
 #### README.md Updates
+
 - Added `window` feature to Feature Flags section
 - Added "Displaying Images in Windows" usage section with example
 - Included Cargo.toml configuration instructions
 
 #### examples/README.md Updates
+
 - Added "Window Display (GUI)" section
 - Documented both examples with usage instructions
 - Added feature flags section
@@ -100,21 +106,21 @@ use cv_rusty::{Matrix3, Matrix1, show_image};
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Works with color images
     let mut color_image = Matrix3::zeros(400, 300);
-    
+
     // Draw something
     for y in 100..200 {
         for x in 150..250 {
             color_image.set_pixel(x, y, 255, 0, 0);
         }
     }
-    
+
     // Display the color image
     show_image("My Window", &color_image)?;
-    
+
     // Also works with grayscale images
     let gray_image = Matrix1::zeros(400, 300);
     show_image("Grayscale", &gray_image)?;
-    
+
     Ok(())
 }
 ```
@@ -160,6 +166,7 @@ cargo run --example window_display_example --features window
 ### Optional Feature
 
 Made it an optional feature because:
+
 - Maintains `no_std` compatibility for core library
 - Doesn't add GUI dependencies for embedded/server use cases
 - Users can opt-in only when needed
@@ -167,6 +174,7 @@ Made it an optional feature because:
 ### API Design
 
 Simple, intuitive API:
+
 - Unified function name (`show_image`) works with all image types
 - Uses Rust's trait system (`Displayable` trait) for type safety and extensibility
 - Blocking API for easy usage

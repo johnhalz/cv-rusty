@@ -48,6 +48,7 @@ pub fn show_image<T: Displayable>(window_name: &str, image: &T) -> Result<(), Wi
 ```
 
 **Benefits:**
+
 - Single function for all image types
 - Type-safe through compile-time checking
 - Extensible to custom image types
@@ -76,6 +77,7 @@ pub trait Displayable {
 ```
 
 **Implementations:**
+
 - ✅ `Matrix1` (grayscale images)
 - ✅ `Matrix3` (color images)
 - ✅ Custom types (user-implementable)
@@ -95,7 +97,7 @@ impl Displayable for MyImage {
         if self.width == 0 || self.height == 0 {
             return Err(WindowError::InvalidDimensions);
         }
-        
+
         let buffer: Vec<u32> = self.data
             .iter()
             .map(|&pixel| {
@@ -103,7 +105,7 @@ impl Displayable for MyImage {
                 (rgb << 16) | (rgb << 8) | rgb
             })
             .collect();
-        
+
         Ok((buffer, self.width, self.height))
     }
 }
@@ -163,15 +165,18 @@ show_image("Window", &"not an image")?;
 ## Updated Components
 
 ### Source Code
+
 - ✅ `src/window.rs` - Refactored with trait-based implementation
 - ✅ `src/lib.rs` - Updated public exports
 
 ### Examples
+
 - ✅ `examples/simple_show_image.rs` - Updated to use unified API
 - ✅ `examples/window_display_example.rs` - Updated to use unified API
 - ✅ `examples/test_window.rs` - Updated to use unified API
 
 ### Documentation
+
 - ✅ `README.md` - Updated usage examples
 - ✅ `docs/guides/window_display.md` - Comprehensive guide update
 - ✅ `docs/quick-reference.md` - All examples updated
@@ -214,6 +219,7 @@ show_and_wait("Gray", &gray_image)?;   // Works with both
 ### Developer Experience
 
 1. **Simplified API Surface**
+
    - Fewer functions to remember
    - No need to choose between variants
    - Single consistent interface
@@ -227,11 +233,13 @@ show_and_wait("Gray", &gray_image)?;   // Works with both
    ```
 
 3. **Enhanced Type Safety**
+
    - Compile-time checking
    - Better error messages
    - No runtime type checking
 
 4. **Extensibility**
+
    - Implement `Displayable` for custom types
    - Works seamlessly with existing API
    - Future-proof design
@@ -268,6 +276,7 @@ cargo run --example window_display_example --features window
 ## Deprecation Timeline
 
 ### Version 0.4.0 (This Release)
+
 - ❌ `show_image_color()` removed
 - ❌ `show_and_wait_gray()` removed
 - ✅ `show_image<T: Displayable>()` replaces both
@@ -276,6 +285,7 @@ cargo run --example window_display_example --features window
 ### No Deprecation Period
 
 Since this is a clean break with clear migration path:
+
 - Functions removed immediately (not deprecated)
 - Migration is mechanical and straightforward
 - No behavior changes, only naming unification
@@ -333,6 +343,7 @@ This change improves API ergonomics while maintaining full backward compatibilit
 ## Questions?
 
 If you have questions about this change:
+
 1. Read the [Migration Guide](../../MIGRATION_GUIDE.md)
 2. Check the updated [documentation](../guides/window_display.md)
 3. Review the [examples](../../examples/)

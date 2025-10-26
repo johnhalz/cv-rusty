@@ -96,6 +96,7 @@ result = existing_color * (1 - opacity) + new_color * opacity
 ```
 
 **Key features:**
+
 - Default opacity is `1.0` (fully opaque) for all standard constructors
 - Opacity is automatically clamped to the range `[0.0, 1.0]`
 - Works with both grayscale and RGB images
@@ -490,23 +491,23 @@ use cv_rusty::{Matrix3, draw_circle, draw_rectangle, Color, Stroke};
 
 fn draw_bar_chart(data: &[f32]) -> Matrix3 {
     let mut image = Matrix3::zeros(400, 600);
-    
+
     // White background
     for y in 0..image.height() {
         for x in 0..image.width() {
             image.set_pixel(x, y, 255, 255, 255);
         }
     }
-    
+
     let bar_width = 40.0;
     let spacing = 20.0;
     let max_height = 300.0;
     let base_y = 350.0;
-    
+
     for (i, &value) in data.iter().enumerate() {
         let x = 50.0 + (i as f32 * (bar_width + spacing));
         let height = value * max_height;
-        
+
         draw_rectangle(
             &mut image,
             x + bar_width / 2.0,
@@ -517,7 +518,7 @@ fn draw_bar_chart(data: &[f32]) -> Matrix3 {
             Some(Stroke::new(2, Color::rgb(0, 0, 0))),
             Some(Color::rgb(100, 150, 255))
         );
-        
+
         // Data point marker
         draw_circle(
             &mut image,
@@ -528,7 +529,7 @@ fn draw_bar_chart(data: &[f32]) -> Matrix3 {
             Some(Color::rgb(255, 100, 100))
         );
     }
-    
+
     image
 }
 
@@ -548,7 +549,7 @@ fn annotate_image(
     confidence: f32
 ) {
     let (x, y, w, h) = bbox;
-    
+
     // Draw bounding box
     let color = if confidence > 0.8 {
         Color::rgb(0, 255, 0)  // Green for high confidence
@@ -557,7 +558,7 @@ fn annotate_image(
     } else {
         Color::rgb(255, 0, 0)  // Red for low confidence
     };
-    
+
     draw_rectangle(
         image,
         x + w / 2.0,
@@ -567,7 +568,7 @@ fn annotate_image(
         Some(Stroke::new(3, color)),
         None  // No fill, just outline
     );
-    
+
     // Draw confidence indicator (corner circles)
     let radius = 5.0;
     for (cx, cy) in [
@@ -592,7 +593,7 @@ Draw shapes in order from back to front for proper layering:
 
 ```rust
 // 1. Draw background
-draw_rectangle(&mut image, 400.0, 300.0, 700.0, 500.0, 0.0, 0, None, 
+draw_rectangle(&mut image, 400.0, 300.0, 700.0, 500.0, 0.0, 0, None,
                Some(Color::rgb(200, 200, 200)));
 
 // 2. Draw middle layer
@@ -620,7 +621,7 @@ for i in 0..5 {
     } else {
         Color::rgb(255, 255, 255)
     };
-    
+
     draw_circle(&mut image, center_x, center_y, radius, 0, None, Some(color));
 }
 ```
@@ -639,13 +640,13 @@ for row in 0..rows {
     for col in 0..cols {
         let x = start_x + (col as f32 * cell_size);
         let y = start_y + (row as f32 * cell_size);
-        
+
         let fill = if (row + col) % 2 == 0 {
             Color::rgb(200, 200, 200)
         } else {
             Color::rgb(255, 255, 255)
         };
-        
+
         draw_rectangle(
             &mut image,
             x + cell_size / 2.0,

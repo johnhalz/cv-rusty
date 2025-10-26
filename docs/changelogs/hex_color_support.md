@@ -1,9 +1,5 @@
 # Hex Color Support - Feature Documentation
 
-**Date:** 2024
-**Status:** Implemented
-**Version:** 0.5.0+
-
 ## Overview
 
 The `Color` enum now supports creating colors from hex strings, making it easy to use web colors and design system colors in your drawings. This feature supports both 6-digit (`#RRGGBB`) and 3-digit (`#RGB`) hex formats, with or without the hash prefix.
@@ -20,6 +16,7 @@ let accent = Color::rgb(155, 89, 182); // Hard to remember/communicate
 ```
 
 **Issues:**
+
 - Not intuitive - who remembers that (52, 152, 219) is a nice blue?
 - Hard to share colors between web and code
 - Difficult to use design system colors
@@ -36,6 +33,7 @@ let red: Color = "#E74C3C".parse().unwrap();        // Idiomatic Rust
 ```
 
 **Benefits:**
+
 - ✅ Use colors from web design tools directly
 - ✅ Easy to communicate colors (just copy the hex code)
 - ✅ Compatible with CSS, design systems, and color pickers
@@ -68,6 +66,7 @@ Color::from_hex("#FfFfFf")  // White
 #### 3-Digit Format (RGB)
 
 The 3-digit format is a shorthand where each digit is doubled:
+
 - `#F00` expands to `#FF0000`
 - `#0F0` expands to `#00FF00`
 - `#369` expands to `#336699`
@@ -321,6 +320,7 @@ fn test_common_colors() {
 ```
 
 **Test Coverage:**
+
 - ✅ 6-digit format with/without hash
 - ✅ 3-digit format with/without hash
 - ✅ Case sensitivity (uppercase, lowercase, mixed)
@@ -401,7 +401,7 @@ let color = Color::from_hex("#3498DB").unwrap();   // New way
 Potential additions:
 
 - **8-digit format:** `#RRGGBBAA` for alpha channel support
-- **Named colors:** `Color::from_name("red")` 
+- **Named colors:** `Color::from_name("red")`
 - **HSL/HSV parsing:** `Color::from_hsl("hsl(210, 50%, 50%)")`
 - **RGB function parsing:** `Color::from_rgb_str("rgb(255, 0, 0)")`
 - **Compile-time parsing:** Macro for zero-cost hex colors
