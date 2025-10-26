@@ -90,6 +90,48 @@ Creates test patterns and writes them as JPEG and PNG.
 cargo run --example write_image_example
 ```
 
+### Drawing Shapes
+
+#### Drawing Example
+Demonstrates drawing rectangles and circles on RGB images with various styles, colors, rotations, and stroke widths.
+
+```bash
+cargo run --example drawing_example
+```
+
+This example creates a canvas and draws:
+- Filled rectangles with borders (with and without rotation)
+- Filled circles with borders
+- Outline-only shapes (no fill)
+- Overlapping shapes
+
+Output: `drawing_output.png`
+
+#### Drawing Grayscale Example
+Demonstrates drawing on grayscale (Matrix1) images.
+
+```bash
+cargo run --example drawing_grayscale_example
+```
+
+Output: `drawing_grayscale_output.png`
+
+#### Drawing Hex Colors Example
+Demonstrates using hex color strings for drawing.
+
+```bash
+cargo run --example drawing_hex_colors
+```
+
+This example shows:
+- 6-digit hex format (`#RRGGBB` or `RRGGBB`)
+- 3-digit hex format (`#RGB` or `RGB`)
+- Using `Color::from_hex()` method
+- Using `.parse()` with `FromStr` trait
+- Common web colors
+
+Output: `drawing_hex_colors.png`
+
 ### Image Transformations
 
 #### Transform Demo
@@ -169,6 +211,7 @@ The convolution examples will demonstrate various effects:
 
 ## Creating Your Own Examples
 
+### Convolution Example
 ```rust
 use cv_rusty::{read_jpeg, write_jpeg, show_image, Kernel, BorderMode};
 
@@ -186,6 +229,63 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Display and save result
     show_image("Blurred", &blurred)?;
     write_jpeg(&blurred, "output.jpg", 90)?;
+    
+    Ok(())
+}
+```
+
+### Drawing Example
+```rust
+use cv_rusty::{Matrix3, draw_rectangle, draw_circle, write_png, Color};
+
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    // Create a white canvas
+    let mut image = Matrix3::zeros(480, 640);
+    for y in 0..image.height() {
+        for x in 0..image.width() {
+            image.set_pixel(x, y, 255, 255, 255);
+        }
+    }
+    
+    // Draw a red rectangle with black border
+    draw_rectangle(
+        &mut image,
+        320.0, 240.0,  // center position (x, y)
+        100.0, 80.0,   // width, height
+        45.0,          // rotation in degrees
+        3,             // stroke width
+        Some(Color::rgb(0, 0, 0)),       // black stroke
+        Some(Color::rgb(255, 0, 0))      // red fill
+    );
+    
+    // Use hex colors
+    draw_rectangle(
+        &mut image,
+        420.0, 240.0,
+        100.0, 80.0,
+        0.0,
+        2,
+        Some(Color::from_hex("#2C3E50")?),  // dark blue-gray
+        Some(Color::from_hex("#3498DB")?)   // light blue
+    );
+    
+    // Draw a blue circle with white border
+    draw_circle(
+        &mut image,
+        200.0, 200.0,  // center position (x, y)
+        50.0,          // radius
+        2,             // stroke width
+        Some(Color::rgb(255, 255, 255)), // white stroke
+        Some(Color::rgb(0, 0, 255))      // blue fill
+    );
+    
+    // Parse color from string
+    let pink: Color = "#FF1493".parse()?;
+    draw_circle(&mut image, 300.0, 200.0, 40.0, 2,
+                Some(Color::black()), Some(pink));
+    
+    // Save result
+    write_png(&image, "output.png")?;
     
     Ok(())
 }
