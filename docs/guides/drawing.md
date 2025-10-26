@@ -22,7 +22,8 @@ The drawing module is `no_std` compatible and provides:
 - ✅ **RGB support** via `Matrix3`
 - ✅ **Flexible styling** with customizable colors, stroke width, and fill
 - ✅ **Rotation support** for rectangles (in degrees)
-- ✅ **Anti-aliasing-free** rendering (pixel-perfect, no blending)
+- ✅ **Opacity/transparency** support with alpha blending
+- ✅ **Anti-aliasing-free** rendering (pixel-perfect)
 
 ## Color System
 
@@ -46,6 +47,17 @@ let magenta = Color::from_hex("F0F").unwrap();       // 3-digit without #
 // Parse from strings using FromStr trait
 let yellow: Color = "#FFFF00".parse().unwrap();
 let orange: Color = "FF8800".parse().unwrap();
+
+// Create colors with custom opacity (0.0 = fully transparent, 1.0 = fully opaque)
+let semi_red = Color::rgb_with_opacity(255, 0, 0, 0.5);      // 50% transparent red
+let semi_gray = Color::gray_with_opacity(128, 0.7);          // 70% opaque gray
+
+// Modify opacity of existing colors
+let opaque_blue = Color::rgb(0, 0, 255);
+let transparent_blue = opaque_blue.with_opacity(0.3);        // 30% opaque blue
+
+// Get opacity value
+let opacity = semi_red.opacity();     // 0.5
 
 // Conversions
 let rgb_tuple = red.to_rgb();         // (255, 0, 0)
@@ -74,6 +86,40 @@ This means `#369` expands to `#336699` (RGB: 51, 102, 153).
 
 **With or without hash:**
 - Both `"#FF0000"` and `"FF0000"` are valid
+
+### Opacity and Alpha Blending
+
+Colors support opacity values between 0.0 (fully transparent) and 1.0 (fully opaque). When drawing with semi-transparent colors, the new color is blended with the existing pixel using alpha blending:
+
+```
+result = existing_color * (1 - opacity) + new_color * opacity
+```
+
+**Key features:**
+- Default opacity is `1.0` (fully opaque) for all standard constructors
+- Opacity is automatically clamped to the range `[0.0, 1.0]`
+- Works with both grayscale and RGB images
+- Fully transparent colors (opacity = 0.0) do not modify pixels
+- Blending occurs for each color channel independently
+
+```rust
+// Create semi-transparent colors
+let semi_red = Color::rgb_with_opacity(255, 0, 0, 0.5);
+let semi_gray = Color::gray_with_opacity(200, 0.3);
+
+// Modify opacity of existing colors
+let blue = Color::rgb(0, 0, 255);
+let transparent_blue = blue.with_opacity(0.4);
+
+// Draw with transparency
+draw_circle(
+    &mut image,
+    320.0, 240.0,
+    50.0,
+    None,
+    Some(Color::rgb_with_opacity(255, 0, 0, 0.6))  // 60% opaque red
+);
+```
 
 ### Grayscale Conversion
 
@@ -172,6 +218,31 @@ draw_rectangle(
 );
 ```
 
+### Semi-Transparent Rectangle
+
+```rust
+// Draw overlapping semi-transparent rectangles
+draw_rectangle(
+    &mut rgb_image,
+    200.0, 200.0,
+    150.0, 100.0,
+    0.0,
+    None,
+    Some(Color::rgb(0, 0, 255))  // Opaque blue background
+);
+
+// Overlapping semi-transparent red rectangle
+draw_rectangle(
+    &mut rgb_image,
+    250.0, 220.0,
+    150.0, 100.0,
+    0.0,
+    None,
+    Some(Color::rgb_with_opacity(255, 0, 0, 0.5))  // 50% transparent red
+);
+// The overlap will show a purple blend
+```
+
 ## Drawing Circles
 
 Circles are drawn with their center at the specified `(x, y)` position.
@@ -240,6 +311,36 @@ draw_circle(
     None,          // No stroke
     Some(Color::rgb(0, 255, 0))      // Green fill
 );
+```
+
+### Semi-Transparent Circle
+
+```rust
+// Draw overlapping semi-transparent circles for a Venn diagram effect
+draw_circle(
+    &mut rgb_image,
+    200.0, 240.0,
+    60.0,
+    Some(Stroke::new(2, Color::rgb(200, 0, 0))),
+    Some(Color::rgb_with_opacity(255, 0, 0, 0.6))  // 60% opaque red
+);
+
+draw_circle(
+    &mut rgb_image,
+    260.0, 240.0,
+    60.0,
+    Some(Stroke::new(2, Color::rgb(0, 200, 0))),
+    Some(Color::rgb_with_opacity(0, 255, 0, 0.6))  // 60% opaque green
+);
+
+draw_circle(
+    &mut rgb_image,
+    230.0, 290.0,
+    60.0,
+    Some(Stroke::new(2, Color::rgb(0, 0, 200))),
+    Some(Color::rgb_with_opacity(0, 0, 255, 0.6))  // 60% opaque blue
+);
+// Overlapping areas blend the colors
 ```
 
 ## Unified API for All Image Types
@@ -573,11 +674,11 @@ for row in 0..rows {
 ## Limitations
 
 - No anti-aliasing (pixel-perfect rendering only)
-- No alpha blending (opaque colors only)
 - No line drawing (use thin rectangles as workaround)
 - No ellipse support (use circles only)
 - No polygon support (use multiple rectangles)
 - Rectangle rotation is centered (not arbitrary pivot points)
+- Transparency blending is simple alpha compositing (no premultiplied alpha)
 
 ## Future Enhancements
 
@@ -586,9 +687,8 @@ Potential additions in future versions:
 - Line drawing with thickness
 - Polygon drawing
 - Ellipse support
-- Text rendering
 - Anti-aliasing options
-- Alpha blending
+- Premultiplied alpha blending
 - Gradient fills
 - Pattern fills
 - Bezier curves

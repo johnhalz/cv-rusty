@@ -132,6 +132,23 @@ This example shows:
 
 Output: `drawing_hex_colors.png`
 
+#### Opacity Example
+Demonstrates the opacity/transparency feature with semi-transparent shapes and alpha blending.
+
+```bash
+cargo run --example opacity_example
+```
+
+This example shows:
+- Creating colors with custom opacity (0.0 to 1.0)
+- Overlapping semi-transparent shapes that blend colors
+- Venn diagram effect with color mixing
+- Gradient effects using varying opacity levels
+- Watermark-style low-opacity overlays
+- Fully transparent shapes
+
+Output: `opacity_output.png`
+
 ### Image Transformations
 
 #### Transform Demo
@@ -280,6 +297,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let pink: Color = "#FF1493".parse()?;
     draw_circle(&mut image, 300.0, 200.0, 40.0,
                 Some(Stroke::new(2, Color::black())), Some(pink));
+    
+    // Draw semi-transparent overlapping shapes
+    draw_circle(&mut image, 150.0, 350.0, 40.0, None,
+                Some(Color::rgb_with_opacity(255, 0, 0, 0.6)));  // 60% opaque red
+    draw_circle(&mut image, 190.0, 350.0, 40.0, None,
+                Some(Color::rgb_with_opacity(0, 0, 255, 0.6)));  // 60% opaque blue
+    // Overlap creates purple blend
     
     // Save result
     write_png(&image, "output.png")?;

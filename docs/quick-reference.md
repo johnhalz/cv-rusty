@@ -217,6 +217,17 @@ let gold = Color::from_hex("FFD700")?;  // # prefix optional
 
 // Parse from string
 let pink: Color = "#FF1493".parse()?;
+
+// Colors with opacity (0.0 = transparent, 1.0 = opaque)
+let semi_red = Color::rgb_with_opacity(255, 0, 0, 0.5);     // 50% transparent
+let semi_gray = Color::gray_with_opacity(128, 0.7);         // 70% opaque
+
+// Modify opacity of existing colors
+let opaque_blue = Color::rgb(0, 0, 255);
+let transparent_blue = opaque_blue.with_opacity(0.3);       // 30% opaque
+
+// Get opacity value
+let opacity = semi_red.opacity();  // Returns 0.5
 ```
 
 ### Draw Rectangle
@@ -403,6 +414,58 @@ fn draw_bbox(image: &mut Matrix3, x: f32, y: f32,
         None
     );
 }
+```
+
+### Opacity and Transparency
+
+```rust
+// Draw overlapping semi-transparent shapes
+draw_rectangle(
+    &mut image,
+    200.0, 200.0,
+    150.0, 100.0,
+    0.0,
+    None,
+    Some(Color::rgb(0, 0, 255))  // Opaque blue
+);
+
+draw_rectangle(
+    &mut image,
+    250.0, 220.0,
+    150.0, 100.0,
+    0.0,
+    None,
+    Some(Color::rgb_with_opacity(255, 0, 0, 0.5))  // 50% transparent red
+);
+// Overlap shows purple blend
+
+// Venn diagram with color blending
+let colors = [
+    Color::rgb_with_opacity(255, 0, 0, 0.6),    // Red
+    Color::rgb_with_opacity(0, 255, 0, 0.6),    // Green
+    Color::rgb_with_opacity(0, 0, 255, 0.6),    // Blue
+];
+
+for (i, color) in colors.iter().enumerate() {
+    draw_circle(
+        &mut image,
+        200.0 + (i as f32 * 60.0),
+        240.0,
+        50.0,
+        None,
+        Some(*color)
+    );
+}
+
+// Watermark effect with very low opacity
+draw_rectangle(
+    &mut image,
+    400.0, 500.0,
+    300.0, 80.0,
+    15.0,
+    None,
+    Some(Color::rgb_with_opacity(128, 128, 128, 0.15))  // 15% opacity
+);
 ```
 
 ### Performance

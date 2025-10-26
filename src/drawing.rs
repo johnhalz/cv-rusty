@@ -40,14 +40,25 @@ use core::str::FromStr;
 
 /// Represents a color value that can be used for both grayscale and RGB images.
 ///
+/// Each color includes an opacity value between 0.0 (fully transparent) and 1.0 (fully opaque).
+/// The default opacity is 1.0 when using the standard constructors.
+///
 /// # Examples
 ///
 /// ```
 /// use cv_rusty::Color;
 ///
-/// // Create colors using constructors
+/// // Create colors using constructors (default opacity 1.0)
 /// let red = Color::rgb(255, 0, 0);
 /// let gray = Color::gray(128);
+///
+/// // Create colors with custom opacity
+/// let semi_transparent_red = Color::rgb_with_opacity(255, 0, 0, 0.5);
+/// let semi_transparent_gray = Color::gray_with_opacity(128, 0.7);
+///
+/// // Modify opacity of existing colors
+/// let opaque_blue = Color::rgb(0, 0, 255);
+/// let transparent_blue = opaque_blue.with_opacity(0.3);
 ///
 /// // Create colors from hex strings
 /// let blue = Color::from_hex("#0000FF").unwrap();
@@ -57,40 +68,83 @@ use core::str::FromStr;
 /// // Using FromStr trait
 /// let yellow: Color = "#FFFF00".parse().unwrap();
 /// ```
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq)]
 pub enum Color {
-    /// Grayscale color (single channel)
-    Gray(u8),
-    /// RGB color (three channels)
-    Rgb(u8, u8, u8),
+    /// Grayscale color (single channel) with opacity (0.0-1.0)
+    Gray(u8, f32),
+    /// RGB color (three channels) with opacity (0.0-1.0)
+    Rgb(u8, u8, u8, f32),
 }
 
 impl Color {
-    /// Creates a new grayscale color.
+    /// Creates a new grayscale color with default opacity (1.0).
     pub fn gray(value: u8) -> Self {
-        Color::Gray(value)
+        Color::Gray(value, 1.0)
     }
 
-    /// Creates a new RGB color.
+    /// Creates a new grayscale color with specified opacity.
+    ///
+    /// # Arguments
+    ///
+    /// * `value` - Grayscale value (0-255)
+    /// * `opacity` - Opacity value (0.0-1.0), automatically clamped
+    pub fn gray_with_opacity(value: u8, opacity: f32) -> Self {
+        Color::Gray(value, opacity.clamp(0.0, 1.0))
+    }
+
+    /// Creates a new RGB color with default opacity (1.0).
     pub fn rgb(r: u8, g: u8, b: u8) -> Self {
-        Color::Rgb(r, g, b)
+        Color::Rgb(r, g, b, 1.0)
     }
 
-    /// Creates a black color (grayscale or RGB).
+    /// Creates a new RGB color with specified opacity.
+    ///
+    /// # Arguments
+    ///
+    /// * `r` - Red channel (0-255)
+    /// * `g` - Green channel (0-255)
+    /// * `b` - Blue channel (0-255)
+    /// * `opacity` - Opacity value (0.0-1.0), automatically clamped
+    pub fn rgb_with_opacity(r: u8, g: u8, b: u8, opacity: f32) -> Self {
+        Color::Rgb(r, g, b, opacity.clamp(0.0, 1.0))
+    }
+
+    /// Creates a black color (grayscale or RGB) with default opacity (1.0).
     pub fn black() -> Self {
-        Color::Rgb(0, 0, 0)
+        Color::Rgb(0, 0, 0, 1.0)
     }
 
-    /// Creates a white color (grayscale or RGB).
+    /// Creates a white color (grayscale or RGB) with default opacity (1.0).
     pub fn white() -> Self {
-        Color::Rgb(255, 255, 255)
+        Color::Rgb(255, 255, 255, 1.0)
+    }
+
+    /// Gets the opacity value of the color.
+    pub fn opacity(&self) -> f32 {
+        match self {
+            Color::Gray(_, opacity) => *opacity,
+            Color::Rgb(_, _, _, opacity) => *opacity,
+        }
+    }
+
+    /// Returns a new color with the specified opacity.
+    ///
+    /// # Arguments
+    ///
+    /// * `opacity` - New opacity value (0.0-1.0), automatically clamped
+    pub fn with_opacity(self, opacity: f32) -> Self {
+        let opacity = opacity.clamp(0.0, 1.0);
+        match self {
+            Color::Gray(v, _) => Color::Gray(v, opacity),
+            Color::Rgb(r, g, b, _) => Color::Rgb(r, g, b, opacity),
+        }
     }
 
     /// Converts the color to grayscale if it's RGB.
     pub fn to_gray(&self) -> u8 {
         match self {
-            Color::Gray(v) => *v,
-            Color::Rgb(r, g, b) => {
+            Color::Gray(v, _) => *v,
+            Color::Rgb(r, g, b, _) => {
                 // Using standard luminance formula
                 ((0.299 * (*r as f32)) + (0.587 * (*g as f32)) + (0.114 * (*b as f32))) as u8
             }
@@ -100,8 +154,8 @@ impl Color {
     /// Gets RGB values, converting from grayscale if necessary.
     pub fn to_rgb(&self) -> (u8, u8, u8) {
         match self {
-            Color::Gray(v) => (*v, *v, *v),
-            Color::Rgb(r, g, b) => (*r, *g, *b),
+            Color::Gray(v, _) => (*v, *v, *v),
+            Color::Rgb(r, g, b, _) => (*r, *g, *b),
         }
     }
 
@@ -144,7 +198,7 @@ impl Color {
                 let b = parse_hex_digit(hex.as_bytes()[2])?;
 
                 // Expand: F -> FF (15 -> 255)
-                Ok(Color::Rgb(r * 17, g * 17, b * 17))
+                Ok(Color::Rgb(r * 17, g * 17, b * 17, 1.0))
             }
             6 => {
                 // 6-digit format: RRGGBB
@@ -152,7 +206,7 @@ impl Color {
                 let g = parse_hex_byte(&hex[2..4])?;
                 let b = parse_hex_byte(&hex[4..6])?;
 
-                Ok(Color::Rgb(r, g, b))
+                Ok(Color::Rgb(r, g, b, 1.0))
             }
             _ => Err(HexParseError::InvalidLength(hex.len())),
         }
@@ -193,7 +247,7 @@ impl FromStr for Color {
 }
 
 /// Represents stroke properties for drawing shapes.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq)]
 pub struct Stroke {
     /// Width of the stroke in pixels
     pub width: u32,
@@ -257,7 +311,25 @@ impl DrawTarget for Matrix1 {
     }
 
     fn set_pixel_color(&mut self, x: usize, y: usize, color: Color) -> bool {
-        self.set_pixel(x, y, color.to_gray())
+        let gray_value = color.to_gray();
+        let opacity = color.opacity();
+
+        if opacity >= 1.0 {
+            // Fully opaque, just set the pixel
+            self.set_pixel(x, y, gray_value)
+        } else if opacity <= 0.0 {
+            // Fully transparent, don't change anything
+            true
+        } else {
+            // Blend with existing pixel
+            if let Some(existing) = self.get_pixel(x, y) {
+                let blended =
+                    (existing as f32 * (1.0 - opacity) + gray_value as f32 * opacity) as u8;
+                self.set_pixel(x, y, blended)
+            } else {
+                false
+            }
+        }
     }
 }
 
@@ -272,7 +344,25 @@ impl DrawTarget for Matrix3 {
 
     fn set_pixel_color(&mut self, x: usize, y: usize, color: Color) -> bool {
         let (r, g, b) = color.to_rgb();
-        self.set_pixel(x, y, r, g, b)
+        let opacity = color.opacity();
+
+        if opacity >= 1.0 {
+            // Fully opaque, just set the pixel
+            self.set_pixel(x, y, r, g, b)
+        } else if opacity <= 0.0 {
+            // Fully transparent, don't change anything
+            true
+        } else {
+            // Blend with existing pixel
+            if let Some((er, eg, eb)) = self.get_pixel(x, y) {
+                let blended_r = (er as f32 * (1.0 - opacity) + r as f32 * opacity) as u8;
+                let blended_g = (eg as f32 * (1.0 - opacity) + g as f32 * opacity) as u8;
+                let blended_b = (eb as f32 * (1.0 - opacity) + b as f32 * opacity) as u8;
+                self.set_pixel(x, y, blended_r, blended_g, blended_b)
+            } else {
+                false
+            }
+        }
     }
 }
 
@@ -816,5 +906,54 @@ mod tests {
 
         assert!(rgb.set_pixel_color(5, 5, Color::rgb(255, 0, 0)));
         assert!(gray.set_pixel_color(5, 5, Color::gray(128)));
+    }
+
+    #[test]
+    fn test_opacity() {
+        // Test default opacity
+        let red = Color::rgb(255, 0, 0);
+        assert_eq!(red.opacity(), 1.0);
+
+        // Test custom opacity
+        let semi_red = Color::rgb_with_opacity(255, 0, 0, 0.5);
+        assert_eq!(semi_red.opacity(), 0.5);
+
+        // Test opacity clamping
+        let clamped = Color::rgb_with_opacity(255, 0, 0, 1.5);
+        assert_eq!(clamped.opacity(), 1.0);
+
+        let clamped = Color::rgb_with_opacity(255, 0, 0, -0.5);
+        assert_eq!(clamped.opacity(), 0.0);
+
+        // Test with_opacity
+        let red = Color::rgb(255, 0, 0);
+        let semi_red = red.with_opacity(0.7);
+        assert_eq!(semi_red.opacity(), 0.7);
+        assert_eq!(semi_red.to_rgb(), (255, 0, 0));
+    }
+
+    #[test]
+    fn test_opacity_blending() {
+        // Test grayscale blending
+        let mut gray_img = Matrix1::zeros(10, 10);
+        gray_img.set_pixel(5, 5, 100);
+
+        let semi_white = Color::gray_with_opacity(200, 0.5);
+        gray_img.set_pixel_color(5, 5, semi_white);
+
+        let result = gray_img.get_pixel(5, 5).unwrap();
+        assert_eq!(result, 150); // 100 * 0.5 + 200 * 0.5 = 150
+
+        // Test RGB blending
+        let mut rgb_img = Matrix3::zeros(10, 10);
+        rgb_img.set_pixel(5, 5, 100, 0, 0);
+
+        let semi_white = Color::rgb_with_opacity(200, 200, 200, 0.5);
+        rgb_img.set_pixel_color(5, 5, semi_white);
+
+        let (r, g, b) = rgb_img.get_pixel(5, 5).unwrap();
+        assert_eq!(r, 150); // 100 * 0.5 + 200 * 0.5 = 150
+        assert_eq!(g, 100); // 0 * 0.5 + 200 * 0.5 = 100
+        assert_eq!(b, 100); // 0 * 0.5 + 200 * 0.5 = 100
     }
 }

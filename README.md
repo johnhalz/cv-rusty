@@ -18,7 +18,7 @@ Full documentation is available at: **[https://johnhalz.github.io/cv-rusty/](htt
 - **Separable Convolution**: Optimized implementation for separable kernels (significantly faster for large kernels)
 - **Parallel Processing**: Optional multi-threaded processing using Rayon (requires `parallel` feature)
 - **Color Space Conversions**: Convert between RGB, HSV, and HSL color spaces; convert RGB to grayscale with multiple algorithms
-- **Drawing Shapes**: Draw rectangles (with rotation) and circles on images with customizable stroke and fill colors
+- **Drawing Shapes**: Draw rectangles (with rotation) and circles on images with customizable stroke, fill colors, and opacity/transparency support
 - **Image Transformations**: Resize, crop, and rotate operations with multiple interpolation methods
 - **Image I/O**: Built-in support for reading and writing JPEG and PNG images with automatic format conversion (requires `std` feature)</parameter>
 - **Format Support**: Handles RGB24, Grayscale (L8), and CMYK32 JPEG formats; RGB, RGBA, Grayscale, and Grayscale+Alpha PNG formats
@@ -259,6 +259,45 @@ draw_circle(
     40.0,
     Some(Stroke::new(4, Color::rgb(255, 0, 255))),  // 4px magenta stroke
     None                                             // no fill
+);
+
+// Draw semi-transparent shapes with opacity (0.0 = transparent, 1.0 = opaque)
+draw_rectangle(
+    &mut image,
+    320.0, 350.0,
+    120.0, 80.0,
+    0.0,
+    None,
+    Some(Color::rgb_with_opacity(255, 0, 0, 0.5))  // 50% transparent red
+);
+
+// Overlapping semi-transparent circles blend colors
+draw_circle(
+    &mut image,
+    250.0, 450.0,
+    40.0,
+    None,
+    Some(Color::rgb_with_opacity(255, 0, 0, 0.6))  // 60% opaque red
+);
+
+draw_circle(
+    &mut image,
+    290.0, 450.0,
+    40.0,
+    None,
+    Some(Color::rgb_with_opacity(0, 0, 255, 0.6))  // 60% opaque blue
+);
+// The overlap creates a purple blend
+
+// Modify opacity of existing colors
+let green = Color::rgb(0, 255, 0);
+let semi_green = green.with_opacity(0.3);  // 30% opaque
+draw_circle(
+    &mut image,
+    270.0, 480.0,
+    30.0,
+    None,
+    Some(semi_green)
 );
 
 // Same functions work with grayscale images (Matrix1)
