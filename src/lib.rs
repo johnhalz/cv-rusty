@@ -57,7 +57,7 @@ pub mod window;
 
 pub use color::{hsl_to_rgb, hsv_to_rgb, rgb_to_hsl, rgb_to_hsv, GrayscaleMethod};
 pub use convolution::{BorderMode, Kernel};
-pub use drawing::{draw_circle, draw_rectangle, Color, DrawTarget, HexParseError};
+pub use drawing::{draw_circle, draw_rectangle, Color, DrawTarget, HexParseError, Stroke};
 pub use matrix::{Matrix1, Matrix3};
 pub use transform::{InterpolationMethod, Rotation, RotationAngle};
 

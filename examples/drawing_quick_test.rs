@@ -2,7 +2,7 @@
 //!
 //! This is a minimal example to quickly verify drawing works.
 
-use cv_rusty::{draw_circle, draw_rectangle, write_png, Color, Matrix3};
+use cv_rusty::{draw_circle, draw_rectangle, write_png, Color, Matrix3, Stroke};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Create a 400x300 white canvas
@@ -21,8 +21,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         80.0,
         50.0,
         0.0,
-        2,
-        Some(Color::rgb(0, 0, 0)),
+        Some(Stroke::new(2, Color::rgb(0, 0, 0))),
         Some(Color::rgb(0, 0, 255)),
     );
 
@@ -32,8 +31,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         200.0,
         150.0,
         40.0,
-        2,
-        Some(Color::rgb(0, 0, 0)),
+        Some(Stroke::new(2, Color::rgb(0, 0, 0))),
         Some(Color::rgb(255, 0, 0)),
     );
 
@@ -45,8 +43,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         60.0,
         40.0,
         45.0,
-        2,
-        Some(Color::rgb(0, 0, 0)),
+        Some(Stroke::new(2, Color::rgb(0, 0, 0))),
         Some(Color::rgb(0, 255, 0)),
     );
 

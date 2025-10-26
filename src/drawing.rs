@@ -5,7 +5,7 @@
 //! # Examples
 //!
 //! ```
-//! use cv_rusty::{Matrix3, Matrix1, draw_rectangle, draw_circle, Color};
+//! use cv_rusty::{Matrix3, Matrix1, draw_rectangle, draw_circle, Color, Stroke};
 //!
 //! // Works with RGB images (Matrix3)
 //! let mut rgb_image = Matrix3::zeros(640, 480);
@@ -14,9 +14,8 @@
 //!     200.0, 150.0,  // position (x, y)
 //!     100.0, 80.0,   // width, height
 //!     0.0,           // rotation in degrees
-//!     2,             // stroke width
-//!     Some(Color::rgb(0, 0, 0)),       // stroke color (black)
-//!     Some(Color::rgb(255, 0, 0))      // fill color (red)
+//!     Some(Stroke::new(2, Color::rgb(0, 0, 0))),  // stroke (2px black)
+//!     Some(Color::rgb(255, 0, 0))                 // fill color (red)
 //! );
 //!
 //! // Also works with grayscale images (Matrix1)
@@ -25,9 +24,8 @@
 //!     &mut gray_image,
 //!     320.0, 240.0,  // position (x, y)
 //!     50.0,          // radius
-//!     3,             // stroke width
-//!     Some(Color::gray(255)),          // stroke color (white)
-//!     Some(Color::gray(100))           // fill color (dark gray)
+//!     Some(Stroke::new(3, Color::gray(255))),  // stroke (3px white)
+//!     Some(Color::gray(100))                   // fill color (dark gray)
 //! );
 //! ```
 
@@ -194,6 +192,22 @@ impl FromStr for Color {
     }
 }
 
+/// Represents stroke properties for drawing shapes.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct Stroke {
+    /// Width of the stroke in pixels
+    pub width: u32,
+    /// Color of the stroke
+    pub color: Color,
+}
+
+impl Stroke {
+    /// Creates a new stroke with the specified width and color.
+    pub fn new(width: u32, color: Color) -> Self {
+        Self { width, color }
+    }
+}
+
 // Helper function to parse a single hex digit (0-F)
 fn parse_hex_digit(byte: u8) -> Result<u8, HexParseError> {
     match byte {
@@ -272,14 +286,13 @@ impl DrawTarget for Matrix3 {
 /// * `width` - Width of the rectangle
 /// * `height` - Height of the rectangle
 /// * `rotation` - Rotation angle in degrees (clockwise)
-/// * `stroke_width` - Width of the outline (0 for no outline)
-/// * `stroke_color` - Color of the outline (None for no outline)
+/// * `stroke` - Optional stroke with width and color (None for no outline)
 /// * `fill_color` - Color to fill the rectangle (None for no fill)
 ///
 /// # Examples
 ///
 /// ```
-/// use cv_rusty::{Matrix3, Matrix1, draw_rectangle, Color};
+/// use cv_rusty::{Matrix3, Matrix1, draw_rectangle, Color, Stroke};
 ///
 /// // Draw on RGB image
 /// let mut rgb_image = Matrix3::zeros(640, 480);
@@ -288,8 +301,7 @@ impl DrawTarget for Matrix3 {
 ///     320.0, 240.0,
 ///     100.0, 60.0,
 ///     45.0,
-///     2,
-///     Some(Color::rgb(0, 0, 0)),
+///     Some(Stroke::new(2, Color::rgb(0, 0, 0))),
 ///     Some(Color::rgb(255, 0, 0))
 /// );
 ///
@@ -300,11 +312,11 @@ impl DrawTarget for Matrix3 {
 ///     320.0, 240.0,
 ///     100.0, 60.0,
 ///     0.0,
-///     2,
-///     Some(Color::gray(255)),
+///     Some(Stroke::new(2, Color::gray(255))),
 ///     Some(Color::gray(100))
 /// );
 /// ```
+#[allow(clippy::too_many_arguments)]
 pub fn draw_rectangle<T: DrawTarget>(
     image: &mut T,
     x: f32,
@@ -312,8 +324,7 @@ pub fn draw_rectangle<T: DrawTarget>(
     width: f32,
     height: f32,
     rotation: f32,
-    stroke_width: u32,
-    stroke_color: Option<Color>,
+    stroke: Option<Stroke>,
     fill_color: Option<Color>,
 ) {
     // Draw fill first (if any)
@@ -322,17 +333,10 @@ pub fn draw_rectangle<T: DrawTarget>(
     }
 
     // Draw stroke on top (if any)
-    if stroke_width > 0 && stroke_color.is_some() {
-        draw_rectangle_outline(
-            image,
-            x,
-            y,
-            width,
-            height,
-            rotation,
-            stroke_width,
-            stroke_color.unwrap(),
-        );
+    if let Some(s) = stroke {
+        if s.width > 0 {
+            draw_rectangle_outline(image, x, y, width, height, rotation, s);
+        }
     }
 }
 
@@ -344,14 +348,13 @@ pub fn draw_rectangle<T: DrawTarget>(
 /// * `x` - X coordinate of the circle's center
 /// * `y` - Y coordinate of the circle's center
 /// * `radius` - Radius of the circle
-/// * `stroke_width` - Width of the outline (0 for no outline)
-/// * `stroke_color` - Color of the outline (None for no outline)
+/// * `stroke` - Optional stroke with width and color (None for no outline)
 /// * `fill_color` - Color to fill the circle (None for no fill)
 ///
 /// # Examples
 ///
 /// ```
-/// use cv_rusty::{Matrix3, Matrix1, draw_circle, Color};
+/// use cv_rusty::{Matrix3, Matrix1, draw_circle, Color, Stroke};
 ///
 /// // Draw on RGB image
 /// let mut rgb_image = Matrix3::zeros(640, 480);
@@ -359,8 +362,7 @@ pub fn draw_rectangle<T: DrawTarget>(
 ///     &mut rgb_image,
 ///     320.0, 240.0,
 ///     50.0,
-///     3,
-///     Some(Color::rgb(255, 255, 255)),
+///     Some(Stroke::new(3, Color::rgb(255, 255, 255))),
 ///     Some(Color::rgb(0, 0, 255))
 /// );
 ///
@@ -370,18 +372,17 @@ pub fn draw_rectangle<T: DrawTarget>(
 ///     &mut gray_image,
 ///     320.0, 240.0,
 ///     50.0,
-///     3,
-///     Some(Color::gray(255)),
+///     Some(Stroke::new(3, Color::gray(255))),
 ///     Some(Color::gray(100))
 /// );
 /// ```
+#[allow(clippy::too_many_arguments)]
 pub fn draw_circle<T: DrawTarget>(
     image: &mut T,
     x: f32,
     y: f32,
     radius: f32,
-    stroke_width: u32,
-    stroke_color: Option<Color>,
+    stroke: Option<Stroke>,
     fill_color: Option<Color>,
 ) {
     // Draw fill first (if any)
@@ -390,8 +391,10 @@ pub fn draw_circle<T: DrawTarget>(
     }
 
     // Draw stroke on top (if any)
-    if stroke_width > 0 && stroke_color.is_some() {
-        draw_circle_outline(image, x, y, radius, stroke_width, stroke_color.unwrap());
+    if let Some(s) = stroke {
+        if s.width > 0 {
+            draw_circle_outline(image, x, y, radius, s.width, s.color);
+        }
     }
 }
 
@@ -465,8 +468,7 @@ fn draw_rectangle_outline<T: DrawTarget>(
     width: f32,
     height: f32,
     rotation: f32,
-    stroke_width: u32,
-    color: Color,
+    stroke: Stroke,
 ) {
     let angle = rotation.to_radians();
     let cos_a = angle.cos();
@@ -491,7 +493,7 @@ fn draw_rectangle_outline<T: DrawTarget>(
     for i in 0..4 {
         let (x1, y1) = rotated_corners[i];
         let (x2, y2) = rotated_corners[(i + 1) % 4];
-        draw_thick_line(image, x1, y1, x2, y2, stroke_width, color);
+        draw_thick_line(image, x1, y1, x2, y2, stroke.width, stroke.color);
     }
 }
 
@@ -559,8 +561,6 @@ fn draw_thick_line<T: DrawTarget>(
     // Use Bresenham's line algorithm
     let mut x1 = x1;
     let mut y1 = y1;
-    let x2 = x2;
-    let y2 = y2;
 
     let dx = (x2 - x1).abs();
     let dy = (y2 - y1).abs();
@@ -725,8 +725,7 @@ mod tests {
             20.0,
             10.0,
             0.0,
-            1,
-            Some(Color::white()),
+            Some(Stroke::new(1, Color::white())),
             Some(Color::rgb(255, 0, 0)),
         );
 
@@ -745,8 +744,7 @@ mod tests {
             20.0,
             10.0,
             0.0,
-            1,
-            Some(Color::white()),
+            Some(Stroke::new(1, Color::white())),
             Some(Color::gray(128)),
         );
 
@@ -763,8 +761,7 @@ mod tests {
             50.0,
             50.0,
             10.0,
-            1,
-            Some(Color::white()),
+            Some(Stroke::new(1, Color::white())),
             Some(Color::rgb(0, 255, 0)),
         );
 
@@ -781,8 +778,7 @@ mod tests {
             50.0,
             50.0,
             10.0,
-            1,
-            Some(Color::white()),
+            Some(Stroke::new(1, Color::white())),
             Some(Color::gray(200)),
         );
 
