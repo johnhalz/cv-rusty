@@ -9,6 +9,10 @@
       
       
       
+        <link rel="prev" href="../hex_color_support/">
+      
+      
+        <link rel="next" href="../unified_drawing_api/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -16,7 +20,7 @@
     
     
       
-        <title>Opacity and Transparency Support - CV Rusty</title>
+        <title>Opacity Support - CV Rusty</title>
       
     
     
@@ -104,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Opacity and Transparency Support
+              Opacity Support
             
           </span>
         </div>
@@ -380,6 +384,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../guides/drawing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Drawing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../guides/image-writing/" class="md-nav__link">
         
   
@@ -567,18 +594,20 @@
       
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
         
           
           <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
@@ -594,7 +623,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             Changelogs
@@ -631,12 +660,418 @@
   
   
     <li class="md-nav__item">
-      <a href="../window_feature_summary/" class="md-nav__link">
+      <a href="../hex_color_support/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Window Feature
+    Hex Color Support
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Opacity Support
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Opacity Support
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#whats-new" class="md-nav__link">
+    <span class="md-ellipsis">
+      What's New
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What&#39;s New">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#color-opacity" class="md-nav__link">
+    <span class="md-ellipsis">
+      Color Opacity
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-constructors" class="md-nav__link">
+    <span class="md-ellipsis">
+      New Constructors
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      New Methods
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alpha-blending" class="md-nav__link">
+    <span class="md-ellipsis">
+      Alpha Blending
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic-opacity-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Basic Opacity Usage
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#venn-diagram-effect" class="md-nav__link">
+    <span class="md-ellipsis">
+      Venn Diagram Effect
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gradient-effect" class="md-nav__link">
+    <span class="md-ellipsis">
+      Gradient Effect
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#watermark-effect" class="md-nav__link">
+    <span class="md-ellipsis">
+      Watermark Effect
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#backward-compatibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      Backward Compatibility
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#breaking-changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Breaking Changes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Breaking Changes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#minor-type-changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Minor Type Changes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#migration-guide" class="md-nav__link">
+    <span class="md-ellipsis">
+      Migration Guide
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance-impact" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performance Impact
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      Implementation Details
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementation Details">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#opacity-clamping" class="md-nav__link">
+    <span class="md-ellipsis">
+      Opacity Clamping
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#blending-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      Blending Algorithm
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#special-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      Special Cases
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-programs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example Programs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#use-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      Use Cases
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Use Cases">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#data-visualization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Data Visualization
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#image-annotation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Image Annotation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#uigraphics" class="md-nav__link">
+    <span class="md-ellipsis">
+      UI/Graphics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#design" class="md-nav__link">
+    <span class="md-ellipsis">
+      Design
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#future-enhancements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Future Enhancements
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Documentation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Issues
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#credits" class="md-nav__link">
+    <span class="md-ellipsis">
+      Credits
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      See Also
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../unified_drawing_api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Unified Drawing API
     
   </span>
   
@@ -654,12 +1089,35 @@
   
   
     <li class="md-nav__item">
-      <a href="../UNIFIED_SHOW_IMAGE_API.md" class="md-nav__link">
+      <a href="../unified_show_image_api/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     Unified show_image API
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../window_feature_summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Window Feature
     
   </span>
   
@@ -1041,9 +1499,6 @@
 
 
 <h1 id="opacity-and-transparency-support">Opacity and Transparency Support</h1>
-<p><strong>Date</strong>: 2024
-<strong>Version</strong>: 0.6.0 (upcoming)
-<strong>Type</strong>: Feature Addition</p>
 <h2 id="overview">Overview</h2>
 <p>Added comprehensive opacity/transparency support to the drawing module, enabling semi-transparent shapes and alpha blending. Colors now support opacity values between 0.0 (fully transparent) and 1.0 (fully opaque), with automatic blending when drawing on existing pixels.</p>
 <h2 id="whats-new">What's New</h2>
@@ -1073,9 +1528,11 @@
 <p>When drawing with semi-transparent colors, the new color is automatically blended with existing pixels using the formula:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>result = existing * (1.0 - opacity) + new * opacity
 </code></pre></div>
-<p>This works for both:
-- <strong>Matrix1</strong> (grayscale images) - single channel blending
-- <strong>Matrix3</strong> (RGB images) - independent blending per channel</p>
+<p>This works for both:</p>
+<ul>
+<li><strong>Matrix1</strong> (grayscale images) - single channel blending</li>
+<li><strong>Matrix3</strong> (RGB images) - independent blending per channel</li>
+</ul>
 <h2 id="examples">Examples</h2>
 <h3 id="basic-opacity-usage">Basic Opacity Usage</h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">use</span><span class="w"> </span><span class="n">cv_rusty</span><span class="p">::{</span><span class="n">Matrix3</span><span class="p">,</span><span class="w"> </span><span class="n">draw_circle</span><span class="p">,</span><span class="w"> </span><span class="n">draw_rectangle</span><span class="p">,</span><span class="w"> </span><span class="n">Color</span><span class="p">};</span>
@@ -1182,9 +1639,11 @@
 <li><strong><code>PartialEq</code> trait</strong>: Changed from <code>Eq</code> to <code>PartialEq</code> (since <code>f32</code> doesn't implement <code>Eq</code>)</li>
 <li><strong><code>Stroke</code> struct</strong>: Changed from <code>PartialEq, Eq</code> to just <code>PartialEq</code></li>
 </ol>
-<p>These changes should not affect most users unless:
-- You pattern match on <code>Color</code> enum variants directly (rare)
-- You rely on <code>Eq</code> trait bounds for <code>Color</code> or <code>Stroke</code> (very rare)</p>
+<p>These changes should not affect most users unless:</p>
+<ul>
+<li>You pattern match on <code>Color</code> enum variants directly (rare)</li>
+<li>You rely on <code>Eq</code> trait bounds for <code>Color</code> or <code>Stroke</code> (very rare)</li>
+</ul>
 <h3 id="migration-guide">Migration Guide</h3>
 <p>If you pattern match on <code>Color</code> variants:</p>
 <p><strong>Before:</strong>
@@ -1207,8 +1666,12 @@
 <ul>
 <li><strong>Fully opaque colors</strong> (opacity = 1.0): No performance impact</li>
 <li><strong>Fully transparent colors</strong> (opacity = 0.0): Minimal overhead (early return)</li>
-<li><strong>Semi-transparent colors</strong> (0.0 &lt; opacity &lt; 1.0): Requires pixel read and blend calculation</li>
-<li>Adds ~10-15% overhead for semi-transparent shapes</li>
+<li>
+<p><strong>Semi-transparent colors</strong> (0.0 &lt; opacity &lt; 1.0): Requires pixel read and blend calculation</p>
+</li>
+<li>
+<p>Adds ~10-15% overhead for semi-transparent shapes</p>
+</li>
 <li>Blending is computed per-pixel during drawing</li>
 </ul>
 <h2 id="implementation-details">Implementation Details</h2>
@@ -1248,11 +1711,13 @@
 <p>New example demonstrating opacity features:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>cargo<span class="w"> </span>run<span class="w"> </span>--example<span class="w"> </span>opacity_example
 </code></pre></div>
-<p>This example creates:
-- Overlapping semi-transparent shapes
-- Venn diagram with color blending
-- Gradient effects using varying opacity
-- Watermark-style low-opacity overlays</p>
+<p>This example creates:</p>
+<ul>
+<li>Overlapping semi-transparent shapes</li>
+<li>Venn diagram with color blending</li>
+<li>Gradient effects using varying opacity</li>
+<li>Watermark-style low-opacity overlays</li>
+</ul>
 <h2 id="use-cases">Use Cases</h2>
 <h3 id="data-visualization">Data Visualization</h3>
 <ul>

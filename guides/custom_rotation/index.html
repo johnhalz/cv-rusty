@@ -386,6 +386,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../drawing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Drawing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../image-writing/" class="md-nav__link">
         
   
@@ -1090,12 +1113,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../../changelogs/window_feature_summary/" class="md-nav__link">
+      <a href="../../changelogs/hex_color_support/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Window Feature
+    Hex Color Support
     
   </span>
   
@@ -1113,12 +1136,81 @@
   
   
     <li class="md-nav__item">
-      <a href="../../changelogs/UNIFIED_SHOW_IMAGE_API.md" class="md-nav__link">
+      <a href="../../changelogs/opacity_support/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Opacity Support
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../changelogs/unified_drawing_api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Unified Drawing API
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../changelogs/unified_show_image_api/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     Unified show_image API
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../changelogs/window_feature_summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Window Feature
     
   </span>
   
@@ -1819,17 +1911,21 @@
 <h2 id="output-dimensions">Output Dimensions</h2>
 <p>The output image is automatically sized to contain the entire rotated image without cropping.</p>
 <h3 id="example-dimension-changes">Example Dimension Changes</h3>
-<p><strong>Square Images (100×100):</strong>
-- 0°: 100×100
-- 15°: ~104×104
-- 30°: ~116×116
-- 45°: ~141×141 (maximum)
-- 90°: 100×100</p>
-<p><strong>Rectangular Images (200×100):</strong>
-- 0°: 200×100
-- 30°: ~249×230
-- 45°: ~212×212
-- 90°: 100×200</p>
+<p><strong>Square Images (100×100):</strong></p>
+<ul>
+<li>0°: 100×100</li>
+<li>15°: ~104×104</li>
+<li>30°: ~116×116</li>
+<li>45°: ~141×141 (maximum)</li>
+<li>90°: 100×100</li>
+</ul>
+<p><strong>Rectangular Images (200×100):</strong></p>
+<ul>
+<li>0°: 200×100</li>
+<li>30°: ~249×230</li>
+<li>45°: ~212×212</li>
+<li>90°: 100×200</li>
+</ul>
 <h2 id="comparison-fixed-vs-custom-rotation">Comparison: Fixed vs Custom Rotation</h2>
 <table>
 <thead>
@@ -1930,25 +2026,31 @@
 <p>See <code>examples/transform_demo.rs</code> for a complete demonstration:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>cargo<span class="w"> </span>run<span class="w"> </span>--example<span class="w"> </span>transform_demo<span class="w"> </span>--release
 </code></pre></div>
-<p>This will create several output files demonstrating:
-- 45° rotation with degrees
-- 30° rotation with nearest neighbor
-- PI/6 radians rotation
-- -22.5° counter-clockwise rotation</p>
+<p>This will create several output files demonstrating:</p>
+<ul>
+<li>45° rotation with degrees</li>
+<li>30° rotation with nearest neighbor</li>
+<li>PI/6 radians rotation</li>
+<li>-22.5° counter-clockwise rotation</li>
+</ul>
 <h2 id="mathematical-background">Mathematical Background</h2>
 <h3 id="rotation-matrix">Rotation Matrix</h3>
 <p>For angle θ (in radians), clockwise rotation:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>[cos(θ)  -sin(θ)]
-<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>[sin(θ)   cos(θ)]
-</code></pre></div>
+<div class="arithmatex">\[
+\begin{pmatrix}
+\cos\theta &amp; -\sin\theta \\
+\sin\theta &amp; \cos\theta
+\end{pmatrix}
+\]</div>
 <h3 id="implementation">Implementation</h3>
 <p>Uses inverse rotation to map output pixels to source:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>For each output pixel (x_out, y_out):
-<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>  1. Translate to origin (subtract center)
-<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>  2. Apply inverse rotation
-<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>  3. Translate back (add center)
-<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>  4. Sample source image with interpolation
-</code></pre></div>
+<p>For each output pixel (<code>x_out</code>, <code>y_out</code>):</p>
+<ol>
+<li>Translate to origin (subtract center)</li>
+<li>Apply inverse rotation</li>
+<li>Translate back (add center)</li>
+<li>Sample source image with interpolation</li>
+</ol>
 <h3 id="why-inverse-rotation">Why Inverse Rotation?</h3>
 <p>Forward rotation would leave gaps. Inverse rotation ensures every output pixel is filled by sampling the appropriate source location.</p>
 <h2 id="limitations">Limitations</h2>
@@ -1959,12 +2061,14 @@
 <li><strong>Performance</strong>: Slower than fixed-angle rotations</li>
 </ol>
 <h2 id="future-enhancements">Future Enhancements</h2>
-<p>Potential additions:
-- [ ] Rotation around custom pivot point
-- [ ] Crop to original dimensions option
-- [ ] Bicubic interpolation
-- [ ] SIMD optimizations
-- [ ] GPU acceleration</p>
+<p>Potential additions:</p>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Rotation around custom pivot point</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Crop to original dimensions option</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Bicubic interpolation</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> SIMD optimizations</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> GPU acceleration</li>
+</ul>
 <h2 id="additional-resources">Additional Resources</h2>
 <ul>
 <li>Main documentation: <code>README.md</code></li>

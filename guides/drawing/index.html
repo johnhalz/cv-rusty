@@ -9,6 +9,10 @@
       
       
       
+        <link rel="prev" href="../convolution/">
+      
+      
+        <link rel="next" href="../image-writing/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -16,7 +20,7 @@
     
     
       
-        <title>Drawing Shapes Guide - CV Rusty</title>
+        <title>Drawing - CV Rusty</title>
       
     
     
@@ -104,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Drawing Shapes Guide
+              Drawing
             
           </span>
         </div>
@@ -293,18 +297,20 @@
       
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
           <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
@@ -320,7 +326,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             Guides
@@ -368,6 +374,440 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Drawing
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Drawing
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      Table of Contents
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#color-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      Color System
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Color System">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hex-color-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hex Color Format
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#opacity-and-alpha-blending" class="md-nav__link">
+    <span class="md-ellipsis">
+      Opacity and Alpha Blending
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#grayscale-conversion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Grayscale Conversion
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#drawing-rectangles" class="md-nav__link">
+    <span class="md-ellipsis">
+      Drawing Rectangles
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Drawing Rectangles">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#function-signatures" class="md-nav__link">
+    <span class="md-ellipsis">
+      Function Signatures
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#basic-rectangle" class="md-nav__link">
+    <span class="md-ellipsis">
+      Basic Rectangle
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rotated-rectangle" class="md-nav__link">
+    <span class="md-ellipsis">
+      Rotated Rectangle
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#outline-only-rectangle" class="md-nav__link">
+    <span class="md-ellipsis">
+      Outline-Only Rectangle
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fill-only-rectangle" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fill-Only Rectangle
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#semi-transparent-rectangle" class="md-nav__link">
+    <span class="md-ellipsis">
+      Semi-Transparent Rectangle
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#drawing-circles" class="md-nav__link">
+    <span class="md-ellipsis">
+      Drawing Circles
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Drawing Circles">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#function-signatures_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Function Signatures
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#basic-circle" class="md-nav__link">
+    <span class="md-ellipsis">
+      Basic Circle
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#outline-only-circle" class="md-nav__link">
+    <span class="md-ellipsis">
+      Outline-Only Circle
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fill-only-circle" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fill-Only Circle
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#semi-transparent-circle" class="md-nav__link">
+    <span class="md-ellipsis">
+      Semi-Transparent Circle
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unified-api-for-all-image-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      Unified API for All Image Types
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performance Considerations
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Performance Considerations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rectangle-drawing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Rectangle Drawing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#circle-drawing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Circle Drawing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optimization-tips" class="md-nav__link">
+    <span class="md-ellipsis">
+      Optimization Tips
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#typical-performance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Typical Performance
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#complete-drawing-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Complete Drawing Example
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-visualization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Data Visualization
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#annotation-tool" class="md-nav__link">
+    <span class="md-ellipsis">
+      Annotation Tool
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-techniques" class="md-nav__link">
+    <span class="md-ellipsis">
+      Advanced Techniques
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Advanced Techniques">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#layered-drawing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Layered Drawing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shape-combinations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Shape Combinations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#grid-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Grid Patterns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      Best Practices
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Limitations
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#future-enhancements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Future Enhancements
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      See Also
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -631,12 +1071,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../../changelogs/window_feature_summary/" class="md-nav__link">
+      <a href="../../changelogs/hex_color_support/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Window Feature
+    Hex Color Support
     
   </span>
   
@@ -654,12 +1094,81 @@
   
   
     <li class="md-nav__item">
-      <a href="../../changelogs/UNIFIED_SHOW_IMAGE_API.md" class="md-nav__link">
+      <a href="../../changelogs/opacity_support/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Opacity Support
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../changelogs/unified_drawing_api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Unified Drawing API
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../changelogs/unified_show_image_api/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     Unified show_image API
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../changelogs/window_feature_summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Window Feature
     
   </span>
   
@@ -1170,12 +1679,14 @@ This means <code>#369</code> expands to <code>#336699</code> (RGB: 51, 102, 153)
 <p>Colors support opacity values between 0.0 (fully transparent) and 1.0 (fully opaque). When drawing with semi-transparent colors, the new color is blended with the existing pixel using alpha blending:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>result = existing_color * (1 - opacity) + new_color * opacity
 </code></pre></div>
-<p><strong>Key features:</strong>
-- Default opacity is <code>1.0</code> (fully opaque) for all standard constructors
-- Opacity is automatically clamped to the range <code>[0.0, 1.0]</code>
-- Works with both grayscale and RGB images
-- Fully transparent colors (opacity = 0.0) do not modify pixels
-- Blending occurs for each color channel independently</p>
+<p><strong>Key features:</strong></p>
+<ul>
+<li>Default opacity is <code>1.0</code> (fully opaque) for all standard constructors</li>
+<li>Opacity is automatically clamped to the range <code>[0.0, 1.0]</code></li>
+<li>Works with both grayscale and RGB images</li>
+<li>Fully transparent colors (opacity = 0.0) do not modify pixels</li>
+<li>Blending occurs for each color channel independently</li>
+</ul>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">// Create semi-transparent colors</span>
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kd">let</span><span class="w"> </span><span class="n">semi_red</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Color</span><span class="p">::</span><span class="n">rgb_with_opacity</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">);</span>
 <a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="kd">let</span><span class="w"> </span><span class="n">semi_gray</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Color</span><span class="p">::</span><span class="n">gray_with_opacity</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span><span class="w"> </span><span class="mf">0.3</span><span class="p">);</span>
@@ -1634,7 +2145,7 @@ This means <code>#369</code> expands to <code>#336699</code> (RGB: 51, 102, 153)
 <h3 id="layered-drawing">Layered Drawing</h3>
 <p>Draw shapes in order from back to front for proper layering:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="c1">// 1. Draw background</span>
-<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="n">draw_rectangle</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="n">image</span><span class="p">,</span><span class="w"> </span><span class="mf">400.0</span><span class="p">,</span><span class="w"> </span><span class="mf">300.0</span><span class="p">,</span><span class="w"> </span><span class="mf">700.0</span><span class="p">,</span><span class="w"> </span><span class="mf">500.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nb">None</span><span class="p">,</span><span class="w"> </span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="n">draw_rectangle</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="n">image</span><span class="p">,</span><span class="w"> </span><span class="mf">400.0</span><span class="p">,</span><span class="w"> </span><span class="mf">300.0</span><span class="p">,</span><span class="w"> </span><span class="mf">700.0</span><span class="p">,</span><span class="w"> </span><span class="mf">500.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nb">None</span><span class="p">,</span>
 <a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="w">               </span><span class="nb">Some</span><span class="p">(</span><span class="n">Color</span><span class="p">::</span><span class="n">rgb</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w"> </span><span class="mi">200</span><span class="p">)));</span>
 <a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>
 <a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="c1">// 2. Draw middle layer</span>

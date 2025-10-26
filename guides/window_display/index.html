@@ -386,6 +386,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../drawing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Drawing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../image-writing/" class="md-nav__link">
         
   
@@ -593,15 +616,6 @@
       
         <li class="md-nav__item">
   <a href="#error-handling" class="md-nav__link">
-    <span class="md-ellipsis">
-      Error Handling
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#error-handling_1" class="md-nav__link">
     <span class="md-ellipsis">
       Error Handling
     </span>
@@ -895,12 +909,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../../changelogs/window_feature_summary/" class="md-nav__link">
+      <a href="../../changelogs/hex_color_support/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Window Feature
+    Hex Color Support
     
   </span>
   
@@ -918,12 +932,81 @@
   
   
     <li class="md-nav__item">
-      <a href="../../changelogs/UNIFIED_SHOW_IMAGE_API.md" class="md-nav__link">
+      <a href="../../changelogs/opacity_support/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Opacity Support
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../changelogs/unified_drawing_api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Unified Drawing API
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../changelogs/unified_show_image_api/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     Unified show_image API
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../changelogs/window_feature_summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Window Feature
     
   </span>
   
@@ -1056,15 +1139,6 @@
       
         <li class="md-nav__item">
   <a href="#error-handling" class="md-nav__link">
-    <span class="md-ellipsis">
-      Error Handling
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#error-handling_1" class="md-nav__link">
     <span class="md-ellipsis">
       Error Handling
     </span>
@@ -1221,9 +1295,11 @@
 <h2 id="api-overview">API Overview</h2>
 <h3 id="show_imagewindow_name-image"><code>show_image(window_name, image)</code></h3>
 <p>Displays an image in a window. Works with both grayscale (<code>Matrix1</code>) and color (<code>Matrix3</code>) images.</p>
-<p><strong>Arguments:</strong>
-- <code>window_name: &amp;str</code> - Name of the window
-- <code>image: &amp;T</code> - Image to display (any type implementing <code>Displayable</code> trait)</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><code>window_name: &amp;str</code> - Name of the window</li>
+<li><code>image: &amp;T</code> - Image to display (any type implementing <code>Displayable</code> trait)</li>
+</ul>
 <p><strong>Returns:</strong> <code>Result&lt;(), WindowError&gt;</code></p>
 <p><strong>Examples:</strong>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">use</span><span class="w"> </span><span class="n">cv_rusty</span><span class="p">::{</span><span class="n">Matrix1</span><span class="p">,</span><span class="w"> </span><span class="n">Matrix3</span><span class="p">,</span><span class="w"> </span><span class="n">show_image</span><span class="p">};</span>
@@ -1238,9 +1314,11 @@
 </code></pre></div></p>
 <h3 id="show_and_waitwindow_name-image"><code>show_and_wait(window_name, image)</code></h3>
 <p>Displays an image and waits for user to close the window. Works with both color and grayscale images.</p>
-<p><strong>Arguments:</strong>
-- <code>window_name: &amp;str</code> - Name of the window
-- <code>image: &amp;T</code> - Image to display (any type implementing <code>Displayable</code> trait)</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><code>window_name: &amp;str</code> - Name of the window</li>
+<li><code>image: &amp;T</code> - Image to display (any type implementing <code>Displayable</code> trait)</li>
+</ul>
 <p><strong>Returns:</strong> <code>Result&lt;(), WindowError&gt;</code></p>
 <p><strong>Examples:</strong>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">use</span><span class="w"> </span><span class="n">cv_rusty</span><span class="p">::{</span><span class="n">Matrix1</span><span class="p">,</span><span class="w"> </span><span class="n">Matrix3</span><span class="p">,</span><span class="w"> </span><span class="n">show_and_wait</span><span class="p">};</span>
@@ -1255,8 +1333,10 @@
 </code></pre></div></p>
 <h3 id="wait_keydelay"><code>wait_key(delay)</code></h3>
 <p>Waits for a key press for a specified duration (simplified version).</p>
-<p><strong>Arguments:</strong>
-- <code>delay: u64</code> - The number of milliseconds to wait. Use 0 to wait indefinitely.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><code>delay: u64</code> - The number of milliseconds to wait. Use 0 to wait indefinitely.</li>
+</ul>
 <p><strong>Example:</strong>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">use</span><span class="w"> </span><span class="n">cv_rusty</span><span class="p">::</span><span class="n">wait_key</span><span class="p">;</span>
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
@@ -1298,18 +1378,19 @@
 <li><strong>Window close button</strong> - Close the window</li>
 </ul>
 <h2 id="window-behavior">Window Behavior</h2>
-<p>Each call to <code>show_image</code> creates a new window that:
-- Opens immediately with the specified image
-- Runs at a maximum of 60 FPS
-- Remains open until the user presses ESC or closes the window
-- Blocks execution until closed</p>
+<p>Each call to <code>show_image</code> creates a new window that:</p>
+<ul>
+<li>Opens immediately with the specified image</li>
+<li>Runs at a maximum of 60 FPS</li>
+<li>Remains open until the user presses ESC or closes the window</li>
+<li>Blocks execution until closed</li>
+</ul>
 <h2 id="error-handling">Error Handling</h2>
 <p>The window functions return <code>Result&lt;(), WindowError&gt;</code> with the following error types:</p>
 <ul>
 <li><code>WindowError::WindowCreation(String)</code> - Failed to create or update the window</li>
 <li><code>WindowError::InvalidDimensions</code> - Image has zero width or height</li>
 </ul>
-<h2 id="error-handling_1">Error Handling</h2>
 <p><strong>Example:</strong>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">use</span><span class="w"> </span><span class="n">cv_rusty</span><span class="p">::{</span><span class="n">Matrix3</span><span class="p">,</span><span class="w"> </span><span class="n">show_image</span><span class="p">,</span><span class="w"> </span><span class="n">WindowError</span><span class="p">};</span>
 <a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>

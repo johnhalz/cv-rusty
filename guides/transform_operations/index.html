@@ -386,6 +386,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../drawing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Drawing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../image-writing/" class="md-nav__link">
         
   
@@ -1144,12 +1167,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../../changelogs/window_feature_summary/" class="md-nav__link">
+      <a href="../../changelogs/hex_color_support/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Window Feature
+    Hex Color Support
     
   </span>
   
@@ -1167,12 +1190,81 @@
   
   
     <li class="md-nav__item">
-      <a href="../../changelogs/UNIFIED_SHOW_IMAGE_API.md" class="md-nav__link">
+      <a href="../../changelogs/opacity_support/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Opacity Support
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../changelogs/unified_drawing_api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Unified Drawing API
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../changelogs/unified_show_image_api/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     Unified show_image API
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../changelogs/window_feature_summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Window Feature
     
   </span>
   
@@ -1703,10 +1795,12 @@
 <h1 id="image-transform-operations">Image Transform Operations</h1>
 <p>This document provides an overview of the image transformation operations added to cv-rusty.</p>
 <h2 id="overview">Overview</h2>
-<p>The transform module provides three core operations for image manipulation:
-- <strong>Resize</strong>: Scale images up or down with different interpolation methods
-- <strong>Crop</strong>: Extract rectangular regions from images
-- <strong>Rotate</strong>: Rotate images in 90-degree increments (fast, lossless) or by arbitrary angles with interpolation</p>
+<p>The transform module provides three core operations for image manipulation:</p>
+<ul>
+<li><strong>Resize</strong>: Scale images up or down with different interpolation methods</li>
+<li><strong>Crop</strong>: Extract rectangular regions from images</li>
+<li><strong>Rotate</strong>: Rotate images in 90-degree increments (fast, lossless) or by arbitrary angles with interpolation</li>
+</ul>
 <p>All operations are <code>no_std</code> compatible and work with both <code>Matrix3</code> (RGB) and <code>Matrix1</code> (grayscale) image types.</p>
 <h2 id="resize">Resize</h2>
 <p>Resize images to specified dimensions with configurable interpolation methods.</p>
@@ -1767,9 +1861,11 @@
 <a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="kd">let</span><span class="w"> </span><span class="n">center</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">image</span><span class="p">.</span><span class="n">crop</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">crop_size</span><span class="p">,</span><span class="w"> </span><span class="n">crop_size</span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span>
 </code></pre></div>
 <h3 id="error-handling">Error Handling</h3>
-<p>The <code>crop()</code> method returns <code>Option&lt;Matrix&gt;</code>:
-- <code>Some(Matrix)</code> if the crop region is valid
-- <code>None</code> if the region extends beyond image boundaries</p>
+<p>The <code>crop()</code> method returns <code>Option&lt;Matrix&gt;</code>:</p>
+<ul>
+<li><code>Some(Matrix)</code> if the crop region is valid</li>
+<li><code>None</code> if the region extends beyond image boundaries</li>
+</ul>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">match</span><span class="w"> </span><span class="n">image</span><span class="p">.</span><span class="n">crop</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="n">height</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span><span class="nb">Some</span><span class="p">(</span><span class="n">cropped</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;Crop successful&quot;</span><span class="p">),</span>
 <a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="nb">None</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;Invalid crop region&quot;</span><span class="p">),</span>
@@ -1782,9 +1878,11 @@
 <li><strong>Optimization</strong>: Uses <code>copy_from_slice</code> for row-wise copying</li>
 </ul>
 <h2 id="rotate">Rotate</h2>
-<p>Rotate images using two methods:
-1. <strong>Fixed angles</strong> (90°, 180°, 270°) - Fast, lossless transformation
-2. <strong>Arbitrary angles</strong> - Custom rotation with interpolation</p>
+<p>Rotate images using two methods:</p>
+<ol>
+<li><strong>Fixed angles</strong> (90°, 180°, 270°) - Fast, lossless transformation</li>
+<li><strong>Arbitrary angles</strong> - Custom rotation with interpolation</li>
+</ol>
 <h3 id="fixed-angle-rotation-fast-lossless">Fixed Angle Rotation (Fast, Lossless)</h3>
 <h4 id="rotation-angles">Rotation Angles</h4>
 <ul>
@@ -1910,10 +2008,18 @@
 <h4 id="performance-characteristics_3">Performance Characteristics</h4>
 <ul>
 <li><strong>Time Complexity</strong>: O(width × height) - processes all output pixels</li>
-<li><strong>Quality</strong>: Depends on interpolation method</li>
-<li>Bilinear: Good quality, slight blur</li>
-<li>Nearest Neighbor: Faster, more pixelated</li>
-<li><strong>Memory</strong>: Creates new image buffer sized to contain full rotated image</li>
+<li>
+<p><strong>Quality</strong>: Depends on interpolation method</p>
+</li>
+<li>
+<p>Bilinear: Good quality, slight blur</p>
+</li>
+<li>
+<p>Nearest Neighbor: Faster, more pixelated</p>
+</li>
+<li>
+<p><strong>Memory</strong>: Creates new image buffer sized to contain full rotated image</p>
+</li>
 </ul>
 <h4 id="comparison-fixed-vs-custom-rotation">Comparison: Fixed vs Custom Rotation</h4>
 <table>
@@ -2096,8 +2202,12 @@
 </code></pre></div>
 <h2 id="performance-tips">Performance Tips</h2>
 <ol>
-<li><strong>Choose the right interpolation method</strong>:</li>
-<li>Use <code>NearestNeighbor</code> for pixel art or when speed is critical</li>
+<li>
+<p><strong>Choose the right interpolation method</strong>:</p>
+</li>
+<li>
+<p>Use <code>NearestNeighbor</code> for pixel art or when speed is critical</p>
+</li>
 <li>
 <p>Use <code>Bilinear</code> for photos and general-purpose resizing</p>
 </li>
@@ -2122,7 +2232,9 @@
 <li>
 <p><strong>Reuse memory when possible</strong>:</p>
 </li>
-<li>Drop intermediate results to free memory</li>
+<li>
+<p>Drop intermediate results to free memory</p>
+</li>
 </ol>
 <h2 id="implementation-details">Implementation Details</h2>
 <h3 id="resize-algorithm">Resize Algorithm</h3>
@@ -2149,16 +2261,22 @@
 <p>Direct memory copy of rectangular regions, optimized with <code>copy_from_slice</code> for row-wise copying.</p>
 <h3 id="rotate-algorithm">Rotate Algorithm</h3>
 <p><strong>Fixed Angle (90°/180°/270°)</strong>:</p>
-<p>Pixel remapping based on rotation angle:
-- <strong>90° CW</strong>: <code>(x, y) → (height-1-y, x)</code>
-- <strong>180°</strong>: <code>(x, y) → (width-1-x, height-1-y)</code>
-- <strong>270° CW</strong>: <code>(x, y) → (y, width-1-x)</code></p>
+<p>Pixel remapping based on rotation angle:</p>
+<ul>
+<li><strong>90° CW</strong>: <code>(x, y) → (height-1-y, x)</code></li>
+<li><strong>180°</strong>: <code>(x, y) → (width-1-x, height-1-y)</code></li>
+<li><strong>270° CW</strong>: <code>(x, y) → (y, width-1-x)</code></li>
+</ul>
 <p><strong>Custom Angle (Arbitrary)</strong>:</p>
 <p>Uses inverse rotation with interpolation:</p>
 <ol>
 <li>Calculate output dimensions to fit entire rotated image</li>
-<li>For each output pixel:</li>
-<li>Apply inverse rotation transformation</li>
+<li>
+<p>For each output pixel:</p>
+</li>
+<li>
+<p>Apply inverse rotation transformation</p>
+</li>
 <li>Sample source image at calculated position</li>
 <li>Use interpolation for sub-pixel accuracy</li>
 </ol>

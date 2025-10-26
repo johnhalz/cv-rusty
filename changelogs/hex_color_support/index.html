@@ -9,6 +9,10 @@
       
       
       
+        <link rel="prev" href="../changelog-color-features/">
+      
+      
+        <link rel="next" href="../opacity_support/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -16,7 +20,7 @@
     
     
       
-        <title>Hex Color Support - Feature Documentation - CV Rusty</title>
+        <title>Hex Color Support - CV Rusty</title>
       
     
     
@@ -104,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Hex Color Support - Feature Documentation
+              Hex Color Support
             
           </span>
         </div>
@@ -380,6 +384,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../guides/drawing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Drawing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../guides/image-writing/" class="md-nav__link">
         
   
@@ -567,18 +594,20 @@
       
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
         
           
           <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
@@ -594,7 +623,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             Changelogs
@@ -628,15 +657,419 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../window_feature_summary/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Hex Color Support
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
   <span class="md-ellipsis">
-    Window Feature
+    Hex Color Support
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#motivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Motivation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Motivation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      Problem
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#solution" class="md-nav__link">
+    <span class="md-ellipsis">
+      Solution
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#features" class="md-nav__link">
+    <span class="md-ellipsis">
+      Features
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#supported-formats" class="md-nav__link">
+    <span class="md-ellipsis">
+      Supported Formats
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Supported Formats">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#6-digit-format-rrggbb" class="md-nav__link">
+    <span class="md-ellipsis">
+      6-Digit Format (RRGGBB)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-digit-format-rgb" class="md-nav__link">
+    <span class="md-ellipsis">
+      3-Digit Format (RGB)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#error-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Error Handling
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fromstr-trait" class="md-nav__link">
+    <span class="md-ellipsis">
+      FromStr Trait
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      API Reference
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="API Reference">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      Methods
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#error-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      Error Type
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Basic Usage
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#design-system-colors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Design System Colors
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#common-web-colors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Common Web Colors
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#error-handling-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Error Handling Patterns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      Implementation Details
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementation Details">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parsing-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parsing Algorithm
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#performance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performance
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      Memory
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compatibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      Compatibility
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-use-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      Common Use Cases
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Use Cases">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-design-tools-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Design Tools Integration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-configuration-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Configuration Files
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-data-visualization" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Data Visualization
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-user-input" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. User Input
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#migration-guide" class="md-nav__link">
+    <span class="md-ellipsis">
+      Migration Guide
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#future-enhancements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Future Enhancements
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      See Also
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example Output
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../opacity_support/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Opacity Support
     
   </span>
   
@@ -654,12 +1087,58 @@
   
   
     <li class="md-nav__item">
-      <a href="../UNIFIED_SHOW_IMAGE_API.md" class="md-nav__link">
+      <a href="../unified_drawing_api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Unified Drawing API
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../unified_show_image_api/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     Unified show_image API
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../window_feature_summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Window Feature
     
   </span>
   
@@ -1062,9 +1541,6 @@
 
 
 <h1 id="hex-color-support-feature-documentation">Hex Color Support - Feature Documentation</h1>
-<p><strong>Date:</strong> 2024
-<strong>Status:</strong> Implemented
-<strong>Version:</strong> 0.5.0+</p>
 <h2 id="overview">Overview</h2>
 <p>The <code>Color</code> enum now supports creating colors from hex strings, making it easy to use web colors and design system colors in your drawings. This feature supports both 6-digit (<code>#RRGGBB</code>) and 3-digit (<code>#RGB</code>) hex formats, with or without the hash prefix.</p>
 <h2 id="motivation">Motivation</h2>
@@ -1073,23 +1549,27 @@
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kd">let</span><span class="w"> </span><span class="n">blue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Color</span><span class="p">::</span><span class="n">rgb</span><span class="p">(</span><span class="mi">52</span><span class="p">,</span><span class="w"> </span><span class="mi">152</span><span class="p">,</span><span class="w"> </span><span class="mi">219</span><span class="p">);</span><span class="w">  </span><span class="c1">// What color is this?</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kd">let</span><span class="w"> </span><span class="n">accent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Color</span><span class="p">::</span><span class="n">rgb</span><span class="p">(</span><span class="mi">155</span><span class="p">,</span><span class="w"> </span><span class="mi">89</span><span class="p">,</span><span class="w"> </span><span class="mi">182</span><span class="p">);</span><span class="w"> </span><span class="c1">// Hard to remember/communicate</span>
 </code></pre></div>
-<p><strong>Issues:</strong>
-- Not intuitive - who remembers that (52, 152, 219) is a nice blue?
-- Hard to share colors between web and code
-- Difficult to use design system colors
-- Copy-pasting colors from design tools requires manual conversion</p>
+<p><strong>Issues:</strong></p>
+<ul>
+<li>Not intuitive - who remembers that (52, 152, 219) is a nice blue?</li>
+<li>Hard to share colors between web and code</li>
+<li>Difficult to use design system colors</li>
+<li>Copy-pasting colors from design tools requires manual conversion</li>
+</ul>
 <h3 id="solution">Solution</h3>
 <p>Now you can use hex strings directly:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kd">let</span><span class="w"> </span><span class="n">blue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Color</span><span class="p">::</span><span class="n">from_hex</span><span class="p">(</span><span class="s">&quot;#3498DB&quot;</span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span><span class="w">     </span><span class="c1">// Clear and recognizable</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kd">let</span><span class="w"> </span><span class="n">accent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Color</span><span class="p">::</span><span class="n">from_hex</span><span class="p">(</span><span class="s">&quot;#9B59B6&quot;</span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span><span class="w">   </span><span class="c1">// Easy to share</span>
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="kd">let</span><span class="w"> </span><span class="n">red</span><span class="p">:</span><span class="w"> </span><span class="nc">Color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;#E74C3C&quot;</span><span class="p">.</span><span class="n">parse</span><span class="p">().</span><span class="n">unwrap</span><span class="p">();</span><span class="w">        </span><span class="c1">// Idiomatic Rust</span>
 </code></pre></div>
-<p><strong>Benefits:</strong>
-- ✅ Use colors from web design tools directly
-- ✅ Easy to communicate colors (just copy the hex code)
-- ✅ Compatible with CSS, design systems, and color pickers
-- ✅ Supports both long and short formats
-- ✅ Idiomatic Rust with <code>FromStr</code> trait</p>
+<p><strong>Benefits:</strong></p>
+<ul>
+<li>✅ Use colors from web design tools directly</li>
+<li>✅ Easy to communicate colors (just copy the hex code)</li>
+<li>✅ Compatible with CSS, design systems, and color pickers</li>
+<li>✅ Supports both long and short formats</li>
+<li>✅ Idiomatic Rust with <code>FromStr</code> trait</li>
+</ul>
 <h2 id="features">Features</h2>
 <h3 id="supported-formats">Supported Formats</h3>
 <h4 id="6-digit-format-rrggbb">6-Digit Format (RRGGBB)</h4>
@@ -1109,10 +1589,12 @@
 <a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="n">Color</span><span class="p">::</span><span class="n">from_hex</span><span class="p">(</span><span class="s">&quot;#FfFfFf&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1">// White</span>
 </code></pre></div>
 <h4 id="3-digit-format-rgb">3-Digit Format (RGB)</h4>
-<p>The 3-digit format is a shorthand where each digit is doubled:
-- <code>#F00</code> expands to <code>#FF0000</code>
-- <code>#0F0</code> expands to <code>#00FF00</code>
-- <code>#369</code> expands to <code>#336699</code></p>
+<p>The 3-digit format is a shorthand where each digit is doubled:</p>
+<ul>
+<li><code>#F00</code> expands to <code>#FF0000</code></li>
+<li><code>#0F0</code> expands to <code>#00FF00</code></li>
+<li><code>#369</code> expands to <code>#336699</code></li>
+</ul>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1">// With hash prefix</span>
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">Color</span><span class="p">::</span><span class="n">from_hex</span><span class="p">(</span><span class="s">&quot;#F00&quot;</span><span class="p">)</span><span class="w">     </span><span class="c1">// Red (255, 0, 0)</span>
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="n">Color</span><span class="p">::</span><span class="n">from_hex</span><span class="p">(</span><span class="s">&quot;#0F0&quot;</span><span class="p">)</span><span class="w">     </span><span class="c1">// Green (0, 255, 0)</span>
@@ -1326,14 +1808,16 @@
 <a id="__codelineno-12-24" name="__codelineno-12-24" href="#__codelineno-12-24"></a><span class="w">    </span><span class="c1">// Tests for all common web colors</span>
 <a id="__codelineno-12-25" name="__codelineno-12-25" href="#__codelineno-12-25"></a><span class="p">}</span>
 </code></pre></div>
-<p><strong>Test Coverage:</strong>
-- ✅ 6-digit format with/without hash
-- ✅ 3-digit format with/without hash
-- ✅ Case sensitivity (uppercase, lowercase, mixed)
-- ✅ Invalid lengths
-- ✅ Invalid characters
-- ✅ Common web colors
-- ✅ FromStr trait</p>
+<p><strong>Test Coverage:</strong></p>
+<ul>
+<li>✅ 6-digit format with/without hash</li>
+<li>✅ 3-digit format with/without hash</li>
+<li>✅ Case sensitivity (uppercase, lowercase, mixed)</li>
+<li>✅ Invalid lengths</li>
+<li>✅ Invalid characters</li>
+<li>✅ Common web colors</li>
+<li>✅ FromStr trait</li>
+</ul>
 <h2 id="compatibility">Compatibility</h2>
 <ul>
 <li>✅ <strong><code>no_std</code> compatible</strong> - Works in embedded environments</li>
@@ -1386,7 +1870,7 @@
 <p>Potential additions:</p>
 <ul>
 <li><strong>8-digit format:</strong> <code>#RRGGBBAA</code> for alpha channel support</li>
-<li><strong>Named colors:</strong> <code>Color::from_name("red")</code> </li>
+<li><strong>Named colors:</strong> <code>Color::from_name("red")</code></li>
 <li><strong>HSL/HSV parsing:</strong> <code>Color::from_hsl("hsl(210, 50%, 50%)")</code></li>
 <li><strong>RGB function parsing:</strong> <code>Color::from_rgb_str("rgb(255, 0, 0)")</code></li>
 <li><strong>Compile-time parsing:</strong> Macro for zero-cost hex colors</li>

@@ -12,7 +12,7 @@
         <link rel="prev" href="../color-conversion-guide/">
       
       
-        <link rel="next" href="../image-writing/">
+        <link rel="next" href="../drawing/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -830,6 +830,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../drawing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Drawing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../image-writing/" class="md-nav__link">
         
   
@@ -1081,12 +1104,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../../changelogs/window_feature_summary/" class="md-nav__link">
+      <a href="../../changelogs/hex_color_support/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Window Feature
+    Hex Color Support
     
   </span>
   
@@ -1104,12 +1127,81 @@
   
   
     <li class="md-nav__item">
-      <a href="../../changelogs/UNIFIED_SHOW_IMAGE_API.md" class="md-nav__link">
+      <a href="../../changelogs/opacity_support/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Opacity Support
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../changelogs/unified_drawing_api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Unified Drawing API
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../changelogs/unified_show_image_api/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     Unified show_image API
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../changelogs/window_feature_summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Window Feature
     
   </span>
   
@@ -1577,18 +1669,22 @@
 <h1 id="convolution-operations-in-cv-rusty">Convolution Operations in CV Rusty</h1>
 <p>This guide covers the efficient convolution operations available in cv-rusty, including parallel processing support and performance optimization techniques.</p>
 <h2 id="overview">Overview</h2>
-<p>Convolution is a fundamental operation in image processing used for:
-- <strong>Blurring</strong>: Smoothing images and reducing noise
-- <strong>Edge Detection</strong>: Finding boundaries and features
-- <strong>Sharpening</strong>: Enhancing image details
-- <strong>Custom Effects</strong>: Embossing, motion blur, etc.</p>
-<p>CV Rusty provides a highly optimized convolution implementation with:
-- ✅ Parallel processing support (automatic multi-threading)
-- ✅ Multiple border handling modes
-- ✅ Separable convolution for performance
-- ✅ Built-in common kernels
-- ✅ Custom kernel support
-- ✅ <code>no_std</code> compatible</p>
+<p>Convolution is a fundamental operation in image processing used for:</p>
+<ul>
+<li><strong>Blurring</strong>: Smoothing images and reducing noise</li>
+<li><strong>Edge Detection</strong>: Finding boundaries and features</li>
+<li><strong>Sharpening</strong>: Enhancing image details</li>
+<li><strong>Custom Effects</strong>: Embossing, motion blur, etc.</li>
+</ul>
+<p>CV Rusty provides a highly optimized convolution implementation with:</p>
+<ul>
+<li>✅ Parallel processing support (automatic multi-threading)</li>
+<li>✅ Multiple border handling modes</li>
+<li>✅ Separable convolution for performance</li>
+<li>✅ Built-in common kernels</li>
+<li>✅ Custom kernel support</li>
+<li>✅ <code>no_std</code> compatible</li>
+</ul>
 <h2 id="quick-start">Quick Start</h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">use</span><span class="w"> </span><span class="n">cv_rusty</span><span class="p">::{</span><span class="n">read_jpeg</span><span class="p">,</span><span class="w"> </span><span class="n">write_jpeg</span><span class="p">,</span><span class="w"> </span><span class="n">Kernel</span><span class="p">,</span><span class="w"> </span><span class="n">BorderMode</span><span class="p">};</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
@@ -1617,13 +1713,17 @@
 <a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="kd">let</span><span class="w"> </span><span class="n">kernel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Kernel</span><span class="p">::</span><span class="n">gaussian</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="mf">2.0</span><span class="p">);</span>
 <a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="kd">let</span><span class="w"> </span><span class="n">very_blurred</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">image</span><span class="p">.</span><span class="n">convolve</span><span class="p">(</span><span class="o">&amp;</span><span class="n">kernel</span><span class="p">,</span><span class="w"> </span><span class="n">BorderMode</span><span class="p">::</span><span class="n">Replicate</span><span class="p">);</span>
 </code></pre></div>
-<p><strong>Parameters:</strong>
-- <code>size</code>: Kernel size (must be odd: 3, 5, 7, 9, etc.)
-- <code>sigma</code>: Standard deviation (controls blur strength)</p>
-<p><strong>Guidelines:</strong>
-- <code>sigma ≈ size/6</code> for good coverage
-- Larger sigma = stronger blur
-- Use separable convolution for kernels &gt; 5×5</p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><code>size</code>: Kernel size (must be odd: 3, 5, 7, 9, etc.)</li>
+<li><code>sigma</code>: Standard deviation (controls blur strength)</li>
+</ul>
+<p><strong>Guidelines:</strong></p>
+<ul>
+<li><code>sigma ≈ size/6</code> for good coverage</li>
+<li>Larger sigma = stronger blur</li>
+<li>Use separable convolution for kernels &gt; 5×5</li>
+</ul>
 <h3 id="box-blur">Box Blur</h3>
 <p>Uniform averaging filter (faster but less smooth than Gaussian).</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kd">let</span><span class="w"> </span><span class="n">kernel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Kernel</span><span class="p">::</span><span class="n">box_blur</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
@@ -1703,9 +1803,11 @@
 <a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a><span class="p">]);</span>
 <a id="__codelineno-7-23" name="__codelineno-7-23" href="#__codelineno-7-23"></a><span class="kd">let</span><span class="w"> </span><span class="n">blurred</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">image</span><span class="p">.</span><span class="n">convolve</span><span class="p">(</span><span class="o">&amp;</span><span class="n">custom_blur</span><span class="p">,</span><span class="w"> </span><span class="n">BorderMode</span><span class="p">::</span><span class="n">Replicate</span><span class="p">);</span>
 </code></pre></div>
-<p><strong>Requirements:</strong>
-- Width and height must be odd (3, 5, 7, 9, etc.)
-- Data length must equal width × height</p>
+<p><strong>Requirements:</strong></p>
+<ul>
+<li>Width and height must be odd (3, 5, 7, 9, etc.)</li>
+<li>Data length must equal width × height</li>
+</ul>
 <h2 id="border-modes">Border Modes</h2>
 <p>Control how pixels outside the image boundary are handled:</p>
 <h3 id="bordermodereplicate-recommended">BorderMode::Replicate (Recommended)</h3>
@@ -1744,12 +1846,14 @@
 <p>For separable kernels (like Gaussian), use <code>convolve_separable()</code> for massive performance gains.</p>
 <h3 id="why-separable">Why Separable?</h3>
 <p>A 2D convolution with an N×N kernel requires N² operations per pixel. A separable kernel can be decomposed into two 1D convolutions, requiring only 2N operations.</p>
-<p><strong>Performance Gain:</strong>
-- 3×3: 1.5× faster
-- 5×5: 2.5× faster
-- 9×9: 4.5× faster
-- 15×15: 7.5× faster
-- 21×21: 10.5× faster</p>
+<p><strong>Performance Gain:</strong></p>
+<ul>
+<li>3×3: 1.5× faster</li>
+<li>5×5: 2.5× faster</li>
+<li>9×9: 4.5× faster</li>
+<li>15×15: 7.5× faster</li>
+<li>21×21: 10.5× faster</li>
+</ul>
 <h3 id="usage">Usage</h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="c1">// Create 1D Gaussian kernel</span>
 <a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="kd">let</span><span class="w"> </span><span class="n">kernel_1d</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">create_gaussian_1d</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="mf">2.0</span><span class="p">);</span>
@@ -1785,16 +1889,20 @@
 <a id="__codelineno-16-32" name="__codelineno-16-32" href="#__codelineno-16-32"></a><span class="p">}</span>
 </code></pre></div>
 <h3 id="when-to-use-separable-convolution">When to Use Separable Convolution</h3>
-<p>✅ <strong>Use separable when:</strong>
-- Gaussian blur (always separable)
-- Box blur (always separable)
-- Large kernel sizes (&gt; 5×5)
-- You care about performance</p>
-<p>❌ <strong>Don't use separable for:</strong>
-- Sobel (not separable in practice)
-- Laplacian (not separable)
-- Custom non-separable kernels
-- Small kernels (3×3) where overhead may not be worth it</p>
+<p>✅ <strong>Use separable when:</strong></p>
+<ul>
+<li>Gaussian blur (always separable)</li>
+<li>Box blur (always separable)</li>
+<li>Large kernel sizes (&gt; 5×5)</li>
+<li>You care about performance</li>
+</ul>
+<p>❌ <strong>Don't use separable for:</strong></p>
+<ul>
+<li>Sobel (not separable in practice)</li>
+<li>Laplacian (not separable)</li>
+<li>Custom non-separable kernels</li>
+<li>Small kernels (3×3) where overhead may not be worth it</li>
+</ul>
 <h2 id="parallel-processing">Parallel Processing</h2>
 <p>By default, convolution uses all available CPU cores via Rayon.</p>
 <h3 id="enabledisable">Enable/Disable</h3>
@@ -1809,15 +1917,19 @@
 <a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a><span class="n">cv-rusty</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s2">&quot;0.2.0&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">default-features</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="n">features</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;std&quot;</span><span class="p">]</span><span class="w"> </span><span class="p">}</span>
 </code></pre></div>
 <h3 id="performance-impact">Performance Impact</h3>
-<p>On a 1920×1080 image with a 9×9 kernel:
-- <strong>Single-threaded:</strong> ~200ms
-- <strong>Multi-threaded (8 cores):</strong> ~30ms
-- <strong>Speedup:</strong> ~6.7×</p>
-<p><strong>Guidelines:</strong>
-- Parallel is best for large images (&gt; 500×500)
-- Parallel is best for large kernels (&gt; 5×5)
-- Small images may be faster single-threaded due to overhead
-- Benchmark your specific use case</p>
+<p>On a 1920×1080 image with a 9×9 kernel:</p>
+<ul>
+<li><strong>Single-threaded:</strong> ~200ms</li>
+<li><strong>Multi-threaded (8 cores):</strong> ~30ms</li>
+<li><strong>Speedup:</strong> ~6.7×</li>
+</ul>
+<p><strong>Guidelines:</strong></p>
+<ul>
+<li>Parallel is best for large images (&gt; 500×500)</li>
+<li>Parallel is best for large kernels (&gt; 5×5)</li>
+<li>Small images may be faster single-threaded due to overhead</li>
+<li>Benchmark your specific use case</li>
+</ul>
 <h2 id="performance-tips">Performance Tips</h2>
 <h3 id="1-always-use-release-mode">1. Always Use Release Mode</h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>cargo<span class="w"> </span>build<span class="w"> </span>--release

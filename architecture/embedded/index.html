@@ -384,6 +384,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../guides/drawing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Drawing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../guides/image-writing/" class="md-nav__link">
         
   
@@ -1018,12 +1041,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../../changelogs/window_feature_summary/" class="md-nav__link">
+      <a href="../../changelogs/hex_color_support/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Window Feature
+    Hex Color Support
     
   </span>
   
@@ -1041,12 +1064,81 @@
   
   
     <li class="md-nav__item">
-      <a href="../../changelogs/UNIFIED_SHOW_IMAGE_API.md" class="md-nav__link">
+      <a href="../../changelogs/opacity_support/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Opacity Support
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../changelogs/unified_drawing_api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Unified Drawing API
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../changelogs/unified_show_image_api/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     Unified show_image API
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../changelogs/window_feature_summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Window Feature
     
   </span>
   
@@ -1463,11 +1555,13 @@
 <p>For a <code>Matrix3</code> image, the memory requirements are:
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Memory = width × height × 3 bytes + struct overhead (~24 bytes)
 </code></pre></div></p>
-<p><strong>Examples:</strong>
-- 320×240 image: ~230 KB
-- 640×480 image: ~921 KB
-- 160×120 image: ~57 KB
-- 80×60 image: ~14 KB</p>
+<p><strong>Examples:</strong></p>
+<ul>
+<li>320×240 image: ~230 KB</li>
+<li>640×480 image: ~921 KB</li>
+<li>160×120 image: ~57 KB</li>
+<li>80×60 image: ~14 KB</li>
+</ul>
 <h2 id="setup">Setup</h2>
 <h3 id="1-configure-cargotoml">1. Configure Cargo.toml</h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">[dependencies]</span>
@@ -1801,10 +1895,12 @@
 <li><a href="https://docs.rust-embedded.org/book/collections/index.html">Allocators for embedded systems</a></li>
 </ul>
 <h2 id="support">Support</h2>
-<p>For questions about using CV Rusty in embedded systems, please:
-1. Check the examples in <code>examples/no_std_example.rs</code>
-2. Review this guide
-3. Open an issue on GitHub with your platform details</p>
+<p>For questions about using CV Rusty in embedded systems, please:</p>
+<ol>
+<li>Check the examples in <code>examples/no_std_example.rs</code></li>
+<li>Review this guide</li>
+<li>Open an issue on GitHub with your platform details</li>
+</ol>
 <h2 id="license">License</h2>
 <p>Same as the main CV Rusty library (MIT).</p>
 

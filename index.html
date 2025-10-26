@@ -679,6 +679,29 @@
   
   
     <li class="md-nav__item">
+      <a href="guides/drawing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Drawing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="guides/image-writing/" class="md-nav__link">
         
   
@@ -930,12 +953,12 @@
   
   
     <li class="md-nav__item">
-      <a href="changelogs/window_feature_summary/" class="md-nav__link">
+      <a href="changelogs/hex_color_support/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Window Feature
+    Hex Color Support
     
   </span>
   
@@ -953,12 +976,81 @@
   
   
     <li class="md-nav__item">
-      <a href="changelogs/UNIFIED_SHOW_IMAGE_API.md" class="md-nav__link">
+      <a href="changelogs/opacity_support/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Opacity Support
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="changelogs/unified_drawing_api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Unified Drawing API
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="changelogs/unified_show_image_api/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     Unified show_image API
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="changelogs/window_feature_summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Window Feature
     
   </span>
   
@@ -1422,34 +1514,42 @@
 <h2 id="api-documentation">API Documentation</h2>
 <h3 id="matrix3"><code>Matrix3</code></h3>
 <p>A three-channel matrix for representing RGB image data.</p>
-<p><strong>Key Methods:</strong>
-- <code>new(width, height, data)</code> - Create from raw RGB data
-- <code>zeros(width, height)</code> - Create a zero-initialized matrix
-- <code>get_pixel(x, y)</code> - Get RGB values at a pixel location
-- <code>set_pixel(x, y, r, g, b)</code> - Set RGB values at a pixel location
-- <code>width()</code>, <code>height()</code>, <code>dimensions()</code> - Get matrix dimensions
-- <code>data()</code>, <code>data_mut()</code> - Access raw pixel data</p>
+<p><strong>Key Methods:</strong></p>
+<ul>
+<li><code>new(width, height, data)</code> - Create from raw RGB data</li>
+<li><code>zeros(width, height)</code> - Create a zero-initialized matrix</li>
+<li><code>get_pixel(x, y)</code> - Get RGB values at a pixel location</li>
+<li><code>set_pixel(x, y, r, g, b)</code> - Set RGB values at a pixel location</li>
+<li><code>width()</code>, <code>height()</code>, <code>dimensions()</code> - Get matrix dimensions</li>
+<li><code>data()</code>, <code>data_mut()</code> - Access raw pixel data</li>
+</ul>
 <h3 id="ioread_jpegpath"><code>io::read_jpeg(path)</code></h3>
 <p>Reads a JPEG image file and returns it as a three-channel RGB <code>Matrix3</code>.</p>
-<p><strong>Supported Formats:</strong>
-- RGB24 (24-bit color)
-- L8 (8-bit grayscale, converted to RGB)
-- CMYK32 (CMYK color space, converted to RGB)</p>
+<p><strong>Supported Formats:</strong></p>
+<ul>
+<li>RGB24 (24-bit color)</li>
+<li>L8 (8-bit grayscale, converted to RGB)</li>
+<li>CMYK32 (CMYK color space, converted to RGB)</li>
+</ul>
 <p><strong>Returns:</strong> <code>Result&lt;Matrix3, ImageError&gt;</code></p>
 <h3 id="ioread_pngpath"><code>io::read_png(path)</code></h3>
 <p>Reads a PNG image file and returns it as a three-channel RGB <code>Matrix3</code>.</p>
-<p><strong>Supported Formats:</strong>
-- RGB (24-bit color)
-- RGBA (32-bit color with alpha, alpha channel stripped)
-- Grayscale (8-bit, converted to RGB)
-- Grayscale+Alpha (16-bit, alpha channel stripped, converted to RGB)</p>
+<p><strong>Supported Formats:</strong></p>
+<ul>
+<li>RGB (24-bit color)</li>
+<li>RGBA (32-bit color with alpha, alpha channel stripped)</li>
+<li>Grayscale (8-bit, converted to RGB)</li>
+<li>Grayscale+Alpha (16-bit, alpha channel stripped, converted to RGB)</li>
+</ul>
 <p><strong>Returns:</strong> <code>Result&lt;Matrix3, ImageError&gt;</code></p>
 <h3 id="iowrite_jpegmatrix-path-quality"><code>io::write_jpeg(matrix, path, quality)</code></h3>
 <p>Writes a <code>Matrix3</code> as a JPEG image file.</p>
-<p><strong>Arguments:</strong>
-- <code>matrix</code> - Reference to the Matrix3 containing RGB data
-- <code>path</code> - Path where the JPEG file should be written
-- <code>quality</code> - JPEG quality (1-100, where 100 is best quality)</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><code>matrix</code> - Reference to the Matrix3 containing RGB data</li>
+<li><code>path</code> - Path where the JPEG file should be written</li>
+<li><code>quality</code> - JPEG quality (1-100, where 100 is best quality)</li>
+</ul>
 <p><strong>Returns:</strong> <code>Result&lt;(), ImageError&gt;</code></p>
 <p><strong>Example:</strong>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kd">let</span><span class="w"> </span><span class="n">image</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Matrix3</span><span class="p">::</span><span class="n">zeros</span><span class="p">(</span><span class="mi">640</span><span class="p">,</span><span class="w"> </span><span class="mi">480</span><span class="p">);</span>
@@ -1457,9 +1557,11 @@
 </code></pre></div></p>
 <h3 id="iowrite_pngmatrix-path"><code>io::write_png(matrix, path)</code></h3>
 <p>Writes a <code>Matrix3</code> as a PNG image file (lossless compression).</p>
-<p><strong>Arguments:</strong>
-- <code>matrix</code> - Reference to the Matrix3 containing RGB data
-- <code>path</code> - Path where the PNG file should be written</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><code>matrix</code> - Reference to the Matrix3 containing RGB data</li>
+<li><code>path</code> - Path where the PNG file should be written</li>
+</ul>
 <p><strong>Returns:</strong> <code>Result&lt;(), ImageError&gt;</code></p>
 <p><strong>Example:</strong>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="kd">let</span><span class="w"> </span><span class="n">image</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Matrix3</span><span class="p">::</span><span class="n">zeros</span><span class="p">(</span><span class="mi">640</span><span class="p">,</span><span class="w"> </span><span class="mi">480</span><span class="p">);</span>

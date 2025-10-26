@@ -9,7 +9,7 @@
       
       
       
-        <link rel="prev" href="../changelog-color-features/">
+        <link rel="prev" href="../unified_show_image_api/">
       
       
       
@@ -382,6 +382,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../guides/drawing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Drawing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../guides/image-writing/" class="md-nav__link">
         
   
@@ -618,6 +641,98 @@
   
   <span class="md-ellipsis">
     Color Features
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hex_color_support/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Hex Color Support
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../opacity_support/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Opacity Support
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../unified_drawing_api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Unified Drawing API
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../unified_show_image_api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Unified show_image API
     
   </span>
   
@@ -1009,29 +1124,6 @@
   
 </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../UNIFIED_SHOW_IMAGE_API.md" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Unified show_image API
-    
-  </span>
-  
-
-      </a>
     </li>
   
 
@@ -1431,8 +1523,12 @@
 </ul>
 <h4 id="error-handling">Error Handling</h4>
 <ul>
-<li><code>WindowError</code> enum with variants:</li>
-<li><code>WindowCreation(String)</code> - Window creation/update failures</li>
+<li>
+<p><code>WindowError</code> enum with variants:</p>
+</li>
+<li>
+<p><code>WindowCreation(String)</code> - Window creation/update failures</p>
+</li>
 <li><code>InvalidDimensions</code> - Zero width or height images</li>
 </ul>
 <h4 id="features">Features</h4>
@@ -1466,14 +1562,16 @@
 </ul>
 <h3 id="5-documentation">5. Documentation</h3>
 <h4 id="docswindow_displaymd">docs/window_display.md</h4>
-<p>Complete API documentation including:
-- Feature requirements
-- API reference for all functions
-- Complete examples
-- Error handling guide
-- Comparison with OpenCV
-- Limitations and advanced usage
-- Troubleshooting guide</p>
+<p>Complete API documentation including:</p>
+<ul>
+<li>Feature requirements</li>
+<li>API reference for all functions</li>
+<li>Complete examples</li>
+<li>Error handling guide</li>
+<li>Comparison with OpenCV</li>
+<li>Limitations and advanced usage</li>
+<li>Troubleshooting guide</li>
+</ul>
 <h4 id="readmemd-updates">README.md Updates</h4>
 <ul>
 <li>Added <code>window</code> feature to Feature Flags section</li>
@@ -1551,17 +1649,21 @@
 <li>Works directly with RGB buffers</li>
 </ul>
 <h3 id="optional-feature">Optional Feature</h3>
-<p>Made it an optional feature because:
-- Maintains <code>no_std</code> compatibility for core library
-- Doesn't add GUI dependencies for embedded/server use cases
-- Users can opt-in only when needed</p>
+<p>Made it an optional feature because:</p>
+<ul>
+<li>Maintains <code>no_std</code> compatibility for core library</li>
+<li>Doesn't add GUI dependencies for embedded/server use cases</li>
+<li>Users can opt-in only when needed</li>
+</ul>
 <h3 id="api-design">API Design</h3>
-<p>Simple, intuitive API:
-- Unified function name (<code>show_image</code>) works with all image types
-- Uses Rust's trait system (<code>Displayable</code> trait) for type safety and extensibility
-- Blocking API for easy usage
-- Window name as first parameter
-- Error handling with Result types (more Rust-idiomatic than OpenCV)</p>
+<p>Simple, intuitive API:</p>
+<ul>
+<li>Unified function name (<code>show_image</code>) works with all image types</li>
+<li>Uses Rust's trait system (<code>Displayable</code> trait) for type safety and extensibility</li>
+<li>Blocking API for easy usage</li>
+<li>Window name as first parameter</li>
+<li>Error handling with Result types (more Rust-idiomatic than OpenCV)</li>
+</ul>
 <h2 id="limitations">Limitations</h2>
 <ol>
 <li><strong>Sequential Windows</strong>: Each <code>show_image</code> call blocks until window is closed</li>

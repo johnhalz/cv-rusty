@@ -384,6 +384,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../guides/drawing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Drawing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../guides/image-writing/" class="md-nav__link">
         
   
@@ -1054,12 +1077,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../../changelogs/window_feature_summary/" class="md-nav__link">
+      <a href="../../changelogs/hex_color_support/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Window Feature
+    Hex Color Support
     
   </span>
   
@@ -1077,12 +1100,81 @@
   
   
     <li class="md-nav__item">
-      <a href="../../changelogs/UNIFIED_SHOW_IMAGE_API.md" class="md-nav__link">
+      <a href="../../changelogs/opacity_support/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Opacity Support
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../changelogs/unified_drawing_api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Unified Drawing API
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../changelogs/unified_show_image_api/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     Unified show_image API
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../changelogs/window_feature_summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Window Feature
     
   </span>
   
@@ -1537,25 +1629,33 @@
 <h2 id="module-design">Module Design</h2>
 <h3 id="librs"><code>lib.rs</code></h3>
 <p>The main library entry point configured for <code>no_std</code> compatibility. It uses feature flags to conditionally compile std-dependent code.</p>
-<p><strong>Key Attributes:</strong>
-- <code>#![cfg_attr(not(feature = "std"), no_std)]</code> - Enables <code>no_std</code> when std feature is disabled
-- <code>extern crate alloc</code> - Required for heap allocations in <code>no_std</code> environments</p>
-<p><strong>Public API:</strong>
-- <code>Matrix3</code> - Three-channel image matrix (always available)
-- <code>read_jpeg</code> - JPEG file reading function (only with <code>std</code> feature)</p>
+<p><strong>Key Attributes:</strong></p>
+<ul>
+<li><code>#![cfg_attr(not(feature = "std"), no_std)]</code> - Enables <code>no_std</code> when std feature is disabled</li>
+<li><code>extern crate alloc</code> - Required for heap allocations in <code>no_std</code> environments</li>
+</ul>
+<p><strong>Public API:</strong></p>
+<ul>
+<li><code>Matrix3</code> - Three-channel image matrix (always available)</li>
+<li><code>read_jpeg</code> - JPEG file reading function (only with <code>std</code> feature)</li>
+</ul>
 <h3 id="matrixrs"><code>matrix.rs</code></h3>
 <p>Contains the core data structure for representing multi-channel image data. This module is fully <code>no_std</code> compatible and only requires the <code>alloc</code> crate.</p>
-<p><strong><code>no_std</code> Compatibility:</strong>
-- Uses <code>core::fmt</code> instead of <code>std::fmt</code>
-- Imports <code>Vec</code> from <code>alloc::vec::Vec</code> when <code>std</code> is not available
-- Imports <code>vec!</code> macro from <code>alloc::vec</code> for <code>no_std</code> environments</p>
+<p><strong><code>no_std</code> Compatibility:</strong></p>
+<ul>
+<li>Uses <code>core::fmt</code> instead of <code>std::fmt</code></li>
+<li>Imports <code>Vec</code> from <code>alloc::vec::Vec</code> when <code>std</code> is not available</li>
+<li>Imports <code>vec!</code> macro from <code>alloc::vec</code> for <code>no_std</code> environments</li>
+</ul>
 <h4 id="matrix3"><code>Matrix3</code></h4>
 <p>A three-channel matrix specifically designed for RGB image representation.</p>
-<p><strong>Design Decisions:</strong>
-- <strong>Contiguous Memory Layout</strong>: Data is stored in a single <code>Vec&lt;u8&gt;</code> for cache efficiency
-- <strong>Interleaved Channels</strong>: RGB values are stored as <code>[R, G, B, R, G, B, ...]</code> for better spatial locality
-- <strong>Row-Major Order</strong>: Standard image representation order (y * width + x)
-- <strong>Bounds Checking</strong>: All pixel access methods return <code>Option</code> or <code>bool</code> to prevent panics</p>
+<p><strong>Design Decisions:</strong></p>
+<ul>
+<li><strong>Contiguous Memory Layout</strong>: Data is stored in a single <code>Vec&lt;u8&gt;</code> for cache efficiency</li>
+<li><strong>Interleaved Channels</strong>: RGB values are stored as <code>[R, G, B, R, G, B, ...]</code> for better spatial locality</li>
+<li><strong>Row-Major Order</strong>: Standard image representation order (y * width + x)</li>
+<li><strong>Bounds Checking</strong>: All pixel access methods return <code>Option</code> or <code>bool</code> to prevent panics</li>
+</ul>
 <p><strong>Memory Layout:</strong>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Pixel (0,0): [R, G, B] | Pixel (1,0): [R, G, B] | ... | Pixel (W-1,0): [R, G, B]
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>Pixel (0,1): [R, G, B] | Pixel (1,1): [R, G, B] | ... | Pixel (W-1,1): [R, G, B]
@@ -1570,31 +1670,39 @@
 </code></pre></div></p>
 <h3 id="iors"><code>io.rs</code></h3>
 <p>Handles image file I/O operations, currently supporting JPEG format. This module is only compiled when the <code>std</code> feature is enabled, as it requires file system access.</p>
-<p><strong>Compilation Guard:</strong>
-- Only included when <code>#[cfg(feature = "std")]</code> is true
-- Requires <code>std::fs</code>, <code>std::io</code>, and <code>std::path</code></p>
+<p><strong>Compilation Guard:</strong></p>
+<ul>
+<li>Only included when <code>#[cfg(feature = "std")]</code> is true</li>
+<li>Requires <code>std::fs</code>, <code>std::io</code>, and <code>std::path</code></li>
+</ul>
 <h4 id="imageerror"><code>ImageError</code></h4>
-<p>Custom error type for image operations with variants:
-- <code>Io(io::Error)</code> - File system errors
-- <code>JpegDecode(String)</code> - JPEG decoding errors
-- <code>UnsupportedFormat(String)</code> - Unsupported pixel format errors</p>
+<p>Custom error type for image operations with variants:</p>
+<ul>
+<li><code>Io(io::Error)</code> - File system errors</li>
+<li><code>JpegDecode(String)</code> - JPEG decoding errors</li>
+<li><code>UnsupportedFormat(String)</code> - Unsupported pixel format errors</li>
+</ul>
 <h4 id="read_jpegpath"><code>read_jpeg(path)</code></h4>
 <p>Reads JPEG files and converts them to RGB <code>Matrix3</code>.</p>
-<p><strong>Supported Input Formats:</strong>
-1. <strong>RGB24</strong> - Direct passthrough (most common)
-2. <strong>L8 (Grayscale)</strong> - Converted by duplicating channel: <code>[G] -&gt; [G, G, G]</code>
-3. <strong>CMYK32</strong> - Converted using formula:
+<p><strong>Supported Input Formats:</strong></p>
+<ol>
+<li><strong>RGB24</strong> - Direct passthrough (most common)</li>
+<li><strong>L8 (Grayscale)</strong> - Converted by duplicating channel: <code>[G] -&gt; [G, G, G]</code></li>
+<li><strong>CMYK32</strong> - Converted using formula:
    <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>R = (1 - C) * (1 - K) * 255
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>G = (1 - M) * (1 - K) * 255
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>B = (1 - Y) * (1 - K) * 255
-</code></pre></div></p>
-<p><strong>Processing Pipeline:</strong>
-1. Open file with buffered reader
-2. Create JPEG decoder
-3. Decode image to raw pixels
-4. Extract metadata (width, height, pixel format)
-5. Convert to RGB if necessary
-6. Construct <code>Matrix3</code> with RGB data</p>
+</code></pre></div></li>
+</ol>
+<p><strong>Processing Pipeline:</strong></p>
+<ol>
+<li>Open file with buffered reader</li>
+<li>Create JPEG decoder</li>
+<li>Decode image to raw pixels</li>
+<li>Extract metadata (width, height, pixel format)</li>
+<li>Convert to RGB if necessary</li>
+<li>Construct <code>Matrix3</code> with RGB data</li>
+</ol>
 <h2 id="dependencies">Dependencies</h2>
 <h3 id="jpeg-decoder-v03"><code>jpeg-decoder</code> (v0.3)</h3>
 <ul>
@@ -1606,14 +1714,18 @@
 </ul>
 <h2 id="feature-flags">Feature Flags</h2>
 <h3 id="std-default"><code>std</code> (default)</h3>
-<p>Enables standard library support, including:
-- File I/O operations (<code>io</code> module)
-- JPEG reading functionality
-- <code>std::error::Error</code> trait implementations</p>
+<p>Enables standard library support, including:</p>
+<ul>
+<li>File I/O operations (<code>io</code> module)</li>
+<li>JPEG reading functionality</li>
+<li><code>std::error::Error</code> trait implementations</li>
+</ul>
 <h3 id="alloc"><code>alloc</code></h3>
-<p>Enables heap allocation support (required for core functionality):
-- <code>Vec&lt;u8&gt;</code> for storing pixel data
-- Dynamic memory allocation</p>
+<p>Enables heap allocation support (required for core functionality):</p>
+<ul>
+<li><code>Vec&lt;u8&gt;</code> for storing pixel data</li>
+<li>Dynamic memory allocation</li>
+</ul>
 <p><strong>Feature Dependencies:</strong>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">[features]</span>
 <a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">default</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;std&quot;</span><span class="p">]</span>
@@ -1654,27 +1766,35 @@
 </ul>
 <h2 id="no_std-support"><code>no_std</code> Support</h2>
 <h3 id="requirements">Requirements</h3>
-<p>The core library (<code>Matrix3</code> and related operations) only requires:
-- <code>core</code> - Rust's core library (always available)
-- <code>alloc</code> - For heap allocations (<code>Vec</code>)</p>
+<p>The core library (<code>Matrix3</code> and related operations) only requires:</p>
+<ul>
+<li><code>core</code> - Rust's core library (always available)</li>
+<li><code>alloc</code> - For heap allocations (<code>Vec</code>)</li>
+</ul>
 <h3 id="limitations-in-no_std">Limitations in <code>no_std</code></h3>
-<p>Without the <code>std</code> feature, the following are not available:
-- File I/O operations (<code>read_jpeg</code>, future <code>write_jpeg</code>)
-- <code>std::error::Error</code> trait (we use custom error types)
-- Threading/parallelization</p>
+<p>Without the <code>std</code> feature, the following are not available:</p>
+<ul>
+<li>File I/O operations (<code>read_jpeg</code>, future <code>write_jpeg</code>)</li>
+<li><code>std::error::Error</code> trait (we use custom error types)</li>
+<li>Threading/parallelization</li>
+</ul>
 <h3 id="embedded-use-cases">Embedded Use Cases</h3>
-<p>The <code>no_std</code> design enables use in:
-- <strong>Microcontrollers</strong> (ARM Cortex-M, RISC-V)
-- <strong>Real-time Operating Systems</strong> (RTOS)
-- <strong>Bare-metal environments</strong>
-- <strong>FPGA/ASIC soft processors</strong>
-- <strong>Bootloaders and firmware</strong></p>
+<p>The <code>no_std</code> design enables use in:</p>
+<ul>
+<li><strong>Microcontrollers</strong> (ARM Cortex-M, RISC-V)</li>
+<li><strong>Real-time Operating Systems</strong> (RTOS)</li>
+<li><strong>Bare-metal environments</strong></li>
+<li><strong>FPGA/ASIC soft processors</strong></li>
+<li><strong>Bootloaders and firmware</strong></li>
+</ul>
 <h3 id="memory-considerations">Memory Considerations</h3>
-<p>In <code>no_std</code> environments:
-- Heap allocation requires a global allocator to be configured
-- Large images may exceed available RAM on constrained devices
-- Consider using smaller images or streaming processing
-- Future: Support for static allocation and external memory</p>
+<p>In <code>no_std</code> environments:</p>
+<ul>
+<li>Heap allocation requires a global allocator to be configured</li>
+<li>Large images may exceed available RAM on constrained devices</li>
+<li>Consider using smaller images or streaming processing</li>
+<li>Future: Support for static allocation and external memory</li>
+</ul>
 <h2 id="testing-strategy">Testing Strategy</h2>
 <h3 id="unit-tests">Unit Tests</h3>
 <ul>
@@ -1723,21 +1843,25 @@
 <a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="p">}</span>
 </code></pre></div></p>
 <h3 id="generic-matrix-types">Generic Matrix Types</h3>
-<p>Potential expansion to support different channel counts and data types:
-- <code>Matrix&lt;T, C&gt;</code> - Generic over data type and channel count
-- <code>Matrix1&lt;T&gt;</code> - Single channel (grayscale)
-- <code>Matrix3&lt;T&gt;</code> - Three channels (RGB)
-- <code>Matrix4&lt;T&gt;</code> - Four channels (RGBA)</p>
+<p>Potential expansion to support different channel counts and data types:</p>
+<ul>
+<li><code>Matrix&lt;T, C&gt;</code> - Generic over data type and channel count</li>
+<li><code>Matrix1&lt;T&gt;</code> - Single channel (grayscale)</li>
+<li><code>Matrix3&lt;T&gt;</code> - Three channels (RGB)</li>
+<li><code>Matrix4&lt;T&gt;</code> - Four channels (RGBA)</li>
+</ul>
 <h2 id="contributing-guidelines">Contributing Guidelines</h2>
-<p>When adding new features:
-1. Follow existing module organization patterns
-2. <strong>Design for <code>no_std</code> first</strong> - use <code>core</code> and <code>alloc</code> when possible
-3. Add comprehensive tests (test with and without <code>std</code> feature)
-4. Document all public APIs with examples
-5. Consider performance implications, especially for embedded systems
-6. Maintain memory safety without unsafe code (unless absolutely necessary)
-7. Use feature flags appropriately (<code>std</code> for I/O, keep core logic <code>no_std</code>)
-8. Update this architecture document</p>
+<p>When adding new features:</p>
+<ol>
+<li>Follow existing module organization patterns</li>
+<li><strong>Design for <code>no_std</code> first</strong> - use <code>core</code> and <code>alloc</code> when possible</li>
+<li>Add comprehensive tests (test with and without <code>std</code> feature)</li>
+<li>Document all public APIs with examples</li>
+<li>Consider performance implications, especially for embedded systems</li>
+<li>Maintain memory safety without unsafe code (unless absolutely necessary)</li>
+<li>Use feature flags appropriately (<code>std</code> for I/O, keep core logic <code>no_std</code>)</li>
+<li>Update this architecture document</li>
+</ol>
 <h3 id="testing-strategy-for-no_std">Testing Strategy for <code>no_std</code></h3>
 <p>When testing <code>no_std</code> compatibility:
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># Build without std</span>

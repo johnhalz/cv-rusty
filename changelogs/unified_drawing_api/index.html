@@ -9,6 +9,10 @@
       
       
       
+        <link rel="prev" href="../opacity_support/">
+      
+      
+        <link rel="next" href="../unified_show_image_api/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -16,7 +20,7 @@
     
     
       
-        <title>Unified Drawing API - Design Document - CV Rusty</title>
+        <title>Unified Drawing API - CV Rusty</title>
       
     
     
@@ -104,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Unified Drawing API - Design Document
+              Unified Drawing API
             
           </span>
         </div>
@@ -380,6 +384,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../guides/drawing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Drawing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../guides/image-writing/" class="md-nav__link">
         
   
@@ -567,18 +594,20 @@
       
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
         
           
           <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
@@ -594,7 +623,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             Changelogs
@@ -631,12 +660,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../window_feature_summary/" class="md-nav__link">
+      <a href="../hex_color_support/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Window Feature
+    Hex Color Support
     
   </span>
   
@@ -654,12 +683,378 @@
   
   
     <li class="md-nav__item">
-      <a href="../UNIFIED_SHOW_IMAGE_API.md" class="md-nav__link">
+      <a href="../opacity_support/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Opacity Support
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Unified Drawing API
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Unified Drawing API
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#motivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Motivation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Motivation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#previous-api-initial-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Previous API (Initial Implementation)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-unified-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      New Unified API
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#technical-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Technical Implementation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Technical Implementation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#drawtarget-trait" class="md-nav__link">
+    <span class="md-ellipsis">
+      DrawTarget Trait
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generic-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Generic Functions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compile-time-dispatch" class="md-nav__link">
+    <span class="md-ellipsis">
+      Compile-Time Dispatch
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#color-conversion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Color Conversion
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#consistency-with-existing-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Consistency with Existing Patterns
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Consistency with Existing Patterns">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#window-display-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      Window Display API
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#drawing-api-now-similar" class="md-nav__link">
+    <span class="md-ellipsis">
+      Drawing API (Now Similar)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#migration-guide" class="md-nav__link">
+    <span class="md-ellipsis">
+      Migration Guide
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Migration Guide">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#for-new-users" class="md-nav__link">
+    <span class="md-ellipsis">
+      For New Users
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#for-early-adopters-if-applicable" class="md-nav__link">
+    <span class="md-ellipsis">
+      For Early Adopters (if applicable)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performance
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Performance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#benchmarks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Benchmarks
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generated-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      Generated Code
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#design-philosophy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Design Philosophy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#documentation-updates" class="md-nav__link">
+    <span class="md-ellipsis">
+      Documentation Updates
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exports" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exports
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#future-extensions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Future Extensions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conclusion
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      See Also
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../unified_show_image_api/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     Unified show_image API
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../window_feature_summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Window Feature
     
   </span>
   
@@ -978,14 +1373,11 @@
 
 
 <h1 id="unified-drawing-api-design-document">Unified Drawing API - Design Document</h1>
-<p><strong>Date:</strong> 2024
-<strong>Status:</strong> Implemented
-<strong>Version:</strong> 0.4.0+</p>
 <h2 id="overview">Overview</h2>
 <p>The drawing module now uses a unified API where <code>draw_rectangle()</code> and <code>draw_circle()</code> work seamlessly with both RGB (<code>Matrix3</code>) and grayscale (<code>Matrix1</code>) images. This eliminates the need for separate <code>_gray</code> variants and makes the API more intuitive.</p>
 <h2 id="motivation">Motivation</h2>
 <h3 id="previous-api-initial-implementation">Previous API (Initial Implementation)</h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">use</span><span class="w"> </span><span class="n">cv_rusty</span><span class="p">::{</span><span class="n">Matrix3</span><span class="p">,</span><span class="w"> </span><span class="n">Matrix1</span><span class="p">,</span><span class="w"> </span><span class="n">draw_rectangle</span><span class="p">,</span><span class="w"> </span><span class="n">draw_rectangle_gray</span><span class="p">,</span><span class="w"> </span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">use</span><span class="w"> </span><span class="n">cv_rusty</span><span class="p">::{</span><span class="n">Matrix3</span><span class="p">,</span><span class="w"> </span><span class="n">Matrix1</span><span class="p">,</span><span class="w"> </span><span class="n">draw_rectangle</span><span class="p">,</span><span class="w"> </span><span class="n">draw_rectangle_gray</span><span class="p">,</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">               </span><span class="n">draw_circle</span><span class="p">,</span><span class="w"> </span><span class="n">draw_circle_gray</span><span class="p">,</span><span class="w"> </span><span class="n">Color</span><span class="p">};</span>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1">// RGB images</span>
@@ -1000,11 +1392,13 @@
 <a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>
 <a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="c1">// Note: This was before the Stroke struct was added</span>
 </code></pre></div>
-<p><strong>Problems:</strong>
-- Users had to remember two different function names
-- Not consistent with the library's <code>show_image()</code> API (which works with both types)
-- More cognitive load when switching between image types
-- Duplicated documentation</p>
+<p><strong>Problems:</strong></p>
+<ul>
+<li>Users had to remember two different function names</li>
+<li>Not consistent with the library's <code>show_image()</code> API (which works with both types)</li>
+<li>More cognitive load when switching between image types</li>
+<li>Duplicated documentation</li>
+</ul>
 <h3 id="new-unified-api">New Unified API</h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">use</span><span class="w"> </span><span class="n">cv_rusty</span><span class="p">::{</span><span class="n">Matrix3</span><span class="p">,</span><span class="w"> </span><span class="n">Matrix1</span><span class="p">,</span><span class="w"> </span><span class="n">draw_rectangle</span><span class="p">,</span><span class="w"> </span><span class="n">draw_circle</span><span class="p">,</span><span class="w"> </span><span class="n">Color</span><span class="p">,</span><span class="w"> </span><span class="n">Stroke</span><span class="p">};</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
@@ -1020,12 +1414,14 @@
 <a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="w">               </span><span class="nb">Some</span><span class="p">(</span><span class="n">Stroke</span><span class="p">::</span><span class="n">new</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">Color</span><span class="p">::</span><span class="n">gray</span><span class="p">(</span><span class="mi">255</span><span class="p">))),</span>
 <a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="w">               </span><span class="nb">Some</span><span class="p">(</span><span class="n">Color</span><span class="p">::</span><span class="n">gray</span><span class="p">(</span><span class="mi">100</span><span class="p">)));</span>
 </code></pre></div>
-<p><strong>Benefits:</strong>
-- Single function name to remember
-- Consistent with <code>show_image()</code> API pattern
-- Type-safe through traits
-- Better developer experience
-- No runtime overhead</p>
+<p><strong>Benefits:</strong></p>
+<ul>
+<li>Single function name to remember</li>
+<li>Consistent with <code>show_image()</code> API pattern</li>
+<li>Type-safe through traits</li>
+<li>Better developer experience</li>
+<li>No runtime overhead</li>
+</ul>
 <h2 id="technical-implementation">Technical Implementation</h2>
 <h3 id="drawtarget-trait">DrawTarget Trait</h3>
 <p>The unified API is powered by the <code>DrawTarget</code> trait:</p>
@@ -1089,7 +1485,7 @@
 <a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">to_display_data</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">Vec</span><span class="o">&lt;</span><span class="kt">u8</span><span class="o">&gt;</span><span class="p">;</span>
 <a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="p">}</span>
 <a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>
-<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">show_image</span><span class="o">&lt;</span><span class="n">T</span><span class="p">:</span><span class="w"> </span><span class="nc">Displayable</span><span class="o">&gt;</span><span class="p">(</span><span class="n">window_name</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="kt">str</span><span class="p">,</span><span class="w"> </span><span class="n">image</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="nc">T</span><span class="p">)</span><span class="w"> </span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">show_image</span><span class="o">&lt;</span><span class="n">T</span><span class="p">:</span><span class="w"> </span><span class="nc">Displayable</span><span class="o">&gt;</span><span class="p">(</span><span class="n">window_name</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="kt">str</span><span class="p">,</span><span class="w"> </span><span class="n">image</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="nc">T</span><span class="p">)</span>
 <a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">    </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">Result</span><span class="o">&lt;</span><span class="p">(),</span><span class="w"> </span><span class="n">WindowError</span><span class="o">&gt;</span>
 </code></pre></div>
 <h3 id="drawing-api-now-similar">Drawing API (Now Similar)</h3>

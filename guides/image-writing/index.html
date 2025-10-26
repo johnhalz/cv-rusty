@@ -9,7 +9,7 @@
       
       
       
-        <link rel="prev" href="../convolution/">
+        <link rel="prev" href="../drawing/">
       
       
         <link rel="next" href="../transform_operations/">
@@ -369,6 +369,29 @@
   
   <span class="md-ellipsis">
     Convolution
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../drawing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Drawing
     
   </span>
   
@@ -850,12 +873,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../../changelogs/window_feature_summary/" class="md-nav__link">
+      <a href="../../changelogs/hex_color_support/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Window Feature
+    Hex Color Support
     
   </span>
   
@@ -873,12 +896,81 @@
   
   
     <li class="md-nav__item">
-      <a href="../../changelogs/UNIFIED_SHOW_IMAGE_API.md" class="md-nav__link">
+      <a href="../../changelogs/opacity_support/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Opacity Support
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../changelogs/unified_drawing_api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Unified Drawing API
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../changelogs/unified_show_image_api/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     Unified show_image API
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../changelogs/window_feature_summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Window Feature
     
   </span>
   
@@ -1115,9 +1207,11 @@
 <h1 id="image-writing-functionality">Image Writing Functionality</h1>
 <p>This document describes the image writing capabilities added to cv-rusty, allowing you to save <code>Matrix3</code> objects as JPEG or PNG files.</p>
 <h2 id="overview">Overview</h2>
-<p>The library now supports writing RGB image data from <code>Matrix3</code> objects to disk in two popular formats:
-- <strong>JPEG</strong> - Lossy compression with adjustable quality
-- <strong>PNG</strong> - Lossless compression</p>
+<p>The library now supports writing RGB image data from <code>Matrix3</code> objects to disk in two popular formats:</p>
+<ul>
+<li><strong>JPEG</strong> - Lossy compression with adjustable quality</li>
+<li><strong>PNG</strong> - Lossless compression</li>
+</ul>
 <h2 id="api-reference">API Reference</h2>
 <h3 id="writing-jpeg-images">Writing JPEG Images</h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">write_jpeg</span><span class="o">&lt;</span><span class="n">P</span><span class="p">:</span><span class="w"> </span><span class="nb">AsRef</span><span class="o">&lt;</span><span class="n">Path</span><span class="o">&gt;&gt;</span><span class="p">(</span>
@@ -1126,14 +1220,20 @@
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="n">quality</span><span class="p">:</span><span class="w"> </span><span class="kt">u8</span><span class="p">,</span>
 <a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">Result</span><span class="o">&lt;</span><span class="p">(),</span><span class="w"> </span><span class="n">ImageError</span><span class="o">&gt;</span>
 </code></pre></div>
-<p><strong>Parameters:</strong>
-- <code>matrix</code>: Reference to a <code>Matrix3</code> containing RGB data
-- <code>path</code>: File path where the JPEG should be saved
-- <code>quality</code>: Compression quality (1-100)
-  - <code>1</code>: Lowest quality, smallest file size
-  - <code>100</code>: Highest quality, largest file size
-  - <code>90</code>: Recommended for most use cases
-  - Values outside 1-100 are automatically clamped</p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><code>matrix</code>: Reference to a <code>Matrix3</code> containing RGB data</li>
+<li><code>path</code>: File path where the JPEG should be saved</li>
+<li>
+<p><code>quality</code>: Compression quality (1-100)</p>
+</li>
+<li>
+<p><code>1</code>: Lowest quality, smallest file size</p>
+</li>
+<li><code>100</code>: Highest quality, largest file size</li>
+<li><code>90</code>: Recommended for most use cases</li>
+<li>Values outside 1-100 are automatically clamped</li>
+</ul>
 <p><strong>Example:</strong>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">use</span><span class="w"> </span><span class="n">cv_rusty</span><span class="p">::{</span><span class="n">Matrix3</span><span class="p">,</span><span class="w"> </span><span class="n">write_jpeg</span><span class="p">};</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
@@ -1166,30 +1266,42 @@
 </code></pre></div></p>
 <h2 id="format-comparison">Format Comparison</h2>
 <h3 id="jpeg">JPEG</h3>
-<p><strong>Pros:</strong>
-- Smaller file sizes
-- Adjustable quality/size tradeoff
-- Widely supported
-- Good for photographs</p>
-<p><strong>Cons:</strong>
-- Lossy compression (data loss)
-- Not suitable for text or sharp edges
-- No transparency support</p>
-<p><strong>Typical file sizes (640×480 image):</strong>
-- Quality 95: ~35 KB
-- Quality 75: ~11 KB
-- Quality 50: ~6 KB</p>
+<p><strong>Pros:</strong></p>
+<ul>
+<li>Smaller file sizes</li>
+<li>Adjustable quality/size tradeoff</li>
+<li>Widely supported</li>
+<li>Good for photographs</li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li>Lossy compression (data loss)</li>
+<li>Not suitable for text or sharp edges</li>
+<li>No transparency support</li>
+</ul>
+<p><strong>Typical file sizes (640×480 image):</strong></p>
+<ul>
+<li>Quality 95: ~35 KB</li>
+<li>Quality 75: ~11 KB</li>
+<li>Quality 50: ~6 KB</li>
+</ul>
 <h3 id="png">PNG</h3>
-<p><strong>Pros:</strong>
-- Lossless compression (no data loss)
-- Perfect for graphics with sharp edges
-- Supports transparency (though cv-rusty uses RGB without alpha)
-- Good for iterative editing</p>
-<p><strong>Cons:</strong>
-- Larger file sizes than JPEG
-- Less efficient for photographs</p>
-<p><strong>Typical file sizes (640×480 image):</strong>
-- RGB gradient: ~240 KB</p>
+<p><strong>Pros:</strong></p>
+<ul>
+<li>Lossless compression (no data loss)</li>
+<li>Perfect for graphics with sharp edges</li>
+<li>Supports transparency (though cv-rusty uses RGB without alpha)</li>
+<li>Good for iterative editing</li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li>Larger file sizes than JPEG</li>
+<li>Less efficient for photographs</li>
+</ul>
+<p><strong>Typical file sizes (640×480 image):</strong></p>
+<ul>
+<li>RGB gradient: ~240 KB</li>
+</ul>
 <h2 id="complete-workflow-example">Complete Workflow Example</h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">use</span><span class="w"> </span><span class="n">cv_rusty</span><span class="p">::{</span><span class="n">read_jpeg</span><span class="p">,</span><span class="w"> </span><span class="n">write_jpeg</span><span class="p">,</span><span class="w"> </span><span class="n">write_png</span><span class="p">,</span><span class="w"> </span><span class="n">Matrix3</span><span class="p">};</span>
 <a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
@@ -1275,20 +1387,26 @@
 </tbody>
 </table>
 <h3 id="when-to-use-each-format">When to Use Each Format</h3>
-<p><strong>Use JPEG when:</strong>
-- Working with photographs
-- File size is a concern
-- Minor quality loss is acceptable
-- Sharing on the web</p>
-<p><strong>Use PNG when:</strong>
-- Preserving exact pixel values is critical
-- Working with graphics, text, or line art
-- Need to perform multiple save operations
-- File size is not a primary concern</p>
+<p><strong>Use JPEG when:</strong></p>
+<ul>
+<li>Working with photographs</li>
+<li>File size is a concern</li>
+<li>Minor quality loss is acceptable</li>
+<li>Sharing on the web</li>
+</ul>
+<p><strong>Use PNG when:</strong></p>
+<ul>
+<li>Preserving exact pixel values is critical</li>
+<li>Working with graphics, text, or line art</li>
+<li>Need to perform multiple save operations</li>
+<li>File size is not a primary concern</li>
+</ul>
 <h2 id="dependencies">Dependencies</h2>
-<p>The image writing functionality requires the <code>std</code> feature (enabled by default) and uses:
-- <code>jpeg-encoder</code> (v0.6) for JPEG encoding
-- <code>png</code> (v0.17) for PNG encoding</p>
+<p>The image writing functionality requires the <code>std</code> feature (enabled by default) and uses:</p>
+<ul>
+<li><code>jpeg-encoder</code> (v0.6) for JPEG encoding</li>
+<li><code>png</code> (v0.17) for PNG encoding</li>
+</ul>
 <p>These dependencies are automatically included when using the default <code>std</code> feature.</p>
 <h2 id="examples">Examples</h2>
 <p>Run the included examples to see the functionality in action:</p>

@@ -9,6 +9,10 @@
       
       
       
+        <link rel="prev" href="../unified_drawing_api/">
+      
+      
+        <link rel="next" href="../window_feature_summary/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -16,7 +20,7 @@
     
     
       
-        <title>Unified show_image() API - Changelog - CV Rusty</title>
+        <title>Unified show_image API - CV Rusty</title>
       
     
     
@@ -104,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Unified show_image() API - Changelog
+              Unified show_image API
             
           </span>
         </div>
@@ -380,6 +384,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../guides/drawing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Drawing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../guides/image-writing/" class="md-nav__link">
         
   
@@ -567,18 +594,20 @@
       
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
         
           
           <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
@@ -594,7 +623,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             Changelogs
@@ -631,12 +660,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../window_feature_summary/" class="md-nav__link">
+      <a href="../hex_color_support/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Window Feature
+    Hex Color Support
     
   </span>
   
@@ -654,12 +683,483 @@
   
   
     <li class="md-nav__item">
-      <a href="../UNIFIED_SHOW_IMAGE_API.md" class="md-nav__link">
+      <a href="../opacity_support/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Opacity Support
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../unified_drawing_api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Unified Drawing API
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Unified show_image API
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
   <span class="md-ellipsis">
     Unified show_image API
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#version-040-tbd" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.4.0 (TBD)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.4.0 (TBD)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#breaking-changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Breaking Changes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Breaking Changes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#removed-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Removed Functions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#migration-required" class="md-nav__link">
+    <span class="md-ellipsis">
+      Migration Required
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#new-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      New Features
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="New Features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-unified-show_image-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Unified show_image() Function
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-displayable-trait" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Displayable Trait
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-unified-show_and_wait-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Unified show_and_wait() Function
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#technical-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      Technical Details
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Technical Details">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#implementation-approach" class="md-nav__link">
+    <span class="md-ellipsis">
+      Implementation Approach
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#performance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performance
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#type-safety" class="md-nav__link">
+    <span class="md-ellipsis">
+      Type Safety
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#updated-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      Updated Components
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Updated Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#source-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      Source Code
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Documentation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      API Comparison
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="API Comparison">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#before-v03x" class="md-nav__link">
+    <span class="md-ellipsis">
+      Before (v0.3.x)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#after-v040" class="md-nav__link">
+    <span class="md-ellipsis">
+      After (v0.4.0)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advantages" class="md-nav__link">
+    <span class="md-ellipsis">
+      Advantages
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Advantages">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#developer-experience" class="md-nav__link">
+    <span class="md-ellipsis">
+      Developer Experience
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#code-maintenance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Code Maintenance
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deprecation-timeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deprecation Timeline
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deprecation Timeline">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#version-040-this-release" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 0.4.0 (This Release)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#no-deprecation-period" class="md-nav__link">
+    <span class="md-ellipsis">
+      No Deprecation Period
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rationale" class="md-nav__link">
+    <span class="md-ellipsis">
+      Rationale
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Rationale">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-unify" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why Unify?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#design-decisions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Design Decisions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#future-enhancements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Future Enhancements
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#credits" class="md-nav__link">
+    <span class="md-ellipsis">
+      Credits
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      Resources
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Questions?
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../window_feature_summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Window Feature
     
   </span>
   
@@ -1113,11 +1613,13 @@
 <p>The <code>show_image()</code> function now accepts any type that implements the <code>Displayable</code> trait:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">show_image</span><span class="o">&lt;</span><span class="n">T</span><span class="p">:</span><span class="w"> </span><span class="nc">Displayable</span><span class="o">&gt;</span><span class="p">(</span><span class="n">window_name</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="kt">str</span><span class="p">,</span><span class="w"> </span><span class="n">image</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="nc">T</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">Result</span><span class="o">&lt;</span><span class="p">(),</span><span class="w"> </span><span class="n">WindowError</span><span class="o">&gt;</span>
 </code></pre></div>
-<p><strong>Benefits:</strong>
-- Single function for all image types
-- Type-safe through compile-time checking
-- Extensible to custom image types
-- Zero-cost abstraction</p>
+<p><strong>Benefits:</strong></p>
+<ul>
+<li>Single function for all image types</li>
+<li>Type-safe through compile-time checking</li>
+<li>Extensible to custom image types</li>
+<li>Zero-cost abstraction</li>
+</ul>
 <p><strong>Example:</strong>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">use</span><span class="w"> </span><span class="n">cv_rusty</span><span class="p">::{</span><span class="n">Matrix1</span><span class="p">,</span><span class="w"> </span><span class="n">Matrix3</span><span class="p">,</span><span class="w"> </span><span class="n">show_image</span><span class="p">};</span>
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
@@ -1134,10 +1636,12 @@
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">to_display_buffer</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">Result</span><span class="o">&lt;</span><span class="p">(</span><span class="nb">Vec</span><span class="o">&lt;</span><span class="kt">u32</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="kt">usize</span><span class="p">,</span><span class="w"> </span><span class="kt">usize</span><span class="p">),</span><span class="w"> </span><span class="n">WindowError</span><span class="o">&gt;</span><span class="p">;</span>
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="p">}</span>
 </code></pre></div>
-<p><strong>Implementations:</strong>
-- ✅ <code>Matrix1</code> (grayscale images)
-- ✅ <code>Matrix3</code> (color images)
-- ✅ Custom types (user-implementable)</p>
+<p><strong>Implementations:</strong></p>
+<ul>
+<li>✅ <code>Matrix1</code> (grayscale images)</li>
+<li>✅ <code>Matrix3</code> (color images)</li>
+<li>✅ Custom types (user-implementable)</li>
+</ul>
 <p><strong>Custom Implementation Example:</strong>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">use</span><span class="w"> </span><span class="n">cv_rusty</span><span class="p">::{</span><span class="n">Displayable</span><span class="p">,</span><span class="w"> </span><span class="n">WindowError</span><span class="p">,</span><span class="w"> </span><span class="n">show_image</span><span class="p">};</span>
 <a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
@@ -1248,8 +1752,12 @@
 <h2 id="advantages">Advantages</h2>
 <h3 id="developer-experience">Developer Experience</h3>
 <ol>
-<li><strong>Simplified API Surface</strong></li>
-<li>Fewer functions to remember</li>
+<li>
+<p><strong>Simplified API Surface</strong></p>
+</li>
+<li>
+<p>Fewer functions to remember</p>
+</li>
 <li>No need to choose between variants</li>
 <li>
 <p>Single consistent interface</p>
@@ -1265,7 +1773,9 @@
 <li>
 <p><strong>Enhanced Type Safety</strong></p>
 </li>
-<li>Compile-time checking</li>
+<li>
+<p>Compile-time checking</p>
+</li>
 <li>Better error messages</li>
 <li>
 <p>No runtime type checking</p>
@@ -1273,7 +1783,9 @@
 <li>
 <p><strong>Extensibility</strong></p>
 </li>
-<li>Implement <code>Displayable</code> for custom types</li>
+<li>
+<p>Implement <code>Displayable</code> for custom types</p>
+</li>
 <li>Works seamlessly with existing API</li>
 <li>Future-proof design</li>
 </ol>
@@ -1309,10 +1821,12 @@
 <li>✅ <code>show_and_wait&lt;T: Displayable&gt;()</code> unified</li>
 </ul>
 <h3 id="no-deprecation-period">No Deprecation Period</h3>
-<p>Since this is a clean break with clear migration path:
-- Functions removed immediately (not deprecated)
-- Migration is mechanical and straightforward
-- No behavior changes, only naming unification</p>
+<p>Since this is a clean break with clear migration path:</p>
+<ul>
+<li>Functions removed immediately (not deprecated)</li>
+<li>Migration is mechanical and straightforward</li>
+<li>No behavior changes, only naming unification</li>
+</ul>
 <hr />
 <h2 id="rationale">Rationale</h2>
 <h3 id="why-unify">Why Unify?</h3>
@@ -1354,11 +1868,13 @@
 </ul>
 <hr />
 <h2 id="questions">Questions?</h2>
-<p>If you have questions about this change:
-1. Read the <a href="../../MIGRATION_GUIDE.md">Migration Guide</a>
-2. Check the updated <a href="../../guides/window_display/">documentation</a>
-3. Review the <a href="../../examples/">examples</a>
-4. Open an issue for further assistance</p>
+<p>If you have questions about this change:</p>
+<ol>
+<li>Read the <a href="../../MIGRATION_GUIDE.md">Migration Guide</a></li>
+<li>Check the updated <a href="../../guides/window_display/">documentation</a></li>
+<li>Review the <a href="../../examples/">examples</a></li>
+<li>Open an issue for further assistance</li>
+</ol>
 
 
 

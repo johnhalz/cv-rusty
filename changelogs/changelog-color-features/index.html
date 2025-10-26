@@ -12,7 +12,7 @@
         <link rel="prev" href="../../architecture/embedded/">
       
       
-        <link rel="next" href="../window_feature_summary/">
+        <link rel="next" href="../hex_color_support/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -367,6 +367,29 @@
   
   <span class="md-ellipsis">
     Convolution
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/drawing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Drawing
     
   </span>
   
@@ -826,12 +849,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../window_feature_summary/" class="md-nav__link">
+      <a href="../hex_color_support/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Window Feature
+    Hex Color Support
     
   </span>
   
@@ -849,12 +872,81 @@
   
   
     <li class="md-nav__item">
-      <a href="../UNIFIED_SHOW_IMAGE_API.md" class="md-nav__link">
+      <a href="../opacity_support/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Opacity Support
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../unified_drawing_api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Unified Drawing API
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../unified_show_image_api/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     Unified show_image API
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../window_feature_summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Window Feature
     
   </span>
   
@@ -1070,8 +1162,12 @@
 <p>Added a new <code>Matrix1</code> struct for representing grayscale/single-channel images:</p>
 <ul>
 <li><strong>Struct</strong>: <code>Matrix1</code> - Single-channel matrix for grayscale image data</li>
-<li><strong>Methods</strong>:</li>
-<li><code>new(width, height, data)</code> - Create from raw grayscale data</li>
+<li>
+<p><strong>Methods</strong>:</p>
+</li>
+<li>
+<p><code>new(width, height, data)</code> - Create from raw grayscale data</p>
+</li>
 <li><code>zeros(width, height)</code> - Create zero-initialized matrix</li>
 <li><code>get_pixel(x, y)</code> - Get pixel value at location</li>
 <li><code>set_pixel(x, y, value)</code> - Set pixel value at location</li>
@@ -1081,91 +1177,121 @@
 </ul>
 <h3 id="2-rgb-to-grayscale-conversion">2. RGB to Grayscale Conversion</h3>
 <p>Added multiple methods for converting RGB images to grayscale:</p>
-<p><strong>Methods on Matrix3</strong>:
-- <code>to_grayscale()</code> - Default luminosity method (recommended)
-- <code>to_grayscale_average()</code> - Simple average method
-- <code>to_grayscale_lightness()</code> - Lightness (midpoint) method
-- <code>to_grayscale_with_method(GrayscaleMethod)</code> - Specify conversion method</p>
-<p><strong>Conversion Algorithms</strong>:
-- <strong>Luminosity</strong>: <code>0.299*R + 0.587*G + 0.114*B</code> - Accounts for human perception
-- <strong>Average</strong>: <code>(R + G + B) / 3</code> - Simple arithmetic mean
-- <strong>Lightness</strong>: <code>(max(R,G,B) + min(R,G,B)) / 2</code> - Midpoint of range</p>
-<p><strong>Enum</strong>: <code>GrayscaleMethod</code> with variants:
-- <code>Luminosity</code>
-- <code>Average</code>
-- <code>Lightness</code></p>
+<p><strong>Methods on Matrix3</strong>:</p>
+<ul>
+<li><code>to_grayscale()</code> - Default luminosity method (recommended)</li>
+<li><code>to_grayscale_average()</code> - Simple average method</li>
+<li><code>to_grayscale_lightness()</code> - Lightness (midpoint) method</li>
+<li><code>to_grayscale_with_method(GrayscaleMethod)</code> - Specify conversion method</li>
+</ul>
+<p><strong>Conversion Algorithms</strong>:</p>
+<ul>
+<li><strong>Luminosity</strong>: <code>0.299*R + 0.587*G + 0.114*B</code> - Accounts for human perception</li>
+<li><strong>Average</strong>: <code>(R + G + B) / 3</code> - Simple arithmetic mean</li>
+<li><strong>Lightness</strong>: <code>(max(R,G,B) + min(R,G,B)) / 2</code> - Midpoint of range</li>
+</ul>
+<p><strong>Enum</strong>: <code>GrayscaleMethod</code> with variants:</p>
+<ul>
+<li><code>Luminosity</code></li>
+<li><code>Average</code></li>
+<li><code>Lightness</code></li>
+</ul>
 <h3 id="3-rgb-hsv-color-space-conversion">3. RGB ↔ HSV Color Space Conversion</h3>
 <p>Added functions for converting between RGB and HSV color spaces:</p>
 <ul>
-<li><code>rgb_to_hsv(r: u8, g: u8, b: u8) -&gt; (f32, f32, f32)</code></li>
-<li>Input: RGB values (0-255)</li>
+<li>
+<p><code>rgb_to_hsv(r: u8, g: u8, b: u8) -&gt; (f32, f32, f32)</code></p>
+</li>
+<li>
+<p>Input: RGB values (0-255)</p>
+</li>
 <li>
 <p>Output: (hue in degrees 0-360°, saturation 0.0-1.0, value 0.0-1.0)</p>
 </li>
 <li>
 <p><code>hsv_to_rgb(h: f32, s: f32, v: f32) -&gt; (u8, u8, u8)</code></p>
 </li>
-<li>Input: HSV (hue 0-360°, saturation 0.0-1.0, value 0.0-1.0)</li>
+<li>
+<p>Input: HSV (hue 0-360°, saturation 0.0-1.0, value 0.0-1.0)</p>
+</li>
 <li>Output: RGB values (0-255)</li>
 </ul>
 <h3 id="4-rgb-hsl-color-space-conversion">4. RGB ↔ HSL Color Space Conversion</h3>
 <p>Added functions for converting between RGB and HSL color spaces:</p>
 <ul>
-<li><code>rgb_to_hsl(r: u8, g: u8, b: u8) -&gt; (f32, f32, f32)</code></li>
-<li>Input: RGB values (0-255)</li>
+<li>
+<p><code>rgb_to_hsl(r: u8, g: u8, b: u8) -&gt; (f32, f32, f32)</code></p>
+</li>
+<li>
+<p>Input: RGB values (0-255)</p>
+</li>
 <li>
 <p>Output: (hue in degrees 0-360°, saturation 0.0-1.0, lightness 0.0-1.0)</p>
 </li>
 <li>
 <p><code>hsl_to_rgb(h: f32, s: f32, l: f32) -&gt; (u8, u8, u8)</code></p>
 </li>
-<li>Input: HSL (hue 0-360°, saturation 0.0-1.0, lightness 0.0-1.0)</li>
+<li>
+<p>Input: HSL (hue 0-360°, saturation 0.0-1.0, lightness 0.0-1.0)</p>
+</li>
 <li>Output: RGB values (0-255)</li>
 </ul>
 <h2 id="new-module">New Module</h2>
 <h3 id="color-module"><code>color</code> Module</h3>
-<p>Created a new <code>color</code> module (<code>src/color.rs</code>) containing:
-- Color space conversion functions
-- Grayscale conversion implementations
-- Comprehensive test suite for all conversions</p>
+<p>Created a new <code>color</code> module (<code>src/color.rs</code>) containing:</p>
+<ul>
+<li>Color space conversion functions</li>
+<li>Grayscale conversion implementations</li>
+<li>Comprehensive test suite for all conversions</li>
+</ul>
 <p>All color conversion functionality is <strong><code>no_std</code> compatible</strong> and only requires the <code>alloc</code> crate.</p>
 <h2 id="public-api-exports">Public API Exports</h2>
-<p>Updated <code>lib.rs</code> to export:
-- <code>Matrix1</code> - Single-channel matrix struct
-- <code>GrayscaleMethod</code> - Enum for grayscale conversion methods
-- <code>rgb_to_hsv</code>, <code>hsv_to_rgb</code> - HSV conversion functions
-- <code>rgb_to_hsl</code>, <code>hsl_to_rgb</code> - HSL conversion functions</p>
+<p>Updated <code>lib.rs</code> to export:</p>
+<ul>
+<li><code>Matrix1</code> - Single-channel matrix struct</li>
+<li><code>GrayscaleMethod</code> - Enum for grayscale conversion methods</li>
+<li><code>rgb_to_hsv</code>, <code>hsv_to_rgb</code> - HSV conversion functions</li>
+<li><code>rgb_to_hsl</code>, <code>hsl_to_rgb</code> - HSL conversion functions</li>
+</ul>
 <h2 id="examples">Examples</h2>
 <p>Added new example: <code>color_conversion_example.rs</code></p>
-<p>Demonstrates:
-- RGB to grayscale conversion with all three methods
-- RGB ↔ HSV conversions
-- RGB ↔ HSL conversions
-- Working with Matrix1 (grayscale images)
-- Roundtrip conversion tests</p>
+<p>Demonstrates:</p>
+<ul>
+<li>RGB to grayscale conversion with all three methods</li>
+<li>RGB ↔ HSV conversions</li>
+<li>RGB ↔ HSL conversions</li>
+<li>Working with Matrix1 (grayscale images)</li>
+<li>Roundtrip conversion tests</li>
+</ul>
 <p>Run with:
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>cargo<span class="w"> </span>run<span class="w"> </span>--example<span class="w"> </span>color_conversion_example
 </code></pre></div></p>
 <h2 id="tests">Tests</h2>
-<p>Added comprehensive test coverage:
-- Matrix1 creation and pixel access tests
-- Grayscale conversion tests for all three methods
-- RGB ↔ HSV roundtrip conversion tests
-- RGB ↔ HSL roundtrip conversion tests
-- Pure color conversion accuracy tests
-- Edge case handling</p>
+<p>Added comprehensive test coverage:</p>
+<ul>
+<li>Matrix1 creation and pixel access tests</li>
+<li>Grayscale conversion tests for all three methods</li>
+<li>RGB ↔ HSV roundtrip conversion tests</li>
+<li>RGB ↔ HSL roundtrip conversion tests</li>
+<li>Pure color conversion accuracy tests</li>
+<li>Edge case handling</li>
+</ul>
 <p>All 20 unit tests pass successfully.</p>
 <h2 id="documentation">Documentation</h2>
-<p>Updated documentation:
-- Added inline documentation for all new functions and methods
-- Updated README.md with usage examples
-- Added doc tests that verify code examples compile and run correctly
-- Documented all color space conversion formulas</p>
+<p>Updated documentation:</p>
+<ul>
+<li>Added inline documentation for all new functions and methods</li>
+<li>Updated README.md with usage examples</li>
+<li>Added doc tests that verify code examples compile and run correctly</li>
+<li>Documented all color space conversion formulas</li>
+</ul>
 <h2 id="backward-compatibility">Backward Compatibility</h2>
-<p>All changes are <strong>fully backward compatible</strong>:
-- No breaking changes to existing API
-- Matrix3 functionality unchanged
-- All existing tests continue to pass</p>
+<p>All changes are <strong>fully backward compatible</strong>:</p>
+<ul>
+<li>No breaking changes to existing API</li>
+<li>Matrix3 functionality unchanged</li>
+<li>All existing tests continue to pass</li>
+</ul>
 <h2 id="performance-notes">Performance Notes</h2>
 <ul>
 <li>Color conversions use <code>f32</code> for intermediate calculations</li>
@@ -1174,19 +1300,23 @@
 <li>All operations are <code>no_std</code> compatible</li>
 </ul>
 <h2 id="use-cases">Use Cases</h2>
-<p>These features enable:
-1. <strong>Image preprocessing</strong> - Convert color images to grayscale for algorithms
-2. <strong>Color manipulation</strong> - Adjust hue, saturation, brightness in HSV/HSL space
-3. <strong>Computer vision</strong> - Many CV algorithms work on grayscale images
-4. <strong>Embedded systems</strong> - Reduce memory usage with single-channel images
-5. <strong>Display applications</strong> - Convert between color spaces for different displays
-6. <strong>Image analysis</strong> - Separate color components for analysis</p>
+<p>These features enable:</p>
+<ol>
+<li><strong>Image preprocessing</strong> - Convert color images to grayscale for algorithms</li>
+<li><strong>Color manipulation</strong> - Adjust hue, saturation, brightness in HSV/HSL space</li>
+<li><strong>Computer vision</strong> - Many CV algorithms work on grayscale images</li>
+<li><strong>Embedded systems</strong> - Reduce memory usage with single-channel images</li>
+<li><strong>Display applications</strong> - Convert between color spaces for different displays</li>
+<li><strong>Image analysis</strong> - Separate color components for analysis</li>
+</ol>
 <h2 id="future-enhancements">Future Enhancements</h2>
-<p>Potential additions:
-- YUV/YCbCr color space conversions
-- LAB color space support
-- Batch conversion operations for performance
-- SIMD-optimized conversions</p>
+<p>Potential additions:</p>
+<ul>
+<li>YUV/YCbCr color space conversions</li>
+<li>LAB color space support</li>
+<li>Batch conversion operations for performance</li>
+<li>SIMD-optimized conversions</li>
+</ul>
 
 
 
