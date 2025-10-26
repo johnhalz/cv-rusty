@@ -18,6 +18,7 @@ Full documentation is available at: **[https://johnhalz.github.io/cv-rusty/](htt
 - **Separable Convolution**: Optimized implementation for separable kernels (significantly faster for large kernels)
 - **Parallel Processing**: Optional multi-threaded processing using Rayon (requires `parallel` feature)
 - **Color Space Conversions**: Convert between RGB, HSV, and HSL color spaces; convert RGB to grayscale with multiple algorithms
+- **Drawing Shapes**: Draw rectangles (with rotation) and circles on images with customizable stroke, fill colors, and opacity/transparency support
 - **Image Transformations**: Resize, crop, and rotate operations with multiple interpolation methods
 - **Image I/O**: Built-in support for reading and writing JPEG and PNG images with automatic format conversion (requires `std` feature)</parameter>
 - **Format Support**: Handles RGB24, Grayscale (L8), and CMYK32 JPEG formats; RGB, RGBA, Grayscale, and Grayscale+Alpha PNG formats
@@ -180,7 +181,139 @@ let thumbnail = image
     .rotate(RotationAngle::Rotate90);
 ```
 
-### Converting RGB to Grayscale (`no_std` compatible)</parameter>
+### Drawing Shapes (`no_std` compatible)
+
+```rust
+use cv_rusty::{Matrix3, draw_rectangle, draw_circle, Color, Stroke};
+
+// Create a white canvas
+let mut image = Matrix3::zeros(480, 640);
+for y in 0..image.height() {
+    for x in 0..image.width() {
+        image.set_pixel(x, y, 255, 255, 255);
+    }
+}
+
+// Draw a filled red rectangle with black border
+draw_rectangle(
+    &mut image,
+    320.0, 240.0,  // center position (x, y)
+    100.0, 80.0,   // width, height
+    0.0,           // rotation in degrees (clockwise)
+    Some(Stroke::new(3, Color::rgb(0, 0, 0))),  // 3px black stroke
+    Some(Color::rgb(255, 0, 0))                 // red fill
+);
+
+// Use hex colors (with or without '#' prefix)
+draw_rectangle(
+    &mut image,
+    320.0, 120.0,
+    100.0, 60.0,
+    15.0,
+    Some(Stroke::new(2, Color::from_hex("#2C3E50").unwrap())),  // 2px dark blue-gray stroke
+    Some(Color::from_hex("#3498DB").unwrap())                   // light blue fill
+);
+
+// Use 3-digit hex format (expands F -> FF)
+draw_circle(
+    &mut image,
+    200.0, 200.0,
+    40.0,
+    Some(Stroke::new(2, Color::from_hex("#000").unwrap())),  // 2px black stroke
+    Some(Color::from_hex("#F0F").unwrap())                   // magenta fill
+);
+
+// Parse colors from strings using FromStr trait
+let cyan: Color = "#00FFFF".parse().unwrap();
+draw_circle(
+    &mut image,
+    400.0, 200.0,
+    40.0,
+    Some(Stroke::new(2, Color::black())),  // 2px black stroke
+    Some(cyan)
+);
+
+// Draw a rotated green rectangle with blue border
+draw_rectangle(
+    &mut image,
+    200.0, 150.0,
+    80.0, 120.0,
+    45.0,                                          // rotated 45 degrees
+    Some(Stroke::new(2, Color::rgb(0, 0, 255))),   // 2px blue stroke
+    Some(Color::rgb(0, 255, 0))                    // green fill
+);
+
+// Draw a filled blue circle with white border
+draw_circle(
+    &mut image,
+    450.0, 300.0,  // center position (x, y)
+    50.0,          // radius
+    Some(Stroke::new(2, Color::rgb(255, 255, 255))),  // 2px white stroke
+    Some(Color::rgb(0, 0, 255))                       // blue fill
+);
+
+// Draw outline-only shapes (no fill)
+draw_circle(
+    &mut image,
+    500.0, 400.0,
+    40.0,
+    Some(Stroke::new(4, Color::rgb(255, 0, 255))),  // 4px magenta stroke
+    None                                             // no fill
+);
+
+// Draw semi-transparent shapes with opacity (0.0 = transparent, 1.0 = opaque)
+draw_rectangle(
+    &mut image,
+    320.0, 350.0,
+    120.0, 80.0,
+    0.0,
+    None,
+    Some(Color::rgb_with_opacity(255, 0, 0, 0.5))  // 50% transparent red
+);
+
+// Overlapping semi-transparent circles blend colors
+draw_circle(
+    &mut image,
+    250.0, 450.0,
+    40.0,
+    None,
+    Some(Color::rgb_with_opacity(255, 0, 0, 0.6))  // 60% opaque red
+);
+
+draw_circle(
+    &mut image,
+    290.0, 450.0,
+    40.0,
+    None,
+    Some(Color::rgb_with_opacity(0, 0, 255, 0.6))  // 60% opaque blue
+);
+// The overlap creates a purple blend
+
+// Modify opacity of existing colors
+let green = Color::rgb(0, 255, 0);
+let semi_green = green.with_opacity(0.3);  // 30% opaque
+draw_circle(
+    &mut image,
+    270.0, 480.0,
+    30.0,
+    None,
+    Some(semi_green)
+);
+
+// Same functions work with grayscale images (Matrix1)
+use cv_rusty::Matrix1;
+
+let mut gray_image = Matrix1::zeros(480, 640);
+draw_circle(
+    &mut gray_image,
+    320.0, 240.0,
+    60.0,
+    Some(Stroke::new(3, Color::gray(255))),  // 3px white stroke
+    Some(Color::gray(100))                   // dark gray fill
+);
+```
+
+### Converting RGB to Grayscale (`no_std` compatible)
 
 ```rust
 use cv_rusty::{Matrix3, Matrix1, GrayscaleMethod};
@@ -393,6 +526,15 @@ Demonstrate image transformations (resize, crop, rotate):
 
 ```bash
 cargo run --release --example transform_demo
+```
+
+### Drawing Examples
+
+Draw shapes on images:
+
+```bash
+cargo run --example drawing_example
+cargo run --example drawing_grayscale_example
 ```
 
 ### Convolution Examples
